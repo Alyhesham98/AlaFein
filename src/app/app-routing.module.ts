@@ -8,6 +8,47 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./modules/users/users.module').then((m) => m.UsersModule),
+  },
+  {
+    path: 'event-organizers',
+    loadChildren: () =>
+      import('./modules/organizers/organizers.module').then(
+        (m) => m.OrganizersModule
+      ),
+  },
+  {
+    path: 'venues',
+    loadChildren: () =>
+      import('./modules/venues/venues.module').then((m) => m.VenuesModule),
+  },
+  {
+    path: 'events',
+    loadChildren: () =>
+      import('./modules/events/events.module').then((m) => m.EventsModule),
+  },
+  {
+    path: 'pending-comments',
+    loadChildren: () =>
+      import('./modules/comments/comments.module').then(
+        (m) => m.CommentsModule
+      ),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./modules/settings/settings.module').then(
+        (m) => m.SettingsModule
+      ),
+  },
   { path: '**', redirectTo: 'login' },
 ];
 
