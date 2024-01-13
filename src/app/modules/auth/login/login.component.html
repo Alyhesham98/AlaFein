@@ -1,0 +1,37 @@
+<section class="loginSection">
+  <div class="container">
+    <div class="row">
+      <div class="col images-container">
+        <img src="../../../../assets/images/exclamation.png" width="55" height="190" alt="Exclamation One">
+        <img src="../../../../assets/images/exclamation-two.png" width="55" height="190" alt="Exclamation Two">
+      </div>
+      <div class="col main-container">
+        <div class="content">
+          <img src="../../../../assets/icons/login-logo.svg" alt="Logo">
+          <h2>Hello Again!</h2>
+          <p>Welcome Back</p>
+        </div>
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <input type="text" id="inputEmail" placeholder="Email" formControlName="email"
+            class="form-control form-control-lg">
+          <input type="password" id="inputPhone" placeholder="Password" formControlName="password"
+            class="form-control form-control-lg">
+          <div class="forget-password">
+            <a (click)="onForgetPassword()">Forgot the password?</a>
+          </div>
+
+          <button class="customBtn w-100 mt-4">
+            <span>CONTINUE</span>
+            <img src="assets/icons/arrow-right.svg" width="23" height="23" alt="Arrow Right">
+          </button>
+        </form>
+      </div>
+      <div class="col language-container">
+        <p class="arabic" [class.activeLang]="languageSwitch">العربية</p>
+        <p-inputSwitch [(ngModel)]="languageSwitch"></p-inputSwitch>
+        <p class="english" [class.activeLang]="!languageSwitch">English</p>
+      </div>
+    </div>
+  </div>
+
+</section>

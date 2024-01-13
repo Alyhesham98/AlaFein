@@ -1,0 +1,95 @@
+section.loginSection {
+  padding-top: 65px;
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    .content {
+      text-align: center;
+      margin-bottom: 20px;
+      img {
+        margin-bottom: 70px;
+      }
+      h2 {
+        font-family: "Anton";
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 40px;
+        letter-spacing: 0em;
+        margin-bottom: 18px;
+      }
+      p {
+        font-family: "Formula Condensed Light";
+        font-size: 25px;
+        line-height: 30px;
+        letter-spacing: 0.04em;
+      }
+    }
+    .form {
+      input {
+        font-family: "Abhaya Libre", serif;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 21px;
+        letter-spacing: 0.04em;
+        margin-bottom: 22px;
+        height: 60px;
+      }
+      .forget-password {
+        display: flex;
+        justify-content: end;
+        margin-top: 10px;
+        margin-bottom: 60px;
+        a {
+          font-family: "Abhaya Libre", serif;
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 23px;
+          letter-spacing: 0.04em;
+          color: #0000f5;
+          cursor: pointer;
+        }
+      }
+      button.customBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+        span {
+          flex: 1;
+          font-family: "Plus Jakarta Sans", sans-serif;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 26px;
+          letter-spacing: 0px;
+        }
+        img {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .language-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    .activeLang {
+      opacity: 0.6;
+    }
+    .english {
+      font-family: "Formula Condensed Bold";
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 25px;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+    .arabic {
+      font-family: "IBM Arabic";
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 25px;
+      letter-spacing: 0em;
+      margin-top: 2px;
+    }
+  }
+}

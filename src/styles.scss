@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@font-face {
+  font-family: "Anton";
+  src: url("../src/assets/fonts/Anton/Anton-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Formula Condensed Light";
+  src: url("../src/assets/fonts/FormulaCondensed/FormulaCondensed-Light.otf")
+    format("opentype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Formula Condensed Bold";
+  src: url("../src/assets/fonts/FormulaCondensed/FormulaCondensed-Bold.otf")
+    format("opentype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "IBM Arabic";
+  src: url("../src/assets/fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Bold.ttf")
+    format("truetype");
+  font-weight: bold;
+}
+
+// Button Helpers
+.customBtn {
+  font-weight: 700;
+  height: 46px;
+  color: white;
+  background: #0000f5;
+  border: 1px solid #0000f5;
+  border-radius: 10px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  &-outline {
+    background-color: transparent;
+    color: #183c5e;
+    border: 1px solid #183c5e;
+    &:hover {
+      background-color: rgb(247, 247, 247);
+    }
+  }
+
+  &-approve {
+    background: #00a651;
+    border: 1px solid #00a651;
+  }
+
+  &-reject {
+    background: #de1313e5;
+    border: 1px solid #de1313e5;
+  }
+
+  &:hover {
+    filter: brightness(80%);
+  }
+}
+
+.customBtn:disabled {
+  background-color: rgb(182, 181, 181);
+  border: none;
+
+  &:hover {
+    filter: none;
+    cursor: not-allowed;
+  }
+}
