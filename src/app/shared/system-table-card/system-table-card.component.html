@@ -1,0 +1,28 @@
+<div class="system-card mt-5">
+  <div class="row mb-4 mb-lg-0">
+    <div class="col-lg-6 header-section">
+      <h2>{{cardData.cardName}}</h2>
+      <p>{{cardData.filterDate}}</p>
+    </div>
+    <div class="col-lg-6 d-lg-flex filter-section">
+      <p-dropdown [options]="calendarFilter" [(ngModel)]="selectedCalendar" optionLabel="type"
+        styleClass="filter-dropdown" placeholder="Select a Filter"></p-dropdown>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col content-section">
+      <p-table [value]="cardData.tableData" tableStyleClass="custom-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col" *ngFor="let col of cardData.tableCols">{{col.value}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td *ngFor="let col of cardData.tableCols">{{ rowData[col.key] }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

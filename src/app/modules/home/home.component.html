@@ -1,1 +1,31 @@
-<p>home works!</p>
+<div class="container-fluid">
+  <div class="system-overview">
+    <div class="row">
+      <div class="col-lg-6 header-section">
+        <h2>System Overview</h2>
+        <p>01 NOV - 07 NOV 2023</p>
+      </div>
+      <div class="col-lg-6 d-lg-flex filter-section">
+        <p-dropdown [options]="calendarFilter" [(ngModel)]="selectedCalendar" optionLabel="type"
+          styleClass="filter-dropdown" placeholder="Select a Filter"></p-dropdown>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xl-3" *ngFor="let data of dataTypes">
+        <div class="content-section mt-4 mb-lg-0">
+          <div class="data-card">
+            <h4>{{data.type}}</h4>
+            <h2>{{data.count}} <span>{{data.name}}</span></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="system-data-tables">
+    <div class="row">
+      <div class="col-lg-6" *ngFor="let systemData of tablesData">
+        <app-system-table-card [cardData]="systemData"></app-system-table-card>
+      </div>
+    </div>
+  </div>
+</div>
