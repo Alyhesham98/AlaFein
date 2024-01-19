@@ -6,9 +6,10 @@ import { HomeComponent } from './home.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SystemOverviewComponent } from './system-overview/system-overview.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, SystemOverviewComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

@@ -7,40 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   tablesData: any[] = [];
-  calendarFilter: any[] = [];
-  selectedCalendar: any[] = [];
-  dataTypes: any[] = [];
 
   ngOnInit() {
-    this.calendarFilter = [
-      { type: 'This Week', code: 'week' },
-      { type: 'This Month', code: 'month' },
-      { type: 'This Year', code: 'year' },
-    ];
-
-    this.dataTypes = [
-      {
-        name: 'Events',
-        type: 'Total Events',
-        count: 27,
-      },
-      {
-        name: 'Users',
-        type: 'New Users',
-        count: 70,
-      },
-      {
-        name: 'Events',
-        type: 'New Event Organizer',
-        count: 4,
-      },
-      {
-        name: 'Venues',
-        type: 'New Venues',
-        count: 4,
-      },
-    ];
-
     this.tablesData = [
       {
         cardName: 'Top Users',

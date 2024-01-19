@@ -1,4 +1,4 @@
-<div class="system-card mt-5">
+<div class="system-table-card">
   <div class="row mb-4 mb-lg-0">
     <div class="col-lg-6 header-section">
       <h2>{{cardData.cardName}}</h2>
@@ -9,8 +9,8 @@
         styleClass="filter-dropdown" placeholder="Select a Filter"></p-dropdown>
     </div>
   </div>
-  <div class="row">
-    <div class="col content-section">
+  <div class="row" *ngIf="systemType === 'extended'">
+    <div class="col table-content-section">
       <p-table [value]="cardData.tableData" tableStyleClass="custom-table">
         <ng-template pTemplate="header">
           <tr>
@@ -23,6 +23,16 @@
           </tr>
         </ng-template>
       </p-table>
+    </div>
+  </div>
+  <div class="row" *ngIf="systemType === 'mini'">
+    <div class="col-md-6 col-xl-3" *ngFor="let data of cardData.cardsData">
+      <div class="cards-content-section mt-2 mb-lg-0">
+        <div class="data-card">
+          <h4>{{data.type}}</h4>
+          <h2>{{data.count}} <span>{{data.name}}</span></h2>
+        </div>
+      </div>
     </div>
   </div>
 </div>

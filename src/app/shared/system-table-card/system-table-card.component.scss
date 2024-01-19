@@ -1,9 +1,9 @@
 :host ::ng-deep {
-  .system-card {
-    .content-section {
-        border: 2.19px solid #ececec;
-        border-radius: 13.3px;
-        margin: 0.7rem;
+  .system-table-card {
+    .table-content-section {
+      border: 2.19px solid #ececec;
+      border-radius: 13.3px;
+      margin: 0.5rem 0.7rem;
       .custom-table {
         font-family: "Formula Condensed Light";
         font-size: 21px;
@@ -21,38 +21,66 @@
         }
       }
     }
-  }
 
-  // GENERAL STYLES
-  .header-section {
-    h2 {
-      font-family: "Anton";
-      font-size: 24px;
-      text-transform: uppercase;
-    }
-    p {
-      font-family: "Formula Condensed Light";
-      font-size: 16px;
-      color: #797979;
-    }
-  }
-  .filter-section {
-    justify-content: flex-end;
-    .filter-dropdown {
-      min-width: 180px;
-      .p-dropdown-items-wrapper {
-        font-family: "Formula Condensed Light" !important;
-        font-size: 18px;
-        ul {
-          margin-bottom: 0 !important;
-          padding-left: 0 !important;
+    .cards-content-section {
+      .data-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-transform: uppercase;
+        border: 2px solid #ececec;
+        border-radius: 12px;
+        min-height: 130px;
+        h4 {
+          font-family: "Anton";
+          font-size: 16px;
+          border-left: 4px solid #0000f5;
+          margin-top: 12px;
+          padding-left: 10px;
+        }
+        h2 {
+          font-family: "Anton";
+          font-size: 37px;
+          padding: 12px;
+          span {
+            font-size: 21px;
+            color: #a2a2a2;
+          }
         }
       }
     }
-    .p-dropdown .p-dropdown-label {
-      font-family: "Formula Condensed Light" !important;
-      font-size: 18px;
-      line-height: 26px;
+
+    .header-section {
+      h2 {
+        font-family: "Anton";
+        font-size: 24px;
+        text-transform: uppercase;
+      }
+      p {
+        font-family: "Formula Condensed Light";
+        font-size: 16px;
+        color: #797979;
+      }
+    }
+
+    .filter-section {
+      justify-content: flex-end;
+      .filter-dropdown {
+        min-width: 180px;
+        .p-dropdown-items-wrapper {
+          font-family: "Formula Condensed Light" !important;
+          font-size: 18px;
+          ul {
+            margin-bottom: 0 !important;
+            padding-left: 0 !important;
+          }
+        }
+      }
+      .p-dropdown .p-dropdown-label {
+        font-family: "Formula Condensed Light" !important;
+        font-size: 18px;
+        line-height: 26px;
+      }
     }
   }
 }
