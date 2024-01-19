@@ -51,21 +51,26 @@ export class SystemOverviewComponent implements OnInit {
       cardName: 'System Overview',
       filterDate: '01 NOV - 07 NOV 2023',
       tableCols: [
-        { key: 'name', value: 'User Name' },
-        { key: 'status', value: 'Status' },
+        { key: 'eventName', value: 'Event Name' },
+        { key: 'category', value: 'Category' },
+        { key: 'venue', value: 'Venue' },
+        { key: 'eventOrganizer', value: 'Event Organizer' },
+        { key: 'eventDate', value: 'Event Date' },
       ],
       tableData: [
         {
-          name: 'Maged Moustafa',
-          status: 'Premium',
+          eventName: 'AlaFein',
+          category: 'Workshops',
+          venue: 'Bibliotheca Alexandria',
+          eventOrganizer: 'Maged Moustafa',
+          eventDate: '23-09-2023, 09:00PM',
         },
         {
-          name: 'Maged Moustafa',
-          status: 'Premium',
-        },
-        {
-          name: 'Maged Moustafa',
-          status: 'Premium',
+          eventName: 'AlaFein',
+          category: 'Workshops',
+          venue: 'Bibliotheca Alexandria',
+          eventOrganizer: 'Maged Moustafa',
+          eventDate: '23-09-2023, 09:00PM',
         },
       ],
     };
