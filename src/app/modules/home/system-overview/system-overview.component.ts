@@ -21,7 +21,7 @@ export class SystemOverviewComponent implements OnInit {
     ];
 
     this.dataTypes = {
-      cardName: 'Top Users',
+      cardName: 'System Overview',
       filterDate: '01 NOV - 07 NOV 2023',
       cardsData: [
         {
