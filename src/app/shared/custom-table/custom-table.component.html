@@ -1,0 +1,458 @@
+<p-table
+  #dt1
+  [globalFilterFields]="['id', 'date', 'status', 'progress']"
+  [value]="rows"
+  [columns]="cols"
+  [tableStyle]="{ 'min-width': '60rem' }"
+>
+  <ng-template pTemplate="caption" *ngIf="filter">
+    <div class="row d-flex justify-content-between">
+      <div class="col-4" *ngIf="isSearch">
+        <label class="mb-2" style="visibility: hidden">Search</label>
+        <span class="p-input-icon-left w-100">
+          <input
+            pInputText
+            [(ngModel)]="searchChoice"
+            class="w-100"
+            type="text"
+            (keyup.enter)="filterChange(searchChoice)"
+            [placeholder]="placeholderSearch"
+          />
+          <i class="pi pi-search"></i>
+        </span>
+      </div>
+      <div class="col-4" *ngIf="isTypeList">
+        <label class="mb-2">Type</label>
+        <p-dropdown
+          [options]="typeList"
+          [(ngModel)]="typeChoice"
+          optionLabel="name"
+          [placeholder]="placeholderType"
+          [showClear]="true"
+          optionValue="code"
+          (onChange)="filterChange(typeChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="approvalStatusList">
+        <label class="mb-2">Approval Status</label>
+        <p-dropdown
+          [options]="approval"
+          [(ngModel)]="approvalStatusChoice"
+          [placeholder]="placeholderApproval"
+          [showClear]="true"
+          optionValue="code"
+          optionLabel="name"
+          (onChange)="filterChange(approvalStatusChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="isClientFilterList">
+        <label class="mb-2">Clients</label>
+        <p-dropdown
+          [options]="clientList"
+          [(ngModel)]="clientListChoice"
+          [placeholder]="placeholderClient"
+          [showClear]="true"
+          optionValue="code"
+          optionLabel="name"
+          (onChange)="filterChange(clientListChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="isCompanyFilterList">
+        <label class="mb-2">Companies</label>
+        <p-dropdown
+          [options]="companyList"
+          [(ngModel)]="companyListChoice"
+          [placeholder]="placeholderClient"
+          [showClear]="true"
+          optionValue="code"
+          optionLabel="name"
+          (onChange)="filterChange(companyListChoice)"
+        ></p-dropdown>
+      </div>
+      <div class="col-4 dropdown-container"  *ngIf="isCompanyList">
+        <label class="mb-2">Company</label>
+        <p-dropdown
+
+          [filter]="true"
+          [options]="companiesList"
+          [(ngModel)]="companyChoice"
+          [placeholder]="placeholderCompany"
+          [showClear]="true"
+          optionValue="code"
+          optionLabel="name"
+          (onChange)="filterChange(companyChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="isStatusList">
+        <label class="mb-2">Status</label>
+        <p-dropdown
+          [options]="statusList"
+          [(ngModel)]="StatusChoice"
+          [placeholder]="placeholderStatus"
+          [showClear]="true"
+          optionValue="Id"
+          optionLabel="Name"
+          (onChange)="filterChange(StatusChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="isCountryList">
+        <label class="mb-2">Country</label>
+        <p-dropdown
+          [options]="countryList"
+          [(ngModel)]="countryChoice"
+          [placeholder]="placeholderCountry"
+          [showClear]="true"
+          optionValue="Id"
+          optionLabel="Name"
+          (onChange)="filterChange(countryChoice)"
+        ></p-dropdown>
+      </div>
+
+      <div class="col-4" *ngIf="isUserStatusList">
+        <label class="mb-2">Hospital</label>
+        <p-dropdown
+          [options]="userStatusList"
+          [(ngModel)]="hospitalChoice"
+          [placeholder]="placeholderUserStatus"
+          [showClear]="true"
+          optionValue="Id"
+          optionLabel="Name"
+          (onChange)="filterChange(hospitalChoice)"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div *ngIf="isSortClearBtn" class="flex d-flex justify-content-end mt-2">
+      <button
+        pButton
+        label="Clear"
+        class="p-button-outlined"
+        icon="pi pi-filter-slash"
+        (click)="clear(dt1)"
+      ></button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th
+        [pSortableColumn]="col.field"
+        style="width: 15%"
+        *ngFor="let col of cols"
+      >
+        {{ col.text }} <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th pSortableColumn="action" style="width: 20%" *ngIf="showAction"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-cols>
+    <tr>
+      <td [attr.colspan]="cols.length + 1">
+        <div class="row text-center">
+          <div class="col">
+            <img
+              src="../../../assets/no-data-found.svg"
+              alt="No Data Found"
+            />
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rows let-i="rowIndex">
+    <tr>
+      <td *ngIf="!isId">{{i+1}}</td>
+      <td *ngFor="let col of cols">
+        <ng-container [ngSwitch]="col.field">
+          <ng-template [ngSwitchCase]="'Id'">
+            {{rows.Id.substring(0,8)}}
+          </ng-template>
+          <ng-template [ngSwitchCase]="'Status'">
+            <ng-container [ngSwitch]="rows.Status">
+              <div style="min-width: 35px; display: inline-block">
+                <ng-template [ngSwitchCase]="'Pending'">
+                  <div class="content-box content-box-pending status-box">
+                    <p class="content-text-pending">Pending</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Approved'">
+                  <div class="content-box content-box-approved status-box">
+                    <p class="content-text-approved">Approved</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Rejected'">
+                  <div class="content-box content-box-rejected status-box">
+                    <p class="content-text-rejected">Rejected</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Outstanding'">
+                  <div class="content-box content-box-rejected status-box">
+                    <p class="content-text-rejected">Outstanding</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Current'">
+                  <div class="content-box content-box-approved status-box">
+                    <p class="content-text-approved">Current</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Expiring Soon'">
+                  <div class="content-box content-box-pending status-box">
+                    <p class="content-text-pending">Expiring Soon</p>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-template>
+
+          <ng-template [ngSwitchCase]="'ExpirationDate'">
+            <ng-container [ngSwitch]="rows.Status">
+              <ng-template [ngSwitchCase]="'Current'">
+                <p class="date-text-approved">
+                  {{ rows?.ExpirationDate | date : "dd MMMM yyyy" }}
+                </p>
+              </ng-template>
+              <ng-template [ngSwitchCase]="'Outstanding'">
+                <p class="date-text-rejected">
+                  {{ rows?.ExpirationDate | date : "dd MMMM yyyy" }}
+                </p>
+              </ng-template>
+              <ng-template [ngSwitchCase]="'Expiring Soon'">
+                <p class="date-text-pending">
+                  {{ rows?.ExpirationDate | date : "dd MMMM yyyy" }}
+                </p>
+              </ng-template>
+              <ng-template [ngSwitchCase]="'Expire Date'">
+                <p class="date-text-pending">
+                  {{ rows?.ExpirationDate | date : "dd MMMM yyyy" }}
+                </p>
+              </ng-template>
+            </ng-container>
+          </ng-template>
+
+          <ng-template ngSwitchDefault>
+            {{ getValue(rows, col.field) }}
+          </ng-template>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="!isDots">
+          <section class="d-flex justify-content-end" style="padding: 20px">
+            <ng-container *ngFor="let action of actions">
+              <ng-container *ngIf="action === 'canView'">
+                <div>
+                  <a
+                    class="paraContent d-flex align-items-center"
+                    style="cursor: pointer"
+                    (click)="routeDetails(rows)"
+                  >
+                    <img src="../../../../assets/svg/view.svg" alt="View" />
+                  </a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action === 'canEmail'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="sendEmail(rows)"
+                  >
+                    <img src="../../../../assets/svg/email.svg" alt="Email" />
+                  </a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action === 'canEdit'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="editRouteDetails(rows)"
+                  >
+                    <img
+                      src="../../../../assets/svg/edit.svg"
+                      alt="Edit"
+                      width="18"
+                      height="18"
+                    />
+                  </a>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="action === 'canDelete'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="onDelete(rows)"
+                  >
+                    <img src="../../../../assets/svg/delete.svg" alt="Delete" />
+                  </a>
+                </div>
+              </ng-container>
+            </ng-container>
+          </section>
+        </ng-container>
+        <ng-container *ngIf="isDots">
+          <p-overlayPanel #op>
+            <section>
+              <ng-container *ngFor="let action of actions">
+                <ng-container *ngIf="action === 'canView'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="routeDetails(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../../assets/svg/view.svg"
+                            alt="View"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10 d-flex">
+                          <span>View {{ type }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canEdit'">
+                  <div class="ms-3">
+                    <a
+                      class="paraContent d-flex align-items-end"
+                      (click)="editRouteDetails(rows)"
+                    >
+                      <img
+                        src="../../../../assets/svg/edit.svg"
+                        alt="Edit"
+                        width="15"
+                        height="15"
+                      />
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canSubmit'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="submitCredential(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../../assets/svg/plus-blue.svg"
+                            alt="Add"
+                            width="25"
+                            height="20"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Submit {{ type }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="action === 'canDelete'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="onDelete(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../../assets/svg/delete.svg"
+                            alt="Delete"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Remove {{ type }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canApprove'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="approve(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../../assets/svg/approve-icon-table.svg"
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Approve {{ type }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canDecline'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="disapprove(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../../assets/svg/decline-icon-table.svg"
+                            alt="Decline"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Decline {{ type }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </section>
+          </p-overlayPanel>
+          <a style="cursor: pointer" (click)="op.toggle($event)"
+            ><img src="../../../../assets/icons/dots.png" alt="Dots"
+          /></a>
+        </ng-container>
+
+        <ng-container *ngIf="isEye">
+          <a style="cursor: pointer" (click)="routeDetails(rows)"
+            ><img src="../../../../assets/svg/view.svg" alt="View"
+          /></a>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-paginator
+  (onPageChange)="onPageChange($event)"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first} - {last} of {totalRecords}"
+  [rows]="pageSize"
+  [first]="page"
+  [totalRecords]="totalRecords"
+  [rowsPerPageOptions]="[10, 20, 30]"
+></p-paginator>
