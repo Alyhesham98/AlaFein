@@ -29,11 +29,27 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onLogin() {
-    this.router.navigate(['/home']);
-    // this.authService.login(this.loginForm.value).subscribe(
-    //   (result) => {},
-    //   (err) => {}
-    // );
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe(
+        (result) => {
+          if (result?.Succeeded) {           
+              this.router.navigate(['/home']); 
+          }
+        },
+        (err) => {
+          if (err.error.Message === 'Account blocked from admin.') {
+            this.visible = true;
+          } else {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.error.Message,
+            });
+          }
+        }
+      );
+    }
   }
 
   onForgetPassword() {

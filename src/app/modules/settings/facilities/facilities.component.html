@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1>USERS</h1>
+            <h1>FACILITIES</h1>
         </div>
     </div>
     <div class="row">
@@ -15,6 +15,7 @@
             [pageSize]="pageSize"
             [totalRecords]="totalRecords"
             [cols]="colsData"
+            (pageNumber)="getFacilities($event)"
             [rows]="rowsData"
             [isDots]="true"
           ></app-custom-table>

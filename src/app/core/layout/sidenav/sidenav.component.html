@@ -1,50 +1,149 @@
 <section class="sidenavSection">
   <div class="d-flex flex-column bg-light" style="width: 100%">
     <div class="logoContainer">
-      <img src="assets/icons/logo-white.svg" width="123" height="42" alt="Logo White">
+      <img
+        src="assets/icons/logo-white.svg"
+        width="123"
+        height="42"
+        alt="Logo White"
+      />
     </div>
     <ul class="nav flex-column align-items-center">
       <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/home'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/home.svg" alt="Home">
+        <a
+          [routerLink]="'/home'"
+          routerLinkActive="active"
+          class="nav-link my-2 w-100"
+        >
+          <img src="assets/icons/home.svg" alt="Home" />
           <span>HOME</span>
         </a>
       </li>
       <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/users'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/users.svg" alt="Users">
+        <a
+          [routerLink]="'/users'"
+          routerLinkActive="active"
+          class="nav-link my-2 w-100"
+        >
+          <img src="assets/icons/users.svg" alt="Users" />
           <span>USERS</span>
         </a>
       </li>
       <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/event-organizers'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/organizers.svg" alt="Event Organizers">
+        <a
+          [routerLink]="'/event-organizers'"
+          routerLinkActive="active"
+          class="nav-link my-2 w-100"
+        >
+          <img src="assets/icons/organizers.svg" alt="Event Organizers" />
           <span>EVENT ORGANIZERS</span>
         </a>
       </li>
       <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/venues'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/venues.svg" alt="Venues">
+        <a
+          [routerLink]="'/venues'"
+          routerLinkActive="active"
+          class="nav-link my-2 w-100"
+        >
+          <img src="assets/icons/venues.svg" alt="Venues" />
           <span>VENUES</span>
         </a>
       </li>
-      <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/events'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/events.svg" alt="Events">
-          <span>EVENTS</span>
-        </a>
+      <li class="nav-item text-center justify-content-center w-100">
+        <a
+          class="dropdown-toggle nav-link w-100"
+          data-bs-toggle="collapse"
+          href="#multiCollapseExample1"
+          role="button"
+          aria-expanded="false"
+          aria-controls="multiCollapseExample1"
+        >
+          <img src="assets/icons/events.svg" alt="Events" />
+          <span>EVENTS</span></a
+        >
+        <ul
+          class="collapse multi-collapse list-unstyled nav-link w-100"
+          id="multiCollapseExample1"
+          style="padding-top: 0"
+        >
+          <li>
+            <a
+              [routerLink]="'/events/all-events'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >ALL EVENTS</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/events/event-spotlight'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >EVENTS SPOTLIGHT</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/events/pending-events'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >PENDING EVENTS</a
+            >
+          </li>
+        </ul>
       </li>
       <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/pending-comments'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/comments.svg" alt="Pending Comments">
+        <a
+          [routerLink]="'/pending-comments'"
+          routerLinkActive="active"
+          class="nav-link my-2 w-100"
+        >
+          <img src="assets/icons/comments.svg" alt="Pending Comments" />
           <span>PENDING COMMENTS</span>
         </a>
       </li>
-      <li class="nav-item text-center d-flex justify-content-center w-100">
-        <a [routerLink]="'/settings'" routerLinkActive="active" class="nav-link my-2 w-100">
-          <img src="assets/icons/settings.svg" alt="Settings">
-          <span>SETTINGS</span>
-        </a>
+      <li class="nav-item text-center justify-content-center w-100">
+        <a
+          class="dropdown-toggle nav-link w-100"
+          data-bs-toggle="collapse"
+          href="#multiCollapseExample2"
+          role="button"
+          aria-expanded="false"
+          aria-controls="multiCollapseExample2"
+        >
+          <img src="assets/icons/settings.svg" alt="Settings" />
+          <span>SETTINGS</span></a
+        >
+        <ul
+          class="collapse multi-collapse list-unstyled nav-link w-100"
+          id="multiCollapseExample2"
+          style="padding-top: 0"
+        >
+          <li>
+            <a
+              [routerLink]="'/settings/categories'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >CATEGORIES</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/settings/admins'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >ADMINS</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="'/settings/facilities'"
+              routerLinkActive="active"
+              class="nav-link my-2 w-100"
+              >FACILITIES</a
+            >
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

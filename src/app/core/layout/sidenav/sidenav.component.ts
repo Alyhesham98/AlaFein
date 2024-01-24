@@ -7,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidenavComponent implements OnInit {
   userData: any;
+  isSidebarActive = false;
 
   ngOnInit(): void {
     this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
+  }
+
+  toggleSidebar() {
+    this.isSidebarActive = !this.isSidebarActive;
+    
   }
 }

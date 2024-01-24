@@ -84,3 +84,54 @@ h1{
   line-height: 40.421px;
   text-transform: uppercase;
 }
+
+// table-status-boxes
+
+.status-box {
+  width: 98px;
+  height: 100%;
+  text-align: center;
+  border-radius: 5px;
+  padding: 2px 5px 0 5px;
+}
+
+.content-box {
+  text-align: center;
+  &-rejected {
+    background: #de13131f;
+  }
+  &-pending {
+    background: #f8931d1f;
+  }
+  &-approved {
+    background: #05a8551f;
+  }
+}
+
+.content-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: center;
+  &-normal {
+    color: #e47911;
+  }
+  &-premium {
+    color: #05a855;
+  }
+}
+
+.date-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0em;
+  &-premium {
+    color: #05a855;
+  }
+  &-normal {
+    color: #e47911;
+  }
+
+}

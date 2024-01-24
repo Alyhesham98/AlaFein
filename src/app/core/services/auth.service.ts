@@ -10,14 +10,14 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private url = 'http://backend.rep-trust.com/api/v1/';
+  private url = 'http://mshokry-001-site7.anytempurl.com/api/v1/';
   private userData!: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(data: any): Observable<any> {
     return this.http
-      .post<any>(this.url + 'Auth/Login', data, httpOptions)
+      .post<any>(this.url + 'AdminAccount/Login', data, httpOptions)
       .pipe(tap((result: any) => this.save_token(result)));
   }
 
@@ -26,13 +26,6 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  verifyEmail(data: any): Observable<any> {
-    return this.http.post<any>(
-      this.url + 'Auth/VerifyEmail',
-      data,
-      httpOptions
-    );
-  }
 
   public isLoggedIn(): boolean {
     let token = localStorage.getItem('userData');
@@ -40,7 +33,7 @@ export class AuthService {
   }
 
   public save_token(data: any) {
-    this.userData = data.Data;
+    this.userData = JSON.stringify(data.Data);    
     if (data.Succeeded) {
       window.localStorage.setItem('userData', this.userData);
     }
