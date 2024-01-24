@@ -1,24 +1,28 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h1>FACILITIES</h1>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>FACILITIES</h1>
     </div>
-    <div class="row">
-        <div class="col">
-            <hr>
-        </div>
+    <div class="col-md-6 d-md-flex justify-content-end">
+      <button class="customBtn">Add New Facility</button>
     </div>
-    <div class="row">
-        <div class="col">
-            <app-custom-table
-            [pageSize]="pageSize"
-            [totalRecords]="totalRecords"
-            [cols]="colsData"
-            (pageNumber)="getFacilities($event)"
-            [rows]="rowsData"
-            [isDots]="true"
-          ></app-custom-table>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr />
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <app-custom-table
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        (pageNumber)="getFacilities($event)"
+        [rows]="rowsData"
+        [isDots]="true"
+      ></app-custom-table>
+    </div>
+  </div>
 </div>

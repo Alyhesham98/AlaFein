@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <p-fileUpload
+        mode="basic"
+        name="demo[]"
+        url="http://mshokry-001-site7.anytempurl.com/api/v1/Category/UploadCategoryImage"
+        accept="image/*"
+        (onUpload)="onUpload($event)"
+        class="custom-upload-container"
+
+      >
+        <ng-container *ngTemplateOutlet="customUploadTemplate"></ng-container>
+      </p-fileUpload>
+      <ng-template #customUploadTemplate>
+        <div class="custom-upload-button">
+          <img src="/assets/custom-upload-icon.png" alt="Custom Upload" />
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

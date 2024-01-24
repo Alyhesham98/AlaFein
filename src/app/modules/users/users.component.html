@@ -17,6 +17,7 @@
             [cols]="colsData"
             [rows]="rowsData"
             [isDots]="true"
+            (pageNumber)="getUsers($event)"
           ></app-custom-table>
         </div>
     </div>

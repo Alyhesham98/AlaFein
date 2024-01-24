@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit{
       .getAllUsers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
         this.rowsData = data.Data;
-        this.totalRecords = data.pgTotal;
+        this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
