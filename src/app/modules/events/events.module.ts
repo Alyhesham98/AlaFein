@@ -9,7 +9,12 @@ import { PendingEventsComponent } from './pending-events/pending-events.componen
 import { EventSpotlightComponent } from './event-spotlight/event-spotlight.component';
 
 @NgModule({
-  declarations: [EventsComponent, AllEventsComponent, PendingEventsComponent, EventSpotlightComponent],
-  imports: [CommonModule, EventsRoutingModule,SharedModule],
+  declarations: [
+    EventsComponent,
+    AllEventsComponent,
+    PendingEventsComponent,
+    EventSpotlightComponent,
+  ],
+  imports: [CommonModule, EventsRoutingModule, SharedModule],
 })
 export class EventsModule {}

@@ -12,9 +12,21 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
 
-
 @NgModule({
-  declarations: [SettingsComponent, AdminsComponent, FacilitiesComponent, CategoriesComponent, CategoriesFormComponent],
-  imports: [CommonModule, SettingsRoutingModule,SharedModule,ToastModule,DynamicDialogModule,FileUploadModule],
+  declarations: [
+    SettingsComponent,
+    AdminsComponent,
+    FacilitiesComponent,
+    CategoriesComponent,
+    CategoriesFormComponent,
+  ],
+  imports: [
+    CommonModule,
+    SettingsRoutingModule,
+    SharedModule,
+    ToastModule,
+    DynamicDialogModule,
+    FileUploadModule,
+  ],
 })
 export class SettingsModule {}
