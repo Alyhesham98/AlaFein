@@ -10,7 +10,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class CategoriesService {
-  private url = 'http://mshokry-001-site7.anytempurl.com/api/v1/';
+  private url = 'https://alafein.azurewebsites.net/api/v1/';
   private userData!: any;
 
   constructor(private http: HttpClient, private router: Router) {}
