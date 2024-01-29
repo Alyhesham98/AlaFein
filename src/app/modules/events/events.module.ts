@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AllEventsComponent } from './all-events/all-events.component';
 import { PendingEventsComponent } from './pending-events/pending-events.component';
 import { EventSpotlightComponent } from './event-spotlight/event-spotlight.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { EventSpotlightComponent } from './event-spotlight/event-spotlight.compo
     AllEventsComponent,
     PendingEventsComponent,
     EventSpotlightComponent,
+    EventDetailsComponent,
   ],
   imports: [CommonModule, EventsRoutingModule, SharedModule],
 })
