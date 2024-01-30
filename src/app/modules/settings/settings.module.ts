@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ToastModule,
     DynamicDialogModule,
     FileUploadModule,
+    ReactiveFormsModule
   ],
 })
 export class SettingsModule {}

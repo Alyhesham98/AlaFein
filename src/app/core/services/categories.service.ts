@@ -19,4 +19,14 @@ export class CategoriesService {
       `${this.url}Category/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+
+  createCategory(body:any){
+    return this.http.post(`${this.url}Category/Add`,body)
+  }
+
+  uploadCategoryImage(body:any){
+    return this.http.post(`${this.url}Category/UploadCategoryImage`,body)
+  }
+
+  
 }

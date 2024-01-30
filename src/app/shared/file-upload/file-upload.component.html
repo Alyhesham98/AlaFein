@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-lg-8">
+        <label class="form-label">{{labelText}}<span class="warning" *ngIf="required"> *</span></label>
+        <div *ngIf="!multiple">
+            <div class="input-container">
+                <div class="input" *ngIf="file||fileUrl"><a
+                        [href]="fileUrl.path?'http://backend.rep-trust.com'+fileUrl.path:fileUrl"
+                        target="_blank">{{fileUrl.name?fileUrl.name:file}}</a></div>
+
+                <div style="margin-left: 10px;" *ngIf="file||fileUrl && !isLoading">
+                    <span class="close" (click)="removeFile(null)" style="cursor: pointer;">+</span>
+                </div>
+            </div>
+            <div class="input" *ngIf="!file&&!fileUrl"><span style="color: #6c757d;">{{labelText}}</span></div>
+
+        </div>
+
+        <div *ngIf="multiple">
+            <div class="input-container" *ngFor="let file of files; let i =index">
+                <div class="input"><a
+                        [href]="'http://backend.rep-trust.com'+file.Path?'http://backend.rep-trust.com'+file.Path:'http://backend.rep-trust.com'+file.path"
+                        target="_blank">{{file.Name?file.Name:file.name}}</a>
+                </div>
+
+                <div style="margin-left: 10px;" *ngIf="files.length>0 && !isLoading">
+                    <span class="close" (click)="removeFile(null,file)" style="cursor: pointer;">+</span>
+                </div>
+            </div>
+            <div class="input" style="margin-top: 10px;" *ngIf="file.length===0"><span
+                    style="color: #6c757d;">{{labelText}}</span></div>
+        </div>
+    </div>
+    <div class="col-lg-4 d-flex align-items-center" [style.margin-top]="multiple? '40px!important':'30px!important'">
+        <div class="spin" *ngIf="isLoading"></div>
+
+        <p-fileUpload mode="basic" [auto]="true" [ngClass]="isLoading?'hide-button':''"
+            [disabled]="file ||fileUrl || isLoading" [showCancelButton]="true" chooseLabel="Upload" [multiple]="false"
+            name="file" (onProgress)="onUploadProgress()" [url]="uploadURL" [accept]="acceptFiles"
+            (onUpload)="uploadFile($event)"></p-fileUpload>
+    </div>
+
+</div>

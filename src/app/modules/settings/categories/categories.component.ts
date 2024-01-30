@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CategoriesService } from 'src/app/core/services/categories.service';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService, MessageService],
 })
 export class CategoriesComponent {
   colsData: any[] = [
@@ -30,7 +31,11 @@ export class CategoriesComponent {
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
 
-  constructor(private categoryService: CategoriesService,public dialogService: DialogService) {}
+  constructor(
+    private categoryService: CategoriesService,
+    public dialogService: DialogService,
+    public messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.getCategories({

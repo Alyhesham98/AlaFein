@@ -1,22 +1,47 @@
+<p-toast key="toast1"></p-toast>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col">
-      <p-fileUpload
-        mode="basic"
-        name="demo[]"
-        url="http://mshokry-001-site7.anytempurl.com/api/v1/Category/UploadCategoryImage"
-        accept="image/*"
-        (onUpload)="onUpload($event)"
-        class="custom-upload-container"
-
-      >
-        <ng-container *ngTemplateOutlet="customUploadTemplate"></ng-container>
-      </p-fileUpload>
-      <ng-template #customUploadTemplate>
-        <div class="custom-upload-button">
-          <img src="/assets/custom-upload-icon.png" alt="Custom Upload" />
-        </div>
-      </ng-template>
+      <p class="title">GENERAL INFORMATION</p>
     </div>
   </div>
+  <form [formGroup]="categoryForm">
+    <div class="row">
+      <div class="col">
+        <input
+          #fileInput
+          type="file"
+          id="formFile"
+          accept="image/*"
+          style="display: none"
+          (change)="onFileSelected()"
+        />
+        <img
+          [src]="this.uploadedImage? 'https://alafein.azurewebsites.net/'+this.uploadedImage:'../../../../../assets/profile.svg'"
+          style="cursor: pointer"
+          (click)="fileInput.click()"
+          [ngClass]="this.uploadedImage? 'image-uploaded':''"
+        />
+        <span class="category-text">Upload the category picture</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'Category EN'"
+          formControlName="name"
+        ></app-input-field>
+      </div>
+      <!-- <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'Category EN'"
+          formControlName="name"
+        ></app-input-field>
+      </div> -->
+      <div class="col-md-4 d-md-flex mt-4 justify-content-end">
+        <button class="customBtn" (click)="createCategory()">CREATE</button>
+      </div>
+    </div>
+  </form>
 </div>
