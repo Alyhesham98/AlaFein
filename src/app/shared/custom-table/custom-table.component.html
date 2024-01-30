@@ -72,10 +72,9 @@
           (onChange)="filterChange(companyListChoice)"
         ></p-dropdown>
       </div>
-      <div class="col-4 dropdown-container"  *ngIf="isCompanyList">
+      <div class="col-4 dropdown-container" *ngIf="isCompanyList">
         <label class="mb-2">Company</label>
         <p-dropdown
-
           [filter]="true"
           [options]="companiesList"
           [(ngModel)]="companyChoice"
@@ -153,10 +152,7 @@
       <td [attr.colspan]="cols.length + 1">
         <div class="row text-center">
           <div class="col">
-            <img
-              src="../../../assets/no-data-found.svg"
-              alt="No Data Found"
-            />
+            <img src="../../../assets/no-data-found.svg" alt="No Data Found" />
           </div>
         </div>
       </td>
@@ -166,7 +162,6 @@
     <tr>
       <td *ngFor="let col of cols">
         <ng-container [ngSwitch]="col.field">
-
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">
@@ -184,15 +179,25 @@
             </ng-container>
           </ng-template>
           <ng-template [ngSwitchCase]="'Image'">
-              <div style="min-width: 35px; display: inline-block">
-                <img [src]="'https://alafein.azurewebsites.net/'+rows.Image" width="100" height="100" alt="category">
-              </div>
+            <div style="min-width: 35px; display: inline-block">
+              <img
+                [src]="'https://alafein.azurewebsites.net/' + rows.Image"
+                width="100"
+                height="100"
+                alt="category"
+              />
+            </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'ImagePath'">
             <div style="min-width: 35px; display: inline-block">
-              <img [src]="'https://alafein.azurewebsites.net/'+rows.ImagePath" width="70" height="70" alt="category">
+              <img
+                [src]="'https://alafein.azurewebsites.net/' + rows.ImagePath"
+                width="70"
+                height="70"
+                alt="category"
+              />
             </div>
-        </ng-template>
+          </ng-template>
 
           <ng-template ngSwitchDefault>
             {{ getValue(rows, col.field) }}
@@ -270,7 +275,7 @@
                       <div class="row">
                         <div class="col-2">
                           <img
-                            src="../../../../assets/svg/view.svg"
+                            src="../../../assets/svg/view.svg"
                             alt="View"
                             width="15"
                             height="15"
@@ -284,38 +289,22 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="action === 'canEdit'">
-                  <div class="ms-3">
+                  <div class="mb-2">
                     <a
                       class="paraContent d-flex align-items-end"
                       (click)="editRouteDetails(rows)"
                     >
-                      <img
-                        src="../../../../assets/icon/edit.svg"
-                        alt="Edit"
-                        width="15"
-                        height="15"
-                      />
-                    </a>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="action === 'canSubmit'">
-                  <div class="mb-2">
-                    <a
-                      class="paraContent"
-                      style="cursor: pointer"
-                      (click)="submitCredential(rows)"
-                    >
                       <div class="row">
                         <div class="col-2">
                           <img
-                            src="../../../../assets/icon/plus-blue.svg"
-                            alt="Add"
-                            width="25"
-                            height="20"
+                            src="../../../assets/svg/edit.svg"
+                            alt="Edit"
+                            width="15"
+                            height="15"
                           />
                         </div>
                         <div class="col-10">
-                          <span>Submit {{ type }}</span>
+                          <span>Update {{ pageType }}</span>
                         </div>
                       </div>
                     </a>
@@ -332,14 +321,38 @@
                       <div class="row">
                         <div class="col-2">
                           <img
-                            src="../../../../assets/icon/delete.svg"
+                            src="../../../assets/svg/delete.svg"
                             alt="Delete"
                             width="15"
                             height="15"
                           />
                         </div>
                         <div class="col-10">
-                          <span>Remove {{ type }}</span>
+                          <span>Remove {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                
+                <ng-container *ngIf="action === 'canSpotlight'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="spotlight(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/approve-icon-table.svg"
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Spotlight {{ pageType }}</span>
                         </div>
                       </div>
                     </a>
@@ -355,14 +368,14 @@
                       <div class="row">
                         <div class="col-2">
                           <img
-                            src="../../../../assets/svg/approve-icon-table.svg"
+                            src="../../../assets/svg/approve-icon-table.svg"
                             alt="Approve"
                             width="15"
                             height="15"
                           />
                         </div>
                         <div class="col-10">
-                          <span>Approve {{ type }}</span>
+                          <span>Publish {{ pageType }}</span>
                         </div>
                       </div>
                     </a>
@@ -378,14 +391,14 @@
                       <div class="row">
                         <div class="col-2">
                           <img
-                            src="../../../../assets/svg/decline-icon-table.svg"
+                            src="../../../assets/svg/decline-icon-table.svg"
                             alt="Decline"
                             width="15"
                             height="15"
                           />
                         </div>
                         <div class="col-10">
-                          <span>Decline {{ type }}</span>
+                          <span>Archive {{ pageType }}</span>
                         </div>
                       </div>
                     </a>

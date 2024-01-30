@@ -19,4 +19,17 @@ export class FacilitiesService {
       `${this.url}Facility/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+
+  createFacility(body: any) {
+    return this.http.post(`${this.url}Facility/Add`, body);
+  }
+
+  uploadFacilityImage(body: any) {
+    return this.http.post(`${this.url}Facility/UploadFacilityImage`, body);
+  }
+
+  deleteFacility(id: any) {
+    return this.http.delete(`${this.url}Facility/Delete/${id}`);
+  }
+
 }

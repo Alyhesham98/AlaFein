@@ -30,6 +30,7 @@ export class CategoriesComponent {
   pageSize: number = 10;
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
+  actions: any[] = ['canEdit', 'canDelete', 'canApprove', 'canDecline'];
 
   constructor(
     private categoryService: CategoriesService,
@@ -59,7 +60,7 @@ export class CategoriesComponent {
       });
   }
 
-  show(data?: Credential) {
+  show(data?: any) {
     this.ref = this.dialogService.open(CategoriesFormComponent, {
       header: data ? 'Edit Category' : 'Add New Category',
       width: '40%',
@@ -72,5 +73,49 @@ export class CategoriesComponent {
     this.ref.onClose.subscribe((res) =>
       res ? this.getCategories({ pageNumber: 1, pageSize: 10 }) : ''
     );
+  }
+
+  onDeleteCategory(data: any) {
+    console.log(data);
+    this.categoryService.deleteCategory(data.Id).subscribe((res: any) => {
+      if (res.Succeeded) {
+        this.getCategories({ pageNumber: 1, pageSize: 10 });
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Category Deleted Successfully!',
+        });
+      } else {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error Deleting Category.',
+        });
+      }
+    });
+  }
+
+  changeCategoryStatus(data: any) {
+    
+    this.categoryService.approveCategory({id:data.Id}).subscribe((res: any) => {
+      if (res.Succeeded) {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: data.IsPublished?'Category Published Successfully!':'Category Archived Successfully!',
+        });
+        this.getCategories({ pageNumber: 1, pageSize: 10 });
+      } else {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'error',
+          summary: 'Error',
+          detail: data.IsPublished?'Error Publishing Category.':'Error Archiving Category.',
+        });
+      }
+    });
   }
 }

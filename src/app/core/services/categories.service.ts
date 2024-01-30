@@ -20,13 +20,19 @@ export class CategoriesService {
     );
   }
 
-  createCategory(body:any){
-    return this.http.post(`${this.url}Category/Add`,body)
+  createCategory(body: any) {
+    return this.http.post(`${this.url}Category/Add`, body);
   }
 
-  uploadCategoryImage(body:any){
-    return this.http.post(`${this.url}Category/UploadCategoryImage`,body)
+  uploadCategoryImage(body: any) {
+    return this.http.post(`${this.url}Category/UploadCategoryImage`, body);
   }
 
-  
+  deleteCategory(id: any) {
+    return this.http.delete(`${this.url}Category/Delete/${id}`);
+  }
+
+  approveCategory(data: any) {
+    return this.http.patch(`${this.url}Category/TogglePublish`, data);
+  }
 }

@@ -60,6 +60,8 @@ export class CustomTableComponent {
   @Output() filterOutput: EventEmitter<any> = new EventEmitter();
   @Output() approveDetails: EventEmitter<any> = new EventEmitter();
   @Output() disapproveDetails: EventEmitter<any> = new EventEmitter();
+  @Output() spotlightDetails: EventEmitter<any> = new EventEmitter();
+
   @Output() emailDetails: EventEmitter<any> = new EventEmitter();
 
   userStatusChoice: any;
@@ -83,6 +85,7 @@ export class CustomTableComponent {
     },
   ];
   type: any;
+  @Input() pageType:any;
   constructor(
     private router: Router
   ) {
@@ -250,6 +253,10 @@ export class CustomTableComponent {
   }
   disapprove(details: any) {
     this.disapproveDetails.emit(details);
+  }
+
+  spotlight(details: any) {
+    this.spotlightDetails.emit(details);
   }
   editRouteDetails(details: any) {
     this.userDetails.emit(details);

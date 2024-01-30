@@ -12,6 +12,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FacilitiesFormComponent } from './facilities/facilities-form/facilities-form.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FacilitiesComponent,
     CategoriesComponent,
     CategoriesFormComponent,
+    FacilitiesFormComponent,
   ],
   imports: [
     CommonModule,

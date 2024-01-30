@@ -8,6 +8,8 @@ import { AllEventsComponent } from './all-events/all-events.component';
 import { PendingEventsComponent } from './pending-events/pending-events.component';
 import { EventSpotlightComponent } from './event-spotlight/event-spotlight.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { EventFormComponent } from './all-events/event-form/event-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,13 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     PendingEventsComponent,
     EventSpotlightComponent,
     EventDetailsComponent,
+    EventFormComponent,
   ],
-  imports: [CommonModule, EventsRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    EventsRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
+  ],
 })
 export class EventsModule {}

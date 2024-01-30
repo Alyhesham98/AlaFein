@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { EventsService } from 'src/app/core/services/events.service';
+import { EventFormComponent } from './event-form/event-form.component';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-all-events',
   templateUrl: './all-events.component.html',
   styleUrls: ['./all-events.component.scss'],
+  providers: [DialogService, MessageService],
 })
 export class AllEventsComponent {
   colsData: any[] = [
     {
-      field:'Id',
-      text: 'ID'
+      field: 'Id',
+      text: 'ID',
     },
     {
       field: 'Name',
@@ -37,7 +41,13 @@ export class AllEventsComponent {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalRecords!: number;
-  constructor(private evetnsService: EventsService) {}
+  ref: DynamicDialogRef | undefined;
+  actions: any[] = ['canEdit', 'canSpotlight'];
+  constructor(
+    private evetnsService: EventsService,
+    public dialogService: DialogService,
+    public messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.getAllEvents({
@@ -55,5 +65,44 @@ export class AllEventsComponent {
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
+  }
+
+  changeSpotlightStatus(data: any) {
+    this.evetnsService
+      .toggleSpotlight({ id: data.Id })
+      .subscribe((res: any) => {
+        if (res.Succeeded) {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Event Spotlighted Successfully!',
+          });
+          this.getAllEvents({ pageNumber: 1, pageSize: 10 });
+        } else {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error Spotlight Event.',
+          });
+        }
+      });
+  }
+  
+
+  show(data?: any) {
+    this.ref = this.dialogService.open(EventFormComponent, {
+      header: data ? 'Edit Event' : 'Add New Event',
+      width: '40%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      data: data,
+    });
+
+    this.ref.onClose.subscribe((res) =>
+      res ? this.getAllEvents({ pageNumber: 1, pageSize: 10 }) : ''
+    );
   }
 }

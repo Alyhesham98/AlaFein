@@ -32,9 +32,24 @@ export class EventsService {
     );
   }
 
-  getEventsDetails(id:string) {
-    return this.http.get(
-      `${this.url}AdminEvent/Details/${id}`
-    );
+  getEventsDetails(id: string) {
+    return this.http.get(`${this.url}AdminEvent/Details/${id}`);
   }
+
+  getEventsDropdown() {
+    return this.http.get(`${this.url}AdminSubmission/Dropdown`);
+  }
+
+  createEvent(body: any) {
+    return this.http.post(`${this.url}AdminSubmission/Add`, body);
+  }
+
+  uploadEventImage(body: any) {
+    return this.http.post(`${this.url}AdminSubmission/UploadPosterImage`, body);
+  }
+
+  toggleSpotlight(data: any) {
+    return this.http.patch(`${this.url}AdminEvent/ToggleSpotlight`, data);
+  }
+
 }

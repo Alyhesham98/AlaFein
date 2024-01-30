@@ -1,0 +1,40 @@
+<p-toast key="toast1"></p-toast>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <p class="title">GENERAL INFORMATION</p>
+    </div>
+  </div>
+  <form [formGroup]="facilityForm">
+    <div class="row">
+      <div class="col">
+        <input
+          #fileInput
+          type="file"
+          id="formFile"
+          accept="image/*"
+          style="display: none"
+          (change)="onFileSelected()"
+        />
+        <img
+          [src]="
+            this.uploadedImage
+              ? 'https://alafein.azurewebsites.net/' + this.uploadedImage
+              : '../../../../../assets/profile.svg'
+          "
+          style="cursor: pointer"
+          (click)="fileInput.click()"
+          alt="facility"
+          [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
+        />
+        <span class="category-text">Upload the facility picture</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 d-md-flex mt-4">
+        <button class="customBtn" (click)="createFaciliy()">CREATE</button>
+      </div>
+    </div>
+  </form>
+</div>
