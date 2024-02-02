@@ -89,14 +89,13 @@ export class AllEventsComponent {
         }
       });
   }
-  
 
   show(data?: any) {
     this.ref = this.dialogService.open(EventFormComponent, {
-      header: data ? 'Edit Event' : 'Add New Event',
-      width: '40%',
+      header: 'EVENT FORM SUBMISSION',
+      width: '80%',
+      height: 'auto',
       contentStyle: { overflow: 'auto' },
-      baseZIndex: 10000,
       maximizable: false,
       data: data,
     });

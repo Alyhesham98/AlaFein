@@ -1,1 +1,84 @@
-<p>event-form works!</p>
+<div class="event-dialog">
+  <div class="body">
+    <form class="event-form" [formGroup]="eventForm">
+      <div class="event-general mt-3">
+        <h2>GENERAL INFORMATION</h2>
+        <div class="row">
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <div class="row gap-4">
+              <div class="col-12">
+                <input type="text" pInputText formControlName="nameEn" placeholder="Event Name En" />
+              </div>
+              <div class="col-12">
+                <textarea rows="5" cols="30" pInputTextarea formControlName="eventDescription"
+                  placeholder="Event Description"></textarea>
+                <small class="noteText">Max. 150 words</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <div class="row gap-4">
+              <div class="col-12">
+                <input type="text" pInputText formControlName="nameAr" placeholder="Event Name Ar" />
+              </div>
+              <div class="col-12">
+                <input type="text" pInputText formControlName="artistNameEn" placeholder="Main Artist Name En" />
+              </div>
+              <div class="col-12">
+                <p-calendar formControlName="eventDate" selectionMode="range" [iconDisplay]="'input'" [showIcon]="true"
+                  [readonlyInput]="true" placeholder="Event Date 'From - To'"></p-calendar>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <div class="row gap-4">
+              <div class="col-12">
+                <p-dropdown formControlName="eventType" [options]="eventTypes" optionLabel="name"
+                  placeholder="Event Type"></p-dropdown>
+              </div>
+              <div class="col-12">
+                <input type="text" pInputText formControlName="artistNameAr" placeholder="Main Artist Name Ar" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="event-information mt-4 mb-5">
+        <h2>INFORMATION</h2>
+        <div class="row">
+          <div class="col-xl-4">
+            <p-dropdown formControlName="venue" [options]="eventTypes" optionLabel="name"
+              placeholder="Select a Venue"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="event-additional">
+        <h2>ADDITIONAL INFORMATION</h2>
+        <div class="row">
+          <div class="col-xl-4 mb-4">
+            <p-dropdown formControlName="attendanceOption" [options]="eventTypes" optionLabel="name"
+              placeholder="Attendance Options"></p-dropdown>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input type="text" pInputText formControlName="eventPoster" placeholder="Upload The Event Poster" />
+            <small class="noteText mt-1">Preferred 96x96 .PNG</small>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input type="text" pInputText formControlName="eventContact" placeholder="Event Contact" />
+            <small class="noteText mt-1">Optional</small>
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input type="text" pInputText formControlName="additionalComments" placeholder="Additional Comments" />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <a class="btn resetBtn">RESET</a>
+    <button class="btn createBtn">
+      <span>CREATE</span>
+      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+    </button>
+  </div>
+</div>

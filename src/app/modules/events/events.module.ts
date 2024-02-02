@@ -10,6 +10,11 @@ import { EventSpotlightComponent } from './event-spotlight/event-spotlight.compo
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { EventFormComponent } from './all-events/event-form/event-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     EventsRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    DialogModule,
+    DropdownModule,
+    CalendarModule,
+    InputTextareaModule,
+    InputTextModule
   ],
 })
 export class EventsModule {}

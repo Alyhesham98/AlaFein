@@ -75,7 +75,7 @@
 }
 
 // All Title style in modules
-h1{
+h1 {
   color: #000;
   font-family: Anton;
   font-size: 40.421px;
@@ -133,5 +133,14 @@ h1{
   &-normal {
     color: #e47911;
   }
+}
 
+// General Primeng Dialog Styles
+
+// Header Styles
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-family: "Anton";
+  font-size: 30px;
+  font-weight: 400;
+  color: black;
 }
