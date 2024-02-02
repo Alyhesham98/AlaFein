@@ -4,42 +4,35 @@
       <div class="event-general mt-3">
         <h2>GENERAL INFORMATION</h2>
         <div class="row">
-          <div class="col-xl-4 mb-xl-0 mb-3">
-            <div class="row gap-4">
-              <div class="col-12">
-                <input type="text" pInputText formControlName="nameEn" placeholder="Event Name En" />
-              </div>
-              <div class="col-12">
-                <textarea rows="5" cols="30" pInputTextarea formControlName="eventDescription"
-                  placeholder="Event Description"></textarea>
-                <small class="noteText">Max. 150 words</small>
-              </div>
-            </div>
+          <div class="col-xl-4 mb-3">
+            <input type="text" pInputText formControlName="nameEn" placeholder="Event Name En" />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <div class="row gap-4">
-              <div class="col-12">
-                <input type="text" pInputText formControlName="nameAr" placeholder="Event Name Ar" />
-              </div>
-              <div class="col-12">
+            <input type="text" pInputText formControlName="nameAr" placeholder="Event Name Ar" />
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <p-dropdown formControlName="eventType" [options]="eventTypes" optionLabel="name"
+              placeholder="Event Type"></p-dropdown>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <textarea rows="5" cols="30" pInputTextarea formControlName="eventDescription"
+              placeholder="Event Description"></textarea>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <div class="row">
+              <div class="col-12 order-2 order-xl-1 mb-xl-3 mb-0">
                 <input type="text" pInputText formControlName="artistNameEn" placeholder="Main Artist Name En" />
               </div>
-              <div class="col-12">
+              <div class="col-12 order-1 order-xl-2 mb-xl-0 mb-3">
                 <p-calendar formControlName="eventDate" selectionMode="range" [iconDisplay]="'input'" [showIcon]="true"
                   [readonlyInput]="true" placeholder="Event Date 'From - To'"></p-calendar>
               </div>
             </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <div class="row gap-4">
-              <div class="col-12">
-                <p-dropdown formControlName="eventType" [options]="eventTypes" optionLabel="name"
-                  placeholder="Event Type"></p-dropdown>
-              </div>
-              <div class="col-12">
-                <input type="text" pInputText formControlName="artistNameAr" placeholder="Main Artist Name Ar" />
-              </div>
-            </div>
+            <input type="text" pInputText formControlName="artistNameAr" placeholder="Main Artist Name Ar" />
           </div>
         </div>
       </div>
