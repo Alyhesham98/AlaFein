@@ -1,0 +1,59 @@
+.body {
+  h2 {
+    font-family: "Formula Condensed Bold";
+    font-size: 20px;
+    color: black;
+  }
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .p-dropdown-items-wrapper ol,
+    ul {
+      padding-left: 0 !important;
+    }
+    .p-calendar {
+      width: 100%;
+    }
+  }
+
+  .noteText {
+    font-family: "Formula Condensed Light";
+    font-size: 14px;
+    color: #adadad;
+    float: right;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 3rem;
+
+  .createBtn {
+    width: 157px;
+    height: 55px;
+    border-radius: 12.17px;
+    color: white;
+    background-color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16.22px, 20.28px, 16.22px, 20.28px;
+    span {
+      padding-right: 1rem;
+    }
+  }
+
+  .resetBtn {
+    font-size: 16px;
+    font-weight: 700;
+    color: #7b7b7b;
+  }
+}

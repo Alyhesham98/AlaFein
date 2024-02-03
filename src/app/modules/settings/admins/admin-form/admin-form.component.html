@@ -1,0 +1,29 @@
+<div class="admin-dialog">
+  <div class="body">
+    <form class="admin-form" [formGroup]="adminForm">
+      <h2>GENERAL INFORMATION</h2>
+      <div class="row">
+        <div class="col-xl-4 mb-4">
+          <input type="text" pInputText formControlName="username" placeholder="Username" />
+        </div>
+        <div class="col-xl-4 mb-4">
+          <input type="text" pInputText formControlName="email" placeholder="Email" />
+        </div>
+        <div class="col-xl-4 mb-4">
+          <p-dropdown formControlName="adminType" [options]="adminTypes" optionLabel="name" optionValue="code"
+            placeholder="Type"></p-dropdown>
+        </div>
+        <div class="col-xl-4 mb-4">
+          <input type="text" pInputText formControlName="phoneNumber" placeholder="Phone Number" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
+    <button class="btn createBtn" (click)="onSubmitForm()" [disabled]="adminForm.invalid">
+      <span>CREATE</span>
+      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+    </button>
+  </div>
+</div>

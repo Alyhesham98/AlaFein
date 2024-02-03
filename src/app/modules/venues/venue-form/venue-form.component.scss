@@ -1,0 +1,118 @@
+.body {
+  h2 {
+    font-family: "Formula Condensed Bold";
+    font-size: 20px;
+    color: black;
+  }
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .p-dropdown-items-wrapper ol,
+    ul {
+      padding-left: 0 !important;
+    }
+    .p-calendar {
+      width: 100%;
+    }
+  }
+
+  .noteText {
+    font-family: "Formula Condensed Light";
+    font-size: 14px;
+    color: #adadad;
+    float: right;
+  }
+
+  .venue-general {
+    .venueImageUploader {
+      img {
+        max-width: 280px;
+        max-height: 280px;
+        margin: 1rem 1rem 1rem 0;
+        cursor: pointer;
+      }
+    }
+    .venueFacilities {
+      h2 {
+        font-size: 16px;
+      }
+
+      ::ng-deep {
+        .p-buttonset .p-button {
+          font-family: "Anton";
+          margin-inline-end: 1rem;
+          border-right: 1px solid #e0e0e0;
+          border-radius: 5px;
+          & .p-button-label {
+            font-weight: 400 !important;
+          }
+        }
+
+        .p-selectbutton .p-button.p-highlight {
+          background-color: transparent !important;
+          border: 2px solid black;
+          color: black;
+        }
+      }
+    }
+  }
+
+  .venue-days {
+    ::ng-deep {
+      .p-buttonset .p-button {
+        font-family: "Anton";
+        margin-inline-end: 1rem;
+        border-right: 1px solid #e0e0e0;
+        border-radius: 5px;
+        min-width: 135px;
+        & .p-button-label {
+          font-weight: 400 !important;
+        }
+      }
+
+      .p-selectbutton .p-button.p-highlight {
+        background-color: transparent !important;
+        border: 2px solid black;
+        color: black;
+      }
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 3rem;
+  .createBtn {
+    width: 157px;
+    height: 55px;
+    border-radius: 12.17px;
+    color: white;
+    background-color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16.22px, 20.28px, 16.22px, 20.28px;
+
+    &.prev span {
+      padding-left: 1rem;
+    }
+    &.complete span,
+    &.next span {
+      padding-right: 1rem;
+    }
+  }
+
+  .resetBtn {
+    font-size: 16px;
+    font-weight: 700;
+    color: #7b7b7b;
+  }
+}

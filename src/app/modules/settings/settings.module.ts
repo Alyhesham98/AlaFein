@@ -13,6 +13,9 @@ import { CategoriesFormComponent } from './categories/categories-form/categories
 import { FileUploadModule } from 'primeng/fileupload';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FacilitiesFormComponent } from './facilities/facilities-form/facilities-form.component';
+import { AdminFormComponent } from './admins/admin-form/admin-form.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { FacilitiesFormComponent } from './facilities/facilities-form/facilities
     CategoriesComponent,
     CategoriesFormComponent,
     FacilitiesFormComponent,
+    AdminFormComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,9 @@ import { FacilitiesFormComponent } from './facilities/facilities-form/facilities
     ToastModule,
     DynamicDialogModule,
     FileUploadModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropdownModule,
+    InputTextModule,
   ],
 })
 export class SettingsModule {}

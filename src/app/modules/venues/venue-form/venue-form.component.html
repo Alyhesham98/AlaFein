@@ -1,0 +1,91 @@
+<div class="venue-dialog">
+  <div class="body" *ngIf="formPageNumber == 1">
+    <form class="venue-form" [formGroup]="venueForm">
+      <div class="venue-general my-3">
+        <h2>GENERAL INFORMATION</h2>
+        <div class="row">
+          <div class="col-xl-6 venueImageUploader">
+            <input #fileInput type="file" id="formFile" accept="image/*" style="display: none"
+              (change)="onFileSelected()" />
+            <img
+              [src]="this.uploadedImage? 'https://alafein.azurewebsites.net/'+this.uploadedImage:'assets/profile.svg'"
+              (click)="fileInput.click()" [ngClass]="this.uploadedImage? 'image-uploaded':''" />
+            <span class="category-text">Upload the venue picture.</span>
+          </div>
+          <div class="col-xl-6 venueFacilities">
+            <h2>SELECT THE VENUE FACILITIES</h2>
+            <p-selectButton [options]="venueFacilties" formControlName="selectedFacilities" [multiple]="true"
+              optionLabel="name" optionValue="value">
+              <ng-template let-facility pTemplate="item">
+                <img src="{{facility.name}}" alt="{{facility.value}}" width="31" height="31">
+              </ng-template>
+            </p-selectButton>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-xl-4 mb-3">
+            <input type="text" pInputText formControlName="nameEn" placeholder="Name En" />
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <input type="text" pInputText formControlName="nameAr" placeholder="Name Ar" />
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <input type="email" pInputText formControlName="email" placeholder="Email" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <textarea rows="5" cols="30" pInputTextarea formControlName="venueDescriptionEn"
+              placeholder="Venue Description En"></textarea>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <textarea rows="5" cols="30" pInputTextarea formControlName="venueDescriptionAr"
+              placeholder="Venue Description Ar"></textarea>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <p-dropdown formControlName="genre" [options]="genreTypes" optionLabel="name"
+              placeholder="Genre"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="venue-days">
+        <h2>GENERAL INFORMATION</h2>
+        <p-selectButton [options]="weekDays" formControlName="selectedDays" [multiple]="true" optionLabel="name"
+          optionValue="value"></p-selectButton>
+      </div>
+      <div class="venue-media-links mt-4">
+        <h2>SOCIAL MEDIA LINKS</h2>
+        <div class="row">
+          <div class="col-xl-4 mb-4">
+            <input type="text" pInputText formControlName="instagram" placeholder="Instagram Link" />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input type="text" pInputText formControlName="facebook" placeholder="Facebook Link" />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="body" *ngIf="formPageNumber == 2">
+    <h1>ZART TWO</h1>
+  </div>
+  <div class="footer">
+    <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
+
+    <button class="btn createBtn next" *ngIf="formPageNumber == 1" (click)="formPageNumber = 2">
+      <span>NEXT</span>
+      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+    </button>
+
+    <button class="btn createBtn prev" *ngIf="formPageNumber == 2" (click)="formPageNumber = 1">
+      <img src="assets/icons/arrow-left.svg" alt="Arrow Right" width="14" height="14">
+      <span>PREVIOUS</span>
+    </button>
+
+    <button class="btn createBtn complete" *ngIf="formPageNumber == 2" (click)="onFormSubmit()">
+      <span>COMPLETE</span>
+      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+    </button>
+
+  </div>
+</div>
