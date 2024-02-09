@@ -24,6 +24,10 @@ export class FacilitiesService {
     return this.http.post(`${this.url}Facility/Add`, body);
   }
 
+  updateFacility(body: any) {
+    return this.http.put(`${this.url}Facility/Update`, body);
+  }
+
   uploadFacilityImage(body: any) {
     return this.http.post(`${this.url}Facility/UploadFacilityImage`, body);
   }

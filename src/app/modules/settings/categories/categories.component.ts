@@ -98,7 +98,6 @@ export class CategoriesComponent {
   }
 
   changeCategoryStatus(data: any) {
-    
     this.categoryService.approveCategory({id:data.Id}).subscribe((res: any) => {
       if (res.Succeeded) {
         this.messageService.add({

@@ -18,10 +18,14 @@
           (change)="onFileSelected()"
         />
         <img
-          [src]="this.uploadedImage? 'https://alafein.azurewebsites.net/'+this.uploadedImage:'../../../../../assets/profile.svg'"
+          [src]="
+            this.uploadedImage
+              ? 'https://alafein.azurewebsites.net/' + this.uploadedImage
+              : '../../../../../assets/profile.svg'
+          "
           style="cursor: pointer"
           (click)="fileInput.click()"
-          [ngClass]="this.uploadedImage? 'image-uploaded':''"
+          [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
         />
         <span class="category-text">Upload the category picture</span>
       </div>
@@ -40,7 +44,12 @@
         ></app-input-field>
       </div> -->
       <div class="col-md-4 d-md-flex mt-4 justify-content-end">
-        <button class="customBtn" (click)="createCategory()">CREATE</button>
+        <button
+          class="customBtn"
+          (click)="this.categoryDetails ? updateCategory() : createCategory()"
+        >
+          {{ this.categoryDetails ? "UPDATE" : "CREATE" }}
+        </button>
       </div>
     </div>
   </form>

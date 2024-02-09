@@ -20,24 +20,35 @@ export class CategoriesFormComponent implements OnInit {
   categoryForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
   uploadedImage: any;
-
+  categoryDetails: any;
   ngOnInit(): void {
     this.createForm();
+    if (this.config?.data) {
+      this.categoryDetails = this.config?.data;
+      this.setFormData();
+    }
   }
-
+  setFormData(): void {
+    this.uploadedImage = this.categoryDetails.Image;
+    this.categoryForm.patchValue({
+      id: this.categoryDetails?.Id,
+      name: this.categoryDetails?.Name,
+      image: this.categoryDetails?.Image,
+    });
+  }
   createForm() {
     this.categoryForm = new FormGroup({
+      id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       image: new FormControl(null, Validators.required),
     });
   }
+
   onFileSelected(): void {
     const file = this.fileInput.nativeElement.files[0];
     this.categoryForm
       .get('image')
       ?.setValue(this.fileInput.nativeElement.files[0]?.name);
-    console.log(this.categoryForm.value);
-    console.log(file);
     if (file) {
       const formData = new FormData();
       formData.append('image', file);
@@ -45,6 +56,7 @@ export class CategoriesFormComponent implements OnInit {
         .uploadCategoryImage(formData)
         .subscribe((res: any) => {
           this.uploadedImage = res.Data;
+          this.categoryForm.get('image')?.setValue(this.uploadedImage);
           this.messageService.add({
             key: 'toast1',
             severity: 'success',
@@ -54,9 +66,37 @@ export class CategoriesFormComponent implements OnInit {
         });
     }
   }
+
   createCategory() {
     if (this.categoryForm.valid) {
       this.categoryService.createCategory(this.categoryForm.value).subscribe(
+        (res: any) => {
+          this.ref.close(true);
+
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'success',
+            summary: 'Success',
+            detail: res.Message,
+          });
+        },
+        (err) => {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'error',
+            summary: 'Error',
+            detail: err.error.Message,
+          });
+        }
+      );
+    } else {
+      return;
+    }
+  }
+
+  updateCategory() {
+    if (this.categoryForm.valid) {
+      this.categoryService.updateCategory(this.categoryForm.value).subscribe(
         (res: any) => {
           this.ref.close(true);
 

@@ -32,8 +32,19 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'Facility EN'"
+          formControlName="imageName"
+        ></app-input-field>
+      </div>
       <div class="col-md-4 d-md-flex mt-4">
-        <button class="customBtn" (click)="createFaciliy()">CREATE</button>
+        <button
+          class="customBtn"
+          (click)="this.facilityDetails ? updateFacility() : createFaciliy()"
+        >
+          {{ this.facilityDetails ? "UPDATE" : "CREATE" }}
+        </button>
       </div>
     </div>
   </form>

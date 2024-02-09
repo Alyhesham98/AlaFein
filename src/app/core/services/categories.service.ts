@@ -24,6 +24,10 @@ export class CategoriesService {
     return this.http.post(`${this.url}Category/Add`, body);
   }
 
+  updateCategory(body: any) {
+    return this.http.put(`${this.url}Category/Update`, body);
+  }
+
   uploadCategoryImage(body: any) {
     return this.http.post(`${this.url}Category/UploadCategoryImage`, body);
   }

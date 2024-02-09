@@ -26,6 +26,7 @@
         [actions]="actions"
         [pageType]="'Category'"
         [isDots]="true"
+        (userDetails)="show($event)"
         (approveDetails)="changeCategoryStatus($event)"
         (disapproveDetails)="changeCategoryStatus($event)"
       ></app-custom-table>
