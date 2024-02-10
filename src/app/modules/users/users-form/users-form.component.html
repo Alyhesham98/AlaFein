@@ -1,1 +1,59 @@
-<p>users-form works!</p>
+<p-toast key="toast1"></p-toast>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <p class="title">GENERAL INFORMATION</p>
+    </div>
+  </div>
+  <form [formGroup]="usersForm">
+    <div class="row">
+      <div class="col">
+        <input
+          #fileInput
+          type="file"
+          id="formFile"
+          accept="image/*"
+          style="display: none"
+          (change)="onFileSelected()"
+        />
+        <img
+          [src]="
+            this.uploadedImage
+              ? 'https://alafein.azurewebsites.net/' + this.uploadedImage
+              : '../../../../../assets/profile.svg'
+          "
+          style="cursor: pointer"
+          (click)="fileInput.click()"
+          [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
+        />
+        <span class="category-text">Edit the picture</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'First Name'"
+          formControlName="firstName"
+        ></app-input-field>
+      </div>
+      <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'Last Name'"
+          formControlName="lastName"
+        ></app-input-field>
+      </div>
+      <div class="col-md-4">
+        <app-input-field
+          [placeholder]="'Phone'"
+          formControlName="phone"
+        ></app-input-field>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12 d-md-flex mt-4 justify-content-end">
+        <button class="customBtn" (click)="updateUser()">UPDATE</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UsersService } from 'src/app/core/services/users.service';
+import { UsersFormComponent } from './users-form/users-form.component';
 
 @Component({
   selector: 'app-users',
@@ -33,6 +34,7 @@ export class UsersComponent implements OnInit {
   pageSize: number = 10;
   totalRecords!: number;
   actions: any[] = ['canEdit', 'canStatus', 'canBlock', 'canUnblock'];
+  ref: DynamicDialogRef | undefined;
 
   types: any[] = [];
 
@@ -58,12 +60,6 @@ export class UsersComponent implements OnInit {
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
-  }
-
-  getDropdown() {
-    this.userService.getDropdown().subscribe((res: any) => {
-      this.types = res.Data;
-    });
   }
 
   changeUserBlock(data: any) {
@@ -118,5 +114,20 @@ export class UsersComponent implements OnInit {
           });
         }
       });
+  }
+
+  show(data?: any) {
+    this.ref = this.dialogService.open(UsersFormComponent, {
+      header: data ? 'Edit User' : 'Add New Category',
+      width: '70%',
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: false,
+      data: data,
+    });
+
+    this.ref.onClose.subscribe((res) =>
+      res ? this.getUsers({ pageNumber: 1, pageSize: 10 }) : ''
+    );
   }
 }
