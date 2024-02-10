@@ -1,22 +1,29 @@
+<p-toast key="toast1"></p-toast>
+
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h1>pending comments</h1>
-        </div>
+  <div class="row">
+    <div class="col">
+      <h1>pending comments</h1>
     </div>
-    <div class="row">
-        <div class="col">
-            <hr>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr />
     </div>
-    <div class="row">
-        <div class="col">
-          <app-custom-table
-            [pageSize]="pageSize"
-            [totalRecords]="totalRecords"
-            [cols]="colsData"
-            [rows]="rowsData"
-          ></app-custom-table>
-        </div>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-custom-table
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+        [isDots]="true"
+        [actions]="actions"
+        [pageType]="'Comment'"
+        (approveDetails)="toggleCommentStatus($event)"
+        (disapproveDetails)="toggleCommentStatus($event)"
+      ></app-custom-table>
+    </div>
+  </div>
 </div>

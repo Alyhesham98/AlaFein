@@ -4,17 +4,17 @@
       <h2>GENERAL INFORMATION</h2>
       <div class="row">
         <div class="col-xl-4 mb-4">
-          <input type="text" pInputText formControlName="username" placeholder="Username" />
+          <input type="text" pInputText formControlName="firstName" placeholder="firstName" />
         </div>
         <div class="col-xl-4 mb-4">
-          <input type="text" pInputText formControlName="email" placeholder="Email" />
+          <input type="text" pInputText formControlName="email" placeholder="email" />
         </div>
         <div class="col-xl-4 mb-4">
-          <p-dropdown formControlName="adminType" [options]="adminTypes" optionLabel="name" optionValue="code"
+          <p-dropdown formControlName="roleId" [options]="adminTypes" optionLabel="Name" optionValue="Id"
             placeholder="Type"></p-dropdown>
         </div>
         <div class="col-xl-4 mb-4">
-          <input type="text" pInputText formControlName="phoneNumber" placeholder="Phone Number" />
+          <input type="text" pInputText formControlName="password" placeholder="Password" />
         </div>
       </div>
     </form>

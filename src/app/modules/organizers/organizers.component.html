@@ -4,18 +4,24 @@
       <h1>EVENT ORGANIZERS</h1>
     </div>
     <div class="col-md-6 d-md-flex justify-content-end">
-      <button class="customBtn" (click)="show()">CREATE NEW EVENT ORGANIZER</button>
+      <button class="customBtn" (click)="show()">
+        CREATE NEW EVENT ORGANIZER
+      </button>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <hr>
+      <hr />
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <app-custom-table [pageSize]="pageSize" [totalRecords]="totalRecords" [cols]="colsData" [rows]="rowsData"
-        [actions]="actions" [isDots]="true"></app-custom-table>
+      <app-custom-table
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+      ></app-custom-table>
     </div>
   </div>
 </div>

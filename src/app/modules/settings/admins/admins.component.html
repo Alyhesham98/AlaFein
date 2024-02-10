@@ -9,13 +9,20 @@
   </div>
   <div class="row">
     <div class="col">
-      <hr>
+      <hr />
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <app-custom-table [pageSize]="pageSize" [totalRecords]="totalRecords" [cols]="colsData" [rows]="rowsData"
-      [actions]="actions" [isDots]="true"></app-custom-table>
+      <app-custom-table
+        [pageSize]="pageSize"
+        (pageNumber)="getAllAdmins($event)"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+        [actions]="actions"
+        [isDots]="true"
+      ></app-custom-table>
     </div>
   </div>
 </div>

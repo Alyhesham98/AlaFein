@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdminsService } from 'src/app/core/services/admins.service';
 import { AdminFormComponent } from './admin-form/admin-form.component';
@@ -9,7 +9,7 @@ import { AdminFormComponent } from './admin-form/admin-form.component';
   styleUrls: ['./admins.component.scss'],
   providers: [DialogService],
 })
-export class AdminsComponent {
+export class AdminsComponent implements OnInit {
   colsData: any[] = [
     {
       field: 'name',
@@ -35,6 +35,13 @@ export class AdminsComponent {
     public dialogService: DialogService,
     private adminsService: AdminsService
   ) {}
+
+  ngOnInit(): void {
+    // this.getAllAdmins({
+    //   pageNumber: this.pageNumber,
+    //   pageSize: this.pageSize,
+    // });
+  }
 
   getAllAdmins(e: any) {
     this.adminsService

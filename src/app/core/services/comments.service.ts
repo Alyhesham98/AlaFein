@@ -8,26 +8,18 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class AdminsService {
+export class CommentsService {
   private url = 'https://alafein.azurewebsites.net/api/v1/';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getAllAdmins(pageNumber: number, pageSize: number) {
+  getAllComments(pageNumber: number, pageSize: number) {
     return this.http.get(
-      `${this.url}Admin/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `${this.url}AdminComment/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
-  getAdminsDropdown() {
-    return this.http.get(`${this.url}Admin/Dropdown`);
-  }
-
-  createAdmin(body: any) {
-    return this.http.post(`${this.url}Admin/Register`, body);
-  }
-
-  uploadAdminImage(body: any) {
-    return this.http.post(`${this.url}Admin/UploadAdminImage`, body);
+  toggleCommentStatus(body: any) {
+    return this.http.patch(`${this.url}AdminComment/ToggleComment`, body);
   }
 }

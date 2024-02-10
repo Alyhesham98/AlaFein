@@ -5,51 +5,136 @@
         <h2>GENERAL INFORMATION</h2>
         <div class="row">
           <div class="col">
-            <input #fileInput type="file" id="formFile" accept="image/*" style="display: none"
-              (change)="onFileSelected()" />
+            <input
+              #fileInput
+              type="file"
+              id="formFile"
+              accept="image/*"
+              style="display: none"
+              (change)="onFileSelected()"
+            />
             <img
-              [src]="this.uploadedImage? 'https://alafein.azurewebsites.net/'+this.uploadedImage:'assets/profile.svg'"
-              style="cursor: pointer; margin: 1rem 1rem 1rem 0;" (click)="fileInput.click()"
-              [ngClass]="this.uploadedImage? 'image-uploaded':''" />
-            <span class="category-text">Upload the event organizer picture.</span>
+              [src]="
+                this.uploadedImage
+                  ? 'https://alafein.azurewebsites.net/' + this.uploadedImage
+                  : 'assets/profile.svg'
+              "
+              style="cursor: pointer; margin: 1rem 1rem 1rem 0"
+              (click)="fileInput.click()"
+              [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
+            />
+            <span class="category-text"
+              >Upload the event organizer picture.</span
+            >
           </div>
         </div>
         <div class="row">
           <div class="col-xl-4 mb-3">
-            <input type="text" pInputText formControlName="nameEn" placeholder="Name En" />
+            <input
+              type="text"
+              pInputText
+              formControlName="firstName"
+              placeholder="First Name"
+            />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <input type="text" pInputText formControlName="nameAr" placeholder="Name Ar" />
+            <input
+              type="text"
+              pInputText
+              formControlName="lastName"
+              placeholder="Last Name"
+            />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <input type="email" pInputText formControlName="email" placeholder="Email" />
+            <input
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Email"
+            />
           </div>
-        </div>
-        <div class="row">
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <textarea rows="5" cols="30" pInputTextarea formControlName="eventDescription"
-              placeholder="Event Organizer Description"></textarea>
-          </div>
-          <div class="col-xl-4 mb-xl-0 mb-3">
-            <p-dropdown formControlName="genre" [options]="eventTypes" optionLabel="name"
-              placeholder="Genre"></p-dropdown>
+            <input
+              type="password"
+              pInputText
+              formControlName="password"
+              placeholder="Password"
+            />
           </div>
         </div>
       </div>
+    </form>
+    <form class="event-form" [formGroup]="eventSecondForm">
       <div class="event-media-links">
         <h2>SOCIAL MEDIA LINKS</h2>
         <div class="row">
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="instagram" placeholder="Instagram Link" />
+            <input
+              type="text"
+              pInputText
+              formControlName="mapLink"
+              placeholder="Map Link"
+            />
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="facebook" placeholder="Facebook Link" />
+            <input
+              type="text"
+              pInputText
+              formControlName="address"
+              placeholder="Address"
+            />
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="website" placeholder="Website Link" />
+            <input
+              type="text"
+              pInputText
+              formControlName="instagram"
+              placeholder="Instagram Link"
+            />
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="other" placeholder="Other" />
+            <input
+              type="text"
+              pInputText
+              formControlName="facebook"
+              placeholder="Facebook Link"
+            />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="websiteURL"
+              placeholder="Website Link"
+            />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="other"
+              placeholder="Other"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              formControlName="description"
+              placeholder="Event Organizer Description"
+            ></textarea>
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <p-dropdown
+              formControlName="categoryId"
+              [options]="eventTypes"
+              optionLabel="Name"
+              optionValue="Id"
+              placeholder="Genre"
+            ></p-dropdown>
           </div>
         </div>
       </div>
@@ -57,9 +142,18 @@
   </div>
   <div class="footer">
     <a class="btn resetBtn">RESET</a>
-    <button class="btn createBtn">
+    <button
+      class="btn createBtn"
+      (click)="onSubmitForm()"
+      [disabled]="eventForm.invalid && eventSecondForm.invalid"
+    >
       <span>CREATE</span>
-      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+      <img
+        src="assets/icons/arrow-right.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
     </button>
   </div>
 </div>

@@ -13,7 +13,7 @@ export class OrganizersComponent implements OnInit {
   colsData: any[] = [
     {
       field: 'FirstName',
-      text: 'Event Organizer Name',
+      text: 'Organizer Name',
     },
     {
       field: 'Status',
