@@ -16,11 +16,11 @@ export class VenuesComponent implements OnInit {
       text: 'Venues Name',
     },
     {
-      field: 'Location',
+      field: 'location',
       text: 'Location',
     },
     {
-      field: 'Facilities',
+      field: 'Facility',
       text: 'Facilities',
     },
     {

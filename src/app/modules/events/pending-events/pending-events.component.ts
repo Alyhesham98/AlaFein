@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { EventsService } from 'src/app/core/services/events.service';
 
 @Component({
@@ -37,8 +38,9 @@ export class PendingEventsComponent {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalRecords!: number;
+  actions: any[] = ['canView'];
 
-  constructor(private evetnsService: EventsService) {}
+  constructor(private evetnsService: EventsService, private router: Router) {}
 
   ngOnInit(): void {
     this.getPendingEvents({
@@ -56,5 +58,11 @@ export class PendingEventsComponent {
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
+  }
+
+  getEventDetails(data: any) {
+    this.router.navigate([
+      'events/event-details/' + data.Id + '/' + data?.Status?.Name,
+    ]);
   }
 }

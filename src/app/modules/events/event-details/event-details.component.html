@@ -1,19 +1,26 @@
 <div class="container-fluid">
   <div class="row event-header">
     <div class="col-12 p-0">
-      <img src="assets/images/events/event-details-img.png" alt="Event Image">
+      <img src="assets/images/events/event-details-img.png" alt="Event Image" />
     </div>
     <div class="col-12">
-      <h2 class="mt-4">AlaFien! Event</h2>
+      <h2 class="mt-4">{{ eventDetails?.Name }}</h2>
     </div>
   </div>
   <div class="row event-details-first">
     <div class="col-md-6">
       <div class="event-description">
-        <img src="assets/images/events/event-placeholder.png" width="88" height="88" alt="Event Placeholder Image">
+        <img
+          [src]="
+            'https://alafein.azurewebsites.net/' + eventDetails?.Category?.Image
+          "
+          width="88"
+          height="88"
+          alt="Event Placeholder Image"
+        />
         <div>
           <h4>DESCRIPTION</h4>
-          <p>I want to attend different interesting events and have a good time</p>
+          <p>I{{ eventDetails?.Description }}</p>
         </div>
       </div>
     </div>
@@ -22,17 +29,39 @@
         <h4>DETAILS</h4>
         <div class="event-details-data">
           <div class="date">
-            <img src="assets/icons/calendar.svg" width="28" height="28" alt="Calendar Image">
-            <p>23-09-2023, 09:00PM</p>
+            <img
+              src="assets/icons/calendar.svg"
+              width="28"
+              height="28"
+              alt="Calendar Image"
+            />
+            <p>{{ eventDetails?.Date }}</p>
           </div>
           <div class="price">
-            <img src="assets/icons/price.svg" width="28" height="28" alt="Price Image">
-            <p>250 EGP</p>
+            <img
+              src="assets/icons/price.svg"
+              width="28"
+              height="28"
+              alt="Price Image"
+            />
+            <p>{{ eventDetails?.PaymentFee }} EGP</p>
           </div>
           <div class="location">
-            <img src="assets/icons/location.svg" width="24" height="24" alt="Location Image">
-            <p>Elshatby, Alexandria</p>
-            <img class="mt-1" src="assets/icons/link.svg" width="15" height="15" alt="Link Image">
+            <img
+              src="assets/icons/location.svg"
+              width="24"
+              height="24"
+              alt="Location Image"
+            />
+            <p>{{ eventDetails?.Address }}</p>
+            <a [href]="eventDetails?.MapLink" target="_blank">
+              <img
+                src="assets/icons/link.svg"
+                width="15"
+                height="15"
+                alt="Link Image"
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -42,10 +71,22 @@
     <div class="col-md-6">
       <h4 class="mt-5">EVENT ORGANIZER</h4>
       <div class="event-organizer">
-        <img src="assets/images/events/alexandria.png" width="88" height="88" alt="Event Placeholder Image">
+        <img
+          [src]="
+            'https://alafein.azurewebsites.net/' + eventDetails?.Category?.Image
+          "
+          width="88"
+          height="88"
+          alt="Event Placeholder Image"
+        />
         <div>
-          <h4>BIBLIOTHECA ALEXANDRIA <img class="ps-md-2 pt-2 pt-md-0" src="assets/images/events/social-media.svg"
-              alt="Social Media">
+          <h4>
+            {{ eventDetails?.Organizer?.Name }}
+            <img
+              class="ps-md-2 pt-2 pt-md-0"
+              src="assets/images/events/social-media.svg"
+              alt="Social Media"
+            />
           </h4>
           <p>Location</p>
         </div>
@@ -54,22 +95,34 @@
     <div class="col-md-6">
       <h4 class="mt-5">VENUE</h4>
       <div class="event-venue">
-        <img src="assets/images/events/alexandria.png" width="88" height="88" alt="Event Placeholder Image">
+        <img
+          [src]="
+            'https://alafein.azurewebsites.net/' + eventDetails?.Venue?.Photo
+          "
+          width="88"
+          height="88"
+          alt="Event Placeholder Image"
+        />
         <div>
-          <h4>BIBLIOTHECA ALEXANDRIA <img class="ps-md-2 pt-2 pt-md-0" src="assets/images/events/social-media.svg"
-              alt="Social Media">
+          <h4>
+            {{ eventDetails?.Venue?.Name }}
+            <img
+              class="ps-md-2 pt-2 pt-md-0"
+              src="assets/images/events/social-media.svg"
+              alt="Social Media"
+            />
           </h4>
-          <p>Location</p>
+          <p>{{ eventDetails?.Venue?.Address }}</p>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col event-actions">
-      <a class="rejectBtn">REJECT</a>
-      <button class="btn actionsBtn modifyBtn">MODIFY</button>
-      <button class="btn actionsBtn acceptBtn">ACCEPT <img src="assets/icons/arrow-right.svg"
-          alt="Accept Button"></button>
+      <a class="rejectBtn" *ngIf="eventStatus === 'ACCEPT' || eventStatus === 'PENDING'" (click)="toggleStatus(2)">REJECT</a>
+      <button class="btn actionsBtn acceptBtn" *ngIf="eventStatus !== 'ACCEPT'" (click)="toggleStatus(1)">
+        ACCEPT <img src="assets/icons/arrow-right.svg" alt="Accept Button" />
+      </button>
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'all-events', component: AllEventsComponent },
   { path: 'event-spotlight', component: EventSpotlightComponent },
   { path: 'pending-events', component: PendingEventsComponent },
-  { path: 'event-details/:id', component: EventDetailsComponent },
+  { path: 'event-details/:id/:status', component: EventDetailsComponent },
   { path: '**', redirectTo: 'all-events', pathMatch: 'full' },
 ];
 

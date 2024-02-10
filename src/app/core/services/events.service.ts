@@ -52,4 +52,8 @@ export class EventsService {
     return this.http.patch(`${this.url}AdminEvent/ToggleSpotlight`, data);
   }
 
+  toggleStatus(data: any) {
+    return this.http.patch(`${this.url}AdminEvent/ToggleStatus`, data);
+  }
+
 }

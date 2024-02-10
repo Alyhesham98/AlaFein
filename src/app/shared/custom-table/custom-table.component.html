@@ -176,6 +176,23 @@
               {{ rows.FirstName }}
             </div>
           </ng-template>
+          <ng-template [ngSwitchCase]="'Facility'">
+            <div
+              *ngFor="let facility of rows.Facility"
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                [src]="
+                  'https://alafein.azurewebsites.net/' + facility.ImagePath
+                "
+                width="70"
+                height="70"
+                style="border-radius: 50%"
+                alt="category"
+              />
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'location'"> location </ng-template>
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">
@@ -302,7 +319,7 @@
                           />
                         </div>
                         <div class="col-10">
-                          <span>View {{ type }}</span>
+                          <span>View {{ pageType }}</span>
                         </div>
                       </div>
                     </a>

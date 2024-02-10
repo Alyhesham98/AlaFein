@@ -24,9 +24,8 @@
         [pageType]="'Event'"
         (pageNumber)="getAllEvents($event)"
         (spotlightDetails)="changeSpotlightStatus($event)"
+        (dataDetails)="getEventDetails($event)"
       ></app-custom-table>
     </div>
   </div>
 </div>
-
-<a routerLink="/events/event-details/1">go to details</a>
