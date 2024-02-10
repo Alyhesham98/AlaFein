@@ -61,7 +61,7 @@ export class CustomTableComponent {
   @Output() approveDetails: EventEmitter<any> = new EventEmitter();
   @Output() disapproveDetails: EventEmitter<any> = new EventEmitter();
   @Output() spotlightDetails: EventEmitter<any> = new EventEmitter();
-
+  @Output() blockStatus: EventEmitter<any> = new EventEmitter();
   @Output() emailDetails: EventEmitter<any> = new EventEmitter();
 
   userStatusChoice: any;
@@ -85,12 +85,8 @@ export class CustomTableComponent {
     },
   ];
   type: any;
-  @Input() pageType:any;
-  constructor(
-    private router: Router
-  ) {
-
-  }
+  @Input() pageType: any;
+  constructor(private router: Router) {}
   page = 0;
   size = 10;
   onPageChange(event: any) {
@@ -213,6 +209,10 @@ export class CustomTableComponent {
 
   onStatusChange(selectedValue: any) {
     this.statusSearch.emit(selectedValue.value);
+  }
+
+  blockChange(selectedValue: any) {
+    this.blockStatus.emit(selectedValue);
   }
 
   onApprovalChange(selectedValue: any) {

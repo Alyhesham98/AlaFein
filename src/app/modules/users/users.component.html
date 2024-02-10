@@ -1,24 +1,31 @@
+<p-toast key="toast1"></p-toast>
+
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h1>USERS</h1>
-        </div>
+  <div class="row">
+    <div class="col">
+      <h1>USERS</h1>
     </div>
-    <div class="row">
-        <div class="col">
-            <hr>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr />
     </div>
-    <div class="row">
-        <div class="col">
-            <app-custom-table
-            [pageSize]="pageSize"
-            [totalRecords]="totalRecords"
-            [cols]="colsData"
-            [rows]="rowsData"
-            [isDots]="true"
-            (pageNumber)="getUsers($event)"
-          ></app-custom-table>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-custom-table
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+        [actions]="actions"
+        [pageType]="'User'"
+        (blockStatus)="changeUserBlock($event)"
+        (approveDetails)="changeUserStatus($event)"
+        (disapproveDetails)="changeUserStatus($event)"
+        [isDots]="true"
+        (pageNumber)="getUsers($event)"
+      ></app-custom-table>
     </div>
+  </div>
 </div>

@@ -162,6 +162,20 @@
     <tr>
       <td *ngFor="let col of cols">
         <ng-container [ngSwitch]="col.field">
+          <ng-template [ngSwitchCase]="'FirstName'">
+            <div
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                [src]="'https://alafein.azurewebsites.net/' + rows.Photo"
+                width="50"
+                height="50"
+                style="border-radius: 50%"
+                alt="category"
+              />
+              {{ rows.FirstName }}
+            </div>
+          </ng-template>
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">
@@ -294,6 +308,31 @@
                     </a>
                   </div>
                 </ng-container>
+                <ng-container *ngIf="action === 'canBlock'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent d-flex align-items-start"
+                      style="cursor: pointer"
+                      (click)="blockChange(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-12">
+                          <img
+                            src="../../../../assets/svg/block.svg"
+                            alt="Block"
+                            width="15"
+                            height="15"
+                          />
+                          <span style="margin-left: 10px">{{
+                            !rows.IsBlocked
+                              ? "Block " + pageType
+                              : "Unblock " + pageType
+                          }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
                 <ng-container *ngIf="action === 'canEdit'">
                   <div class="mb-2">
                     <a
@@ -382,6 +421,37 @@
                         </div>
                         <div class="col-10">
                           <span>Publish {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canStatus'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="approve(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            [src]="
+                              rows.Status.Name === 'Normal'
+                                ? '../../../assets/svg/approve-icon-table.svg'
+                                : '../../../assets/svg/decline-icon-table.svg'
+                            "
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>{{
+                            rows.Status.Name === "Normal"
+                              ? "Make User Premium"
+                              : "Make User Normal"
+                          }}</span>
                         </div>
                       </div>
                     </a>

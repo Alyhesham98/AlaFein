@@ -20,4 +20,23 @@ export class UsersService {
     );
   }
 
+  toggleBlock(body: any) {
+    return this.http.patch(`${this.url}AdminUser/ToggleBlock`, body);
+  }
+
+  toggleStatus(body: any) {
+    return this.http.patch(`${this.url}AdminUser/ToggleStatus`, body);
+  }
+
+  getDropdown() {
+    return this.http.get(`${this.url}AdminUser/Dropdown`);
+  }
+
+  uploadAdminImage(body: any) {
+    return this.http.post(`${this.url}AdminUser/UploadUserImage`, body);
+  }
+
+  updateAdmin(body: any) {
+    return this.http.patch(`${this.url}AdminUser/Update`, body);
+  }
 }
