@@ -15,13 +15,9 @@ export class CommentsComponent implements OnInit {
       text: 'Name',
     },
     {
-      field: 'Status',
-      text: 'Status',
-    },
-    {
-      field: 'ExpirationDate',
-      text: 'Expire Date',
-    },
+      field: 'User.Name',
+      text: 'User',
+    }
   ];
   rowsData: any[] = [];
   pageNumber: number = 1;
@@ -48,7 +44,7 @@ export class CommentsComponent implements OnInit {
         this.pageSize = data.PageSize;
       });
   }
-  actions: any[] = ['canApprove', 'canDecline'];
+  actions: any[] = ['canApprove'];
 
   toggleCommentStatus(data: any) {
     this.commentService
@@ -59,9 +55,7 @@ export class CommentsComponent implements OnInit {
             key: 'toast1',
             severity: 'success',
             summary: 'Success',
-            detail: data.IsPublished
-              ? 'Comment Published Successfully!'
-              : 'Comment Archived Successfully!',
+            detail: 'Comment Published Successfully',
           });
           this.getList({ pageNumber: 1, pageSize: 10 });
         } else {
@@ -69,9 +63,7 @@ export class CommentsComponent implements OnInit {
             key: 'toast1',
             severity: 'error',
             summary: 'Error',
-            detail: data.IsPublished
-              ? 'Error Comment Category.'
-              : 'Error Comment Category.',
+            detail: 'Error Comment.',
           });
         }
       });

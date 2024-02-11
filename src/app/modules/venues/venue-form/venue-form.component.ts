@@ -1,5 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  FormArray,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { VenuesService } from 'src/app/core/services/venues.service';
 
@@ -11,7 +17,9 @@ import { VenuesService } from 'src/app/core/services/venues.service';
 })
 export class VenueFormComponent implements OnInit {
   formPageNumber = 1;
+  userForm!: FormGroup;
   venueForm!: FormGroup;
+  branchForm!: FormGroup;
   genreTypes!: any[];
   weekDays!: any[];
   venueFacilties!: any[];
@@ -21,92 +29,113 @@ export class VenueFormComponent implements OnInit {
 
   constructor(
     private venuesService: VenuesService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.venueForm = new FormGroup({
-      nameEn: new FormControl(null, Validators.required),
-      nameAr: new FormControl(null, Validators.required),
+    this.getDropdown();
+    this.userForm = new FormGroup({
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
-      venueDescriptionEn: new FormControl(null, Validators.required),
-      venueDescriptionAr: new FormControl(null, Validators.required),
-      genre: new FormControl(null, Validators.required),
-      selectedFacilities: new FormControl(null, Validators.required),
-      selectedDays: new FormControl(null, Validators.required),
-      instagram: new FormControl(null, Validators.required),
-      facebook: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required),
+      profilePicture: new FormControl(null, Validators.required),
     });
 
-    this.genreTypes = [
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
+    this.venueForm = new FormGroup({
+      instagram: new FormControl(null, Validators.required),
+      facebook: new FormControl(null, Validators.required),
+      websiteURL: new FormControl(null, Validators.required),
+      other: new FormControl(null, Validators.required),
+      phoneNumber: new FormControl(null, Validators.required),
+      venueName: new FormControl(null, Validators.required),
+      venueDescription: new FormControl(null, Validators.required),
+      categoryId: new FormControl(null, Validators.required),
+      photos: new FormControl([], Validators.required),
+      venueFacilities: new FormControl([], Validators.required),
+      // branches: this.branchForm.value,
+    });
 
-    this.venueFacilties = [
-      {
-        name: '../../../../assets/icons/venueFacilities/parking.svg',
-        value: 'parking',
-      },
-      {
-        name: '../../../../assets/icons/venueFacilities/food.svg',
-        value: 'food',
-      },
-      {
-        name: '../../../../assets/icons/venueFacilities/smoking.svg',
-        value: 'smoking',
-      },
-      {
-        name: '../../../../assets/icons/venueFacilities/wheelchair.svg',
-        value: 'wheelchair',
-      },
-      {
-        name: '../../../../assets/icons/venueFacilities/wifi.svg',
-        value: 'wifi',
-      },
-    ];
+    this.branchForm = new FormGroup({
+      branches: this.formBuilder.array([]),
+    });
+  }
 
-    this.weekDays = [
-      { name: 'Saturday', value: 'saturday' },
-      { name: 'Sunday', value: 'sunday' },
-      { name: 'Monday', value: 'monday' },
-      { name: 'Tuesday', value: 'tuesday' },
-      { name: 'Wednesday', value: 'wednesday' },
-      { name: 'Thursday', value: 'thursday' },
-      { name: 'Friday', value: 'friday' },
-    ];
+  addItem() {
+    const item = this.formBuilder.group({
+      name: new FormControl(null, Validators.required),
+      address: new FormControl(null, Validators.required),
+      mapLink: new FormControl(null, Validators.required),
+      workDays: new FormControl([null], Validators.required),
+    });
+
+    // Add the new form group to the FormArray
+    this.branches.push(item);
+  }
+
+  // Helper method to get the 'items' FormArray
+  get branches() {
+    return this.branchForm.get('branches') as FormArray;
   }
 
   onFileSelected(): void {
     const file = this.fileInput.nativeElement.files[0];
-    this.venueForm
-      .get('image')
-      ?.setValue(this.fileInput.nativeElement.files[0]?.name);
-
     if (file) {
       const formData = new FormData();
       formData.append('image', file);
-      this.venuesService
-        .uploadVenueUserImage(formData)
-        .subscribe((res: any) => {
-          this.uploadedImage = res.Data;
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Image Uploaded Successfully',
-          });
+      this.venuesService.uploadUserImage(formData).subscribe((res: any) => {
+        this.uploadedImage = res.Data;
+        this.userForm.get('profilePicture')?.setValue(this.uploadedImage);
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Image Uploaded Successfully',
         });
+      });
     }
   }
 
+  onVenueFileSelected(): void {
+    const file = this.fileInput.nativeElement.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+      this.venuesService.uploadVenueUserImage(formData).subscribe((res: any) => {
+        this.uploadedImage = res.Data;
+        let imagesArray = [];
+        imagesArray.push(this.uploadedImage);
+        this.venueForm.get('photos')?.setValue(imagesArray);
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Image Uploaded Successfully',
+        });
+      });
+    }
+  }
+
+  getDropdown() {
+    this.venuesService.getDropdown().subscribe((res: any) => {
+      this.genreTypes = res?.Data?.Category;
+      this.weekDays = res?.Data?.Days;
+      this.venueFacilties = res?.Data?.Facility;
+    });
+  }
+
   onFormSubmit() {
-    console.log(this.venueForm.value);
+    const body = {
+      user: this.userForm.value,
+      venue: this.venueForm.value,
+    };
+    console.log(body);
   }
 
   onResetForm() {
+    this.userForm.reset();
     this.venueForm.reset();
+    this.branchForm.reset();
   }
 }

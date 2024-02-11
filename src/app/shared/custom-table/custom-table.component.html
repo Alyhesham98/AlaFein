@@ -167,6 +167,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="pageType !== 'Admin'"
                 [src]="'https://alafein.azurewebsites.net/' + rows.Photo"
                 width="50"
                 height="50"

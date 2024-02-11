@@ -1,91 +1,221 @@
 <div class="venue-dialog">
   <div class="body" *ngIf="formPageNumber == 1">
-    <form class="venue-form" [formGroup]="venueForm">
+    <form class="venue-form" [formGroup]="userForm">
       <div class="venue-general my-3">
         <h2>GENERAL INFORMATION</h2>
         <div class="row">
           <div class="col-xl-6 venueImageUploader">
-            <input #fileInput type="file" id="formFile" accept="image/*" style="display: none"
-              (change)="onFileSelected()" />
+            <input
+              #fileInput
+              type="file"
+              id="formFile"
+              accept="image/*"
+              style="display: none"
+              (change)="onFileSelected()"
+            />
             <img
-              [src]="this.uploadedImage? 'https://alafein.azurewebsites.net/'+this.uploadedImage:'assets/profile.svg'"
-              (click)="fileInput.click()" [ngClass]="this.uploadedImage? 'image-uploaded':''" />
+              [src]="
+                this.uploadedImage
+                  ? 'https://alafein.azurewebsites.net/' + this.uploadedImage
+                  : 'assets/profile.svg'
+              "
+              (click)="fileInput.click()"
+              [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
+            />
             <span class="category-text">Upload the venue picture.</span>
-          </div>
-          <div class="col-xl-6 venueFacilities">
-            <h2>SELECT THE VENUE FACILITIES</h2>
-            <p-selectButton [options]="venueFacilties" formControlName="selectedFacilities" [multiple]="true"
-              optionLabel="name" optionValue="value">
-              <ng-template let-facility pTemplate="item">
-                <img src="{{facility.name}}" alt="{{facility.value}}" width="31" height="31">
-              </ng-template>
-            </p-selectButton>
           </div>
         </div>
         <div class="row mt-4">
           <div class="col-xl-4 mb-3">
-            <input type="text" pInputText formControlName="nameEn" placeholder="Name En" />
+            <input
+              type="text"
+              pInputText
+              formControlName="firstName"
+              placeholder="Name En"
+            />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <input type="text" pInputText formControlName="nameAr" placeholder="Name Ar" />
+            <input
+              type="text"
+              pInputText
+              formControlName="lastName"
+              placeholder="Name Ar"
+            />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <input type="email" pInputText formControlName="email" placeholder="Email" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-4 mb-xl-0 mb-3">
-            <textarea rows="5" cols="30" pInputTextarea formControlName="venueDescriptionEn"
-              placeholder="Venue Description En"></textarea>
-          </div>
-          <div class="col-xl-4 mb-xl-0 mb-3">
-            <textarea rows="5" cols="30" pInputTextarea formControlName="venueDescriptionAr"
-              placeholder="Venue Description Ar"></textarea>
+            <input
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Email"
+            />
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <p-dropdown formControlName="genre" [options]="genreTypes" optionLabel="name"
-              placeholder="Genre"></p-dropdown>
+            <input
+              type="password"
+              pInputText
+              formControlName="password"
+              placeholder="Password"
+            />
           </div>
         </div>
       </div>
-      <div class="venue-days">
-        <h2>GENERAL INFORMATION</h2>
-        <p-selectButton [options]="weekDays" formControlName="selectedDays" [multiple]="true" optionLabel="name"
-          optionValue="value"></p-selectButton>
-      </div>
+    </form>
+    <form [formGroup]="venueForm">
       <div class="venue-media-links mt-4">
-        <h2>SOCIAL MEDIA LINKS</h2>
+        <h2>General Information & Social Media Links</h2>
         <div class="row">
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="instagram" placeholder="Instagram Link" />
+            <input
+              type="text"
+              pInputText
+              formControlName="venueName"
+              placeholder="Venue Name"
+            />
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="facebook" placeholder="Facebook Link" />
+            <input
+              type="text"
+              pInputText
+              formControlName="phoneNumber"
+              placeholder="Phone Number"
+            />
+          </div>
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <p-dropdown
+              formControlName="categoryId"
+              [options]="genreTypes"
+              optionLabel="Name"
+              optionValue="Id"
+              placeholder="Genre"
+            ></p-dropdown>
+          </div>
+
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="instagram"
+              placeholder="Instagram Link"
+            />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="facebook"
+              placeholder="Facebook Link"
+            />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="websiteURL"
+              placeholder="Website URL"
+            />
+          </div>
+          <div class="col-xl-4 mb-4">
+            <input
+              type="text"
+              pInputText
+              formControlName="other"
+              placeholder="Other"
+            />
+          </div>
+
+          <div class="col-xl-4 mb-xl-0 mb-3">
+            <p-selectButton
+              [options]="venueFacilties"
+              formControlName="venueFacilities"
+              [multiple]="true"
+              optionLabel="ImageName"
+              optionValue="ImagePath"
+            >
+              <ng-template let-facility pTemplate="item">
+                <img
+                  [src]="
+                    'https://alafein.azurewebsites.net/' + facility.ImagePath
+                  "
+                  alt="{{ facility.Id }}"
+                  width="31"
+                  height="31"
+                />
+              </ng-template>
+            </p-selectButton>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 mb-xl-0 mb-3">
+              <textarea
+                rows="5"
+                cols="30"
+                pInputTextarea
+                formControlName="venueDescription"
+                placeholder="Venue Description"
+              ></textarea>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
   <div class="body" *ngIf="formPageNumber == 2">
-    <h1>ZART TWO</h1>
+     <div class="venue-days">
+      <h2>GENERAL INFORMATION</h2>
+      <!-- <p-selectButton
+        [options]="weekDays"
+        formControlName="selectedDays"
+        [multiple]="true"
+        optionLabel="name"
+        optionValue="value"
+      ></p-selectButton> -->
+    </div>
   </div>
   <div class="footer">
     <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
 
-    <button class="btn createBtn next" *ngIf="formPageNumber == 1" (click)="formPageNumber = 2">
+    <button
+      class="btn createBtn next"
+      *ngIf="formPageNumber == 1"
+      (click)="onFormSubmit()"
+      
+      >
+      <!-- (click)="formPageNumber = 2" -->
       <span>NEXT</span>
-      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+      <img
+        src="assets/icons/arrow-right.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
     </button>
 
-    <button class="btn createBtn prev" *ngIf="formPageNumber == 2" (click)="formPageNumber = 1">
-      <img src="assets/icons/arrow-left.svg" alt="Arrow Right" width="14" height="14">
+    <button
+    *ngIf="formPageNumber == 2"
+    (click)="formPageNumber = 1"
+      class="btn createBtn prev"
+    >
+      <img
+        src="assets/icons/arrow-left.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
       <span>PREVIOUS</span>
     </button>
 
-    <button class="btn createBtn complete" *ngIf="formPageNumber == 2" (click)="onFormSubmit()">
+    <button
+      class="btn createBtn complete"
+      *ngIf="formPageNumber == 2"
+      
+    >
       <span>COMPLETE</span>
-      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14">
+      <img
+        src="assets/icons/arrow-right.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
     </button>
-
   </div>
 </div>

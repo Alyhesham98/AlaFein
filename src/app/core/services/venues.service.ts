@@ -18,8 +18,16 @@ export class VenuesService {
       `${this.url}AdminVenue/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
-
+  uploadUserImage(body: any) {
+    return this.http.post(`${this.url}AdminVenue/UploadUserImage`, body);
+  }
   uploadVenueUserImage(body: any) {
     return this.http.post(`${this.url}AdminVenue/UploadVenueImage`, body);
+  }
+
+  getDropdown() {
+    return this.http.get(
+      `${this.url}AdminVenue/Dropdown`
+    );
   }
 }

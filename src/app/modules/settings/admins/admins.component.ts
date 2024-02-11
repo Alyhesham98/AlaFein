@@ -12,11 +12,11 @@ import { AdminFormComponent } from './admin-form/admin-form.component';
 export class AdminsComponent implements OnInit {
   colsData: any[] = [
     {
-      field: 'name',
+      field: 'FirstName',
       text: 'Admin name',
     },
     {
-      field: 'Status',
+      field: 'RoleName',
       text: 'Type',
     },
     {
@@ -37,10 +37,10 @@ export class AdminsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getAllAdmins({
-    //   pageNumber: this.pageNumber,
-    //   pageSize: this.pageSize,
-    // });
+    this.getAllAdmins({
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+    });
   }
 
   getAllAdmins(e: any) {
