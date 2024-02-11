@@ -1,3 +1,5 @@
+<p-toast key="toast1"></p-toast>
+
 <div class="venue-dialog">
   <div class="body" *ngIf="formPageNumber == 1">
     <form class="venue-form" [formGroup]="userForm">
@@ -160,16 +162,62 @@
     </form>
   </div>
   <div class="body" *ngIf="formPageNumber == 2">
-     <div class="venue-days">
-      <h2>GENERAL INFORMATION</h2>
-      <!-- <p-selectButton
-        [options]="weekDays"
-        formControlName="selectedDays"
-        [multiple]="true"
-        optionLabel="name"
-        optionValue="value"
-      ></p-selectButton> -->
-    </div>
+    <form [formGroup]="branchForm">
+      <div class="venue-days">
+        <h2>GENERAL INFORMATION</h2>
+        <div formArrayName="branches">
+          <div *ngFor="let control of branches.controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="row mt-3">
+                <div class="col-xl-3">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="name"
+                    placeholder="Branch Name"
+                  />
+                </div>
+                <div class="col-xl-4">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    placeholder="Branch Address"
+                  />
+                </div>
+                <div class="col-xl-4">
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="mapLink"
+                    placeholder="Map Link"
+                  />
+                </div>
+                <div class="col-xl-10 mt-3">
+                  <p-selectButton
+                    [options]="weekDays"
+                    formControlName="workDays"
+                    [multiple]="true"
+                    optionLabel="Name"
+                    optionValue="Id"
+                    (onChange)="openTimePickerDialog($event, i)"
+                  ></p-selectButton>
+                </div>
+                <div class="col-xl-2 mt-4">
+                  <a class="rejectBtn" (click)="removeControl(i)">Remove</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 justify-content-end">
+            <div class="col-10"></div>
+            <div class="col-2">
+              <a class="addBtn" (click)="addBranch()">Add Branch</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="footer">
     <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
@@ -177,10 +225,8 @@
     <button
       class="btn createBtn next"
       *ngIf="formPageNumber == 1"
-      (click)="onFormSubmit()"
-      
-      >
-      <!-- (click)="formPageNumber = 2" -->
+      (click)="formPageNumber = 2"
+    >
       <span>NEXT</span>
       <img
         src="assets/icons/arrow-right.svg"
@@ -191,8 +237,8 @@
     </button>
 
     <button
-    *ngIf="formPageNumber == 2"
-    (click)="formPageNumber = 1"
+      *ngIf="formPageNumber == 2"
+      (click)="formPageNumber = 1"
       class="btn createBtn prev"
     >
       <img
@@ -206,8 +252,8 @@
 
     <button
       class="btn createBtn complete"
+      (click)="onFormSubmit()"
       *ngIf="formPageNumber == 2"
-      
     >
       <span>COMPLETE</span>
       <img

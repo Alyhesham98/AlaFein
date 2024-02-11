@@ -11,9 +11,13 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { TimePickerComponent } from './venue-form/time-picker/time-picker.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
-  declarations: [VenuesComponent, VenueFormComponent],
+  declarations: [VenuesComponent, VenueFormComponent, TimePickerComponent],
   imports: [
     CommonModule,
     VenuesRoutingModule,
@@ -25,6 +29,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InputTextareaModule,
     InputTextModule,
     SelectButtonModule,
+    DialogModule,
+    CalendarModule,
+    ToastModule
   ],
 })
 export class VenuesModule {}

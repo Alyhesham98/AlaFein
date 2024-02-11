@@ -7,13 +7,15 @@ import {
   FormArray,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { VenuesService } from 'src/app/core/services/venues.service';
+import { TimePickerComponent } from './time-picker/time-picker.component';
 
 @Component({
   selector: 'app-venue-form',
   templateUrl: './venue-form.component.html',
   styleUrls: ['./venue-form.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, DialogService],
 })
 export class VenueFormComponent implements OnInit {
   formPageNumber = 1;
@@ -23,14 +25,17 @@ export class VenueFormComponent implements OnInit {
   genreTypes!: any[];
   weekDays!: any[];
   venueFacilties!: any[];
-
+  selectedWorkday: any;
+  display: boolean = false;
   uploadedImage: any;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
     private venuesService: VenuesService,
     private messageService: MessageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialogService: DialogService,
+    private ref: DynamicDialogRef
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +59,7 @@ export class VenueFormComponent implements OnInit {
       categoryId: new FormControl(null, Validators.required),
       photos: new FormControl([], Validators.required),
       venueFacilities: new FormControl([], Validators.required),
-      // branches: this.branchForm.value,
+      branches: new FormControl([], Validators.required),
     });
 
     this.branchForm = new FormGroup({
@@ -62,20 +67,27 @@ export class VenueFormComponent implements OnInit {
     });
   }
 
-  addItem() {
+  addBranch() {
     const item = this.formBuilder.group({
       name: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       mapLink: new FormControl(null, Validators.required),
-      workDays: new FormControl([null], Validators.required),
+      workDays: new FormControl(
+        this.daysArray.length > 0 ? this.daysArray : null,
+        Validators.required
+      ),
     });
 
     // Add the new form group to the FormArray
     this.branches.push(item);
   }
 
+  removeControl(index: number) {
+    this.branches.removeAt(index);
+  }
+
   // Helper method to get the 'items' FormArray
-  get branches() {
+  get branches(): FormArray {
     return this.branchForm.get('branches') as FormArray;
   }
 
@@ -102,18 +114,20 @@ export class VenueFormComponent implements OnInit {
     if (file) {
       const formData = new FormData();
       formData.append('image', file);
-      this.venuesService.uploadVenueUserImage(formData).subscribe((res: any) => {
-        this.uploadedImage = res.Data;
-        let imagesArray = [];
-        imagesArray.push(this.uploadedImage);
-        this.venueForm.get('photos')?.setValue(imagesArray);
-        this.messageService.add({
-          key: 'toast1',
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Image Uploaded Successfully',
+      this.venuesService
+        .uploadVenueUserImage(formData)
+        .subscribe((res: any) => {
+          this.uploadedImage = res.Data;
+          let imagesArray = [];
+          imagesArray.push(this.uploadedImage);
+          this.venueForm.get('photos')?.setValue(imagesArray);
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Image Uploaded Successfully',
+          });
         });
-      });
     }
   }
 
@@ -126,16 +140,75 @@ export class VenueFormComponent implements OnInit {
   }
 
   onFormSubmit() {
+    this.venueForm.get('branches')?.setValue(this.branchForm.value);
     const body = {
       user: this.userForm.value,
       venue: this.venueForm.value,
     };
-    console.log(body);
+    this.venuesService.createVenue(body).subscribe((res: any) => {
+      this.ref.close(true);
+
+      this.messageService.add({
+        key: 'toast1',
+        severity: 'success',
+        summary: 'Success',
+        detail: res.Message,
+      });
+    });
   }
 
   onResetForm() {
     this.userForm.reset();
     this.venueForm.reset();
     this.branchForm.reset();
+  }
+  daysArray: any[] = [];
+  openTimePickerDialog(data?: any, index?: any) {
+    const ref = this.dialogService.open(TimePickerComponent, {
+      header: 'Select Time Range',
+      width: '70%',
+      height: '40%',
+      baseZIndex: 10000,
+    });
+
+    ref.onClose.subscribe((result: any) => {
+      if (result) {
+        const date = new Date(result.date);
+        const dateStart = date.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        const endDate = new Date(result.startTime);
+        const dateEnd = endDate.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+        let value = [];
+
+        if (data.value.length > 1) {
+          value.push(data.value.shift());
+        }
+        const workDaysFormArray = this.branches.at(index).get('workDays');
+        let newValue = {
+          day: value[0], // Assuming result.day holds the selected day
+          from: dateStart ? dateStart : null,
+          to: dateEnd ? dateEnd : null,
+        };
+
+        if (index > 0) {
+          this.daysArray = [];
+        }
+        this.daysArray.push(newValue);
+        if (
+          newValue.from !== null &&
+          newValue.to !== null &&
+          newValue.day !== null
+        ) {
+          workDaysFormArray?.setValue(this.daysArray);
+        } else {
+          workDaysFormArray?.reset();
+        }
+      }
+    });
   }
 }

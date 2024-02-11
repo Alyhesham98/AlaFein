@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-xl-4">
+    <p-calendar
+      [(ngModel)]="selectedDate"
+      [showTime]="true"
+      [hourFormat]="'24'"
+      [timeOnly]="true"
+    ></p-calendar>
+  </div>
+  <div class="col-xl-4">
+    <p-calendar
+      [(ngModel)]="selectedTime"
+      [showTime]="true"
+      [hourFormat]="'24'"
+      [timeOnly]="true"
+    ></p-calendar>
+  </div>
+</div>
+<div class="row justify-content-end">
+    <div class="col-xl-10"></div>
+  <div class="col-xl-2">
+    <a class="addBtn" (click)="onSave()">Save</a>
+  </div>
+</div>

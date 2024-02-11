@@ -70,7 +70,7 @@
         margin-inline-end: 1rem;
         border-right: 1px solid #e0e0e0;
         border-radius: 5px;
-        min-width: 135px;
+        min-width: 75px;
         & .p-button-label {
           font-weight: 400 !important;
         }
@@ -120,4 +120,37 @@
   border-radius: 50%;
   width: 150px;
   height: 150px;
+}
+
+.rejectBtn {
+  font-size: 16px;
+  text-decoration: none;
+  color: #ff0000;
+  margin-inline-end: 3rem;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.addBtn {
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: center;
+  text-decoration: none;
+  color: #0000f5;
+  margin-inline-end: 3rem;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.selected {
+  /* Your selected style here */
+  border-color: black;
+  /* Add any other styles you want to apply when the control has a value */
 }

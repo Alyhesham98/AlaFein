@@ -26,8 +26,10 @@ export class VenuesService {
   }
 
   getDropdown() {
-    return this.http.get(
-      `${this.url}AdminVenue/Dropdown`
-    );
+    return this.http.get(`${this.url}AdminVenue/Dropdown`);
+  }
+
+  createVenue(body: any) {
+    return this.http.post(`${this.url}AdminVenue/Register`, body);
   }
 }

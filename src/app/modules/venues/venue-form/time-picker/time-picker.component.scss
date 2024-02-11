@@ -1,0 +1,15 @@
+.addBtn {
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: center;
+  text-decoration: none;
+  color: #0000f5;
+  margin-inline-end: 3rem;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
