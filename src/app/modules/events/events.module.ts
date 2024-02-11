@@ -16,6 +16,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ToastModule } from 'primeng/toast';
     CalendarModule,
     InputTextareaModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    CheckboxModule,
   ],
 })
 export class EventsModule {}
