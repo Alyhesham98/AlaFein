@@ -56,4 +56,8 @@ export class EventsService {
     return this.http.patch(`${this.url}AdminEvent/ToggleStatus`, data);
   }
 
+  filterEvents(body: any) {
+    return this.http.post(`${this.url}AdminEvent/GetFilterPagination`, body);
+  }
+
 }

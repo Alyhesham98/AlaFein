@@ -39,4 +39,8 @@ export class UsersService {
   updateAdmin(body: any) {
     return this.http.patch(`${this.url}AdminUser/Update`, body);
   }
+
+  filterUsers(body: any) {
+    return this.http.post(`${this.url}AdminUser/GetFilterPagination`, body);
+  }
 }

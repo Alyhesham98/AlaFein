@@ -8,8 +8,8 @@
   <ng-template pTemplate="caption" *ngIf="filter">
     <div class="row d-flex justify-content-between">
       <div class="col-4" *ngIf="isSearch">
-        <label class="mb-2" style="visibility: hidden">Search</label>
-        <span class="p-input-icon-left w-100">
+        <label style="visibility: hidden">Search</label>
+        <span class="p-input-icon-right w-100">
           <input
             pInputText
             [(ngModel)]="searchChoice"
@@ -18,11 +18,12 @@
             (keyup.enter)="filterChange(searchChoice)"
             [placeholder]="placeholderSearch"
           />
-          <i class="pi pi-search"></i>
+          <i class="pi pi-search"
+            ><img src="../../../assets/svg/search.svg" alt=""
+          /></i>
         </span>
       </div>
       <div class="col-4" *ngIf="isTypeList">
-        <label class="mb-2">Type</label>
         <p-dropdown
           [options]="typeList"
           [(ngModel)]="typeChoice"
@@ -35,7 +36,6 @@
       </div>
 
       <div class="col-4" *ngIf="approvalStatusList">
-        <label class="mb-2">Approval Status</label>
         <p-dropdown
           [options]="approval"
           [(ngModel)]="approvalStatusChoice"

@@ -1,12 +1,17 @@
 <div class="system-table-card">
   <div class="row mb-4 mb-lg-0">
     <div class="col-lg-6 header-section">
-      <h2>{{cardData.cardName}}</h2>
-      <p>{{cardData.filterDate}}</p>
+      <h2>{{ cardData.cardName }}</h2>
+      <p>{{ cardData.filterDate }}</p>
     </div>
     <div class="col-lg-6 d-lg-flex filter-section">
-      <p-dropdown [options]="calendarFilter" [(ngModel)]="selectedCalendar" optionLabel="type"
-        styleClass="filter-dropdown" placeholder="Select a Filter"></p-dropdown>
+      <p-dropdown
+        [options]="calendarFilter"
+        [(ngModel)]="selectedCalendar"
+        optionLabel="type"
+        styleClass="filter-dropdown"
+        placeholder="Select a Filter"
+      ></p-dropdown>
     </div>
   </div>
   <div class="row" *ngIf="systemType === 'extended'">
@@ -14,12 +19,60 @@
       <p-table [value]="cardData.tableData" tableStyleClass="custom-table">
         <ng-template pTemplate="header">
           <tr>
-            <th scope="col" *ngFor="let col of cardData.tableCols">{{col.value}}</th>
+            <th scope="col" *ngFor="let col of cardData.tableCols">
+              {{ col.value }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
           <tr>
-            <td *ngFor="let col of cardData.tableCols">{{ rowData[col.key] }}</td>
+            <td *ngFor="let col of cardData.tableCols">
+              <ng-container [ngSwitch]="col.key">
+                <ng-template [ngSwitchCase]="'FirstName'">
+                  <div
+                    style="
+                      min-width: 35px;
+                      border-radius: 50%;
+                      display: inline-block;
+                    "
+                  >
+                    <img
+                      [src]="
+                        'https://alafein.azurewebsites.net/' + rowData.Photo
+                      "
+                      width="50"
+                      height="50"
+                      style="border-radius: 50%"
+                      alt="category"
+                    />
+                    {{ rowData.FirstName ? rowData.FirstName : rowData.Name }}
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Name'">
+                  <div
+                    style="
+                      min-width: 35px;
+                      border-radius: 50%;
+                      display: inline-block;
+                    "
+                  >
+                    <img
+                      [src]="
+                        'https://alafein.azurewebsites.net/' + rowData.Photo
+                      "
+                      width="50"
+                      height="50"
+                      style="border-radius: 50%"
+                      alt="category"
+                    />
+                    {{ rowData.Name }}
+                  </div>
+                </ng-template>
+                <ng-template ngSwitchDefault>
+                  {{ getValue(rowData, col.key) }}
+                </ng-template>
+              </ng-container>
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -29,8 +82,10 @@
     <div class="col-md-6 col-xl-3" *ngFor="let data of cardData.cardsData">
       <div class="cards-content-section mt-2 mb-lg-0">
         <div class="data-card">
-          <h4>{{data.type}}</h4>
-          <h2>{{data.count}} <span>{{data.name}}</span></h2>
+          <h4>{{ data.type }}</h4>
+          <h2>
+            {{ data.count }} <span>{{ data.name }}</span>
+          </h2>
         </div>
       </div>
     </div>

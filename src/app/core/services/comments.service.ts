@@ -22,4 +22,8 @@ export class CommentsService {
   toggleCommentStatus(body: any) {
     return this.http.patch(`${this.url}AdminComment/ToggleComment`, body);
   }
+
+  filterComment(body: any) {
+    return this.http.post(`${this.url}AdminComment/GetFilterPagination`, body);
+  }
 }

@@ -1,6 +1,6 @@
 <div class="container-fluid">
-  <div class="system-overview-mini">
-    <app-system-overview [systemType]="'mini'"></app-system-overview>
+  <div class="system-overview-mini" *ngIf="data">
+    <app-system-overview [systemType]="'mini'" [data]="data"></app-system-overview>
   </div>
 
   <div class="system-data-tables mt-4">

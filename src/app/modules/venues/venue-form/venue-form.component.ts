@@ -59,11 +59,7 @@ export class VenueFormComponent implements OnInit {
       categoryId: new FormControl(null, Validators.required),
       photos: new FormControl([], Validators.required),
       venueFacilities: new FormControl([], Validators.required),
-      branches: new FormControl([], Validators.required),
-    });
-
-    this.branchForm = new FormGroup({
-      branches: this.formBuilder.array([]),
+      branches: this.formBuilder.array([])
     });
   }
 
@@ -88,7 +84,7 @@ export class VenueFormComponent implements OnInit {
 
   // Helper method to get the 'items' FormArray
   get branches(): FormArray {
-    return this.branchForm.get('branches') as FormArray;
+    return this.venueForm.get('branches') as FormArray;
   }
 
   onFileSelected(): void {
@@ -140,11 +136,15 @@ export class VenueFormComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this.venueForm.get('branches')?.setValue(this.branchForm.value);
+    // let x = {
+    //   venue:
+    // }
     const body = {
       user: this.userForm.value,
       venue: this.venueForm.value,
     };
+    console.log(body);
+    
     this.venuesService.createVenue(body).subscribe((res: any) => {
       this.ref.close(true);
 
@@ -160,7 +160,6 @@ export class VenueFormComponent implements OnInit {
   onResetForm() {
     this.userForm.reset();
     this.venueForm.reset();
-    this.branchForm.reset();
   }
   daysArray: any[] = [];
   openTimePickerDialog(data?: any, index?: any) {

@@ -91,34 +91,27 @@ export class CustomTableComponent {
   size = 10;
   onPageChange(event: any) {
     if (this.searchChoice) {
-      event.search = this.searchChoice;
+      event.name = this.searchChoice;
     } else {
-      event.search = null;
-    }
-
-    if (this.countryChoice) {
-      event.countryId = this.countryChoice;
-    } else {
-      event.countryId = null;
-    }
-
-    if (this.hospitalChoice) {
-      event.facilityId = this.hospitalChoice;
-    } else {
-      event.facilityId = null;
+      event.name = null;
     }
 
     if (this.typeChoice) {
-      event.type = this.typeChoice;
+      event.isApproved = this.typeChoice === 'yes' ? true : false;
     } else {
-      event.type = null;
+      event.isApproved = this.typeChoice;
     }
 
     if (this.approvalStatusChoice) {
-      event.adminApproved =
-        this.approvalStatusChoice === 'approve' ? true : false;
+      event.categoryId = this.approvalStatusChoice;
     } else {
-      event.adminApproved = null;
+      event.categoryId = this.approvalStatusChoice;
+    }
+
+    if (this.approvalStatusChoice) {
+      event.isApproved = this.approvalStatusChoice === 'yes' ? true : false;
+    } else {
+      event.isApproved = this.approvalStatus;
     }
 
     if (this.clientListChoice) {

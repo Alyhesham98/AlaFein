@@ -10,6 +10,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     OverlayPanelModule,
     ReactiveFormsModule,
     FileUploadModule,
+    InputTextModule
   ],
   exports: [
     SystemTableCardComponent,

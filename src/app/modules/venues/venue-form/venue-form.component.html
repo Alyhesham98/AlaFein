@@ -132,7 +132,7 @@
               formControlName="venueFacilities"
               [multiple]="true"
               optionLabel="ImageName"
-              optionValue="ImagePath"
+              optionValue="Id"
             >
               <ng-template let-facility pTemplate="item">
                 <img
@@ -162,7 +162,7 @@
     </form>
   </div>
   <div class="body" *ngIf="formPageNumber == 2">
-    <form [formGroup]="branchForm">
+    <form [formGroup]="venueForm">
       <div class="venue-days">
         <h2>GENERAL INFORMATION</h2>
         <div formArrayName="branches">

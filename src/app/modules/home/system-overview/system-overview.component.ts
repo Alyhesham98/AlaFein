@@ -7,6 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SystemOverviewComponent implements OnInit {
   @Input() systemType!: string;
+  @Input() data: any;
+  @Input() event!: number;
+  @Input() eventOrganizer!: number;
+  @Input() users!: number;
+  @Input() venue!: number;
 
   calendarFilter: any[] = [];
   selectedCalendar: any[] = [];
@@ -19,7 +24,8 @@ export class SystemOverviewComponent implements OnInit {
       { type: 'This Month', code: 'month' },
       { type: 'This Year', code: 'year' },
     ];
-
+    console.log(this.data);
+    
     this.dataTypes = {
       cardName: 'System Overview',
       filterDate: '01 NOV - 07 NOV 2023',
@@ -27,22 +33,22 @@ export class SystemOverviewComponent implements OnInit {
         {
           name: 'Events',
           type: 'Total Events',
-          count: 27,
+          count: this.data.event,
         },
         {
           name: 'Users',
           type: 'New Users',
-          count: 70,
+          count: this.data.users,
         },
         {
           name: 'Events',
           type: 'New Event Organizer',
-          count: 4,
+          count: this.data.eventOrganizer,
         },
         {
           name: 'Venues',
           type: 'New Venues',
-          count: 4,
+          count: this.data.venue,
         },
       ],
     };

@@ -23,11 +23,23 @@ export class AdminsService {
     return this.http.get(`${this.url}Admin/Dropdown`);
   }
 
+  getFilterAdminsDropdown() {
+    return this.http.get(`${this.url}Admin/FilterDropdown`);
+  }
+
+  filterAdmin(body: any) {
+    return this.http.post(`${this.url}Admin/GetFilterPagination`, body);
+  }
+
   createAdmin(body: any) {
     return this.http.post(`${this.url}Admin/Register`, body);
   }
 
   uploadAdminImage(body: any) {
     return this.http.post(`${this.url}Admin/UploadAdminImage`, body);
+  }
+
+  getDashboard() {
+    return this.http.get(`${this.url}Dashboard/Dashboard`);
   }
 }

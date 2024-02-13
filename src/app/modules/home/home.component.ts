@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminsService } from 'src/app/core/services/admins.service';
 
 @Component({
   selector: 'app-home',
@@ -7,97 +8,61 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   tablesData: any[] = [];
-
+  constructor(private adminService: AdminsService) {}
   ngOnInit() {
-    this.tablesData = [
-      {
-        cardName: 'Top Users',
-        filterDate: '01 NOV - 07 NOV 2023',
-        tableCols: [
-          { key: 'name', value: 'User Name' },
-          { key: 'status', value: 'Status' },
-        ],
-        tableData: [
-          {
-            name: 'Maged Moustafa',
-            status: 'Premium',
-          },
-          {
-            name: 'Maged Moustafa',
-            status: 'Premium',
-          },
-          {
-            name: 'Maged Moustafa',
-            status: 'Premium',
-          },
-        ],
-      },
-      {
-        cardName: 'Top Event Organizers',
-        filterDate: '01 NOV - 07 NOV 2023',
-        tableCols: [
-          { key: 'eventName', value: 'Event Organizer Name' },
-          { key: 'noOfEvents', value: '# Of Events' },
-        ],
-        tableData: [
-          {
-            eventName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-          {
-            eventName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-          {
-            eventName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-        ],
-      },
-      {
-        cardName: 'Top Venues',
-        filterDate: '01 NOV - 07 NOV 2023',
-        tableCols: [
-          { key: 'venueName', value: 'Venue Name' },
-          { key: 'noOfEvents', value: '# Of Events' },
-        ],
-        tableData: [
-          {
-            venueName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-          {
-            venueName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-          {
-            venueName: 'Maged Moustafa',
-            noOfEvents: '5',
-          },
-        ],
-      },
-      {
-        cardName: 'Top Categories',
-        filterDate: '01 NOV - 07 NOV 2023',
-        tableCols: [
-          { key: 'category', value: 'Category' },
-          { key: 'noOfEvents', value: '# Of Events' },
-        ],
-        tableData: [
-          {
-            category: 'Museums',
-            noOfEvents: '5',
-          },
-          {
-            category: 'Museums',
-            noOfEvents: '5',
-          },
-          {
-            category: 'Museums',
-            noOfEvents: '5',
-          },
-        ],
-      },
-    ];
+    this.getDashboard();
+  }
+  dashboard!: any;
+  data!: any;
+  dataArra: any[] = [];
+  getDashboard() {
+    this.adminService.getDashboard().subscribe((res: any) => {
+      this.dashboard = res.Data;
+      this.data = {
+        event: this.dashboard?.Event,
+        eventOrganizer: this.dashboard.EventOragnizer,
+        users: this.dashboard.Users,
+        venue: this.dashboard.Venue,
+      };
+      
+      this.tablesData = [
+        {
+          cardName: 'Top Users',
+          filterDate: '01 NOV - 07 NOV 2023',
+          tableCols: [
+            { key: 'FirstName', value: 'User Name' },
+            { key: 'Status.Name', value: 'Status' },
+          ],
+          tableData: this.dashboard.TopUsers,
+        },
+        {
+          cardName: 'Top Event Organizers',
+          filterDate: '01 NOV - 07 NOV 2023',
+          tableCols: [
+            { key: 'Name', value: 'Event Organizer Name' },
+            { key: 'NumberOfEvent', value: '# Of Events' },
+          ],
+          tableData: this.dashboard.TopOrganizers,
+        },
+        {
+          cardName: 'Top Venues',
+          filterDate: '01 NOV - 07 NOV 2023',
+          tableCols: [
+            { key: 'Name', value: 'Venue Name' },
+            { key: 'NumberOfEvent', value: '# Of Events' },
+          ],
+          tableData: this.dashboard.TopVenues,
+        },
+        {
+          cardName: 'Top Categories',
+          filterDate: '01 NOV - 07 NOV 2023',
+          tableCols: [
+            { key: 'Name', value: 'Category' },
+            { key: 'NumberOfEvent', value: '# Of Events' },
+          ],
+          tableData: this.dashboard.TopCategories,
+        },
+      ];
+    });
   }
 }

@@ -32,4 +32,8 @@ export class VenuesService {
   createVenue(body: any) {
     return this.http.post(`${this.url}AdminVenue/Register`, body);
   }
+
+  filterVenues(body: any) {
+    return this.http.post(`${this.url}AdminVenue/GetFilterPagination`, body);
+  }
 }

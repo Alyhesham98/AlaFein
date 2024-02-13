@@ -33,4 +33,8 @@ export class EventOrganizersService {
       body
     );
   }
+
+  filterEventsOrganizers(body: any) {
+    return this.http.post(`${this.url}AdminEventOrganizer/GetFilterPagination`, body);
+  }
 }
