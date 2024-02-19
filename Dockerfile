@@ -1,5 +1,5 @@
 # Use official node image as the base image
-FROM node:16.14.0-alpine as build
+FROM node:16.13.0-alpine as build
 
 # Set the working directory
 WORKDIR /app
@@ -8,6 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Install all the dependencies
+#RUN npm cache clear --force
 RUN npm install
 
 # Generate the build of the application
