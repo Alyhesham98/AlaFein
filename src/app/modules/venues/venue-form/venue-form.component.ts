@@ -23,7 +23,7 @@ export class VenueFormComponent implements OnInit {
   venueForm!: FormGroup;
   branchForm!: FormGroup;
   genreTypes!: any[];
-  weekDays!: any[];
+  weekDays: any[] = [];
   venueFacilties!: any[];
   selectedWorkday: any;
   display: boolean = false;
@@ -130,7 +130,14 @@ export class VenueFormComponent implements OnInit {
   getDropdown() {
     this.venuesService.getDropdown().subscribe((res: any) => {
       this.genreTypes = res?.Data?.Category;
-      this.weekDays = res?.Data?.Days;
+      res?.Data?.Days.forEach((element: any) => {
+        this.weekDays.push({
+          Id: element.Id,
+          Name: element.Name,
+          startTime: null,
+          endTime: null,
+        });
+      });
       this.venueFacilties = res?.Data?.Facility;
     });
   }
@@ -171,80 +178,33 @@ export class VenueFormComponent implements OnInit {
       baseZIndex: 10000,
       data: data,
     });
-    console.log(data);
 
     ref.onClose.subscribe((result: any) => {
       if (result) {
-        const date = new Date(result.date);
-        const dateStart = date.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        });
-        const endDate = new Date(result.startTime);
-        const dateEnd = endDate.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        });
-
-        // console.log(newValue);
-
-        // Push the newValue into the workDays form control array
         const workDaysFormArray = this.branches.at(index).get('workDays');
-        if (index > 0) {
-          this.daysArray = [];
-        }
-        for (let i = 0; i <= data.length; i++) {
-          this.newValue = {
-            day: data[i], // Assuming result.day holds the selected day
+        result.forEach((element: any) => {
+          const date = new Date(element.startTime);
+          const dateStart = date.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+          const endDate = new Date(element.endTime);
+          const dateEnd = endDate.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });          
+          this.newValue = [{
+            day: element.Id, // Assuming result.day holds the selected day
             from: dateStart ? dateStart : null,
             to: dateEnd ? dateEnd : null,
-          };
-        }
-        this.daysArray.push(this.newValue);
-        if (
-          this.newValue.from !== null &&
-          this.newValue.to !== null &&
-          this.newValue.day !== null
-        ) {
-          workDaysFormArray?.setValue(this.daysArray);
-        } else {
-          workDaysFormArray?.reset();
-        }
-      } else {
-        // Handle if the dialog is closed without selecting a time range
-        this.branches.at(index).get('workDays')?.reset();
+          }];
+          workDaysFormArray?.setValue(this.newValue);
+        });
       }
     });
   }
 
-  isDaySelected(branchIndex: number, day: string): boolean {
-    const workDays = this.branches.at(branchIndex).get('workDays')?.value;
-    return workDays.includes(day);
-  }
-
-  openDayForEditing(branchIndex: number, day: string) {
-    // Retrieve the FormControl for workDays
-    const workDaysControl = this.branches.at(branchIndex).get('workDays');
-
-    // Get the array of workDays from the FormControl
-    const workDaysArray = workDaysControl?.value;
-
-    // Find the index of the selected day in the array
-    const dayIndex = workDaysArray.findIndex((item: any) => item.day === day);
-
-    // Check if the day is already selected
-    if (dayIndex !== -1) {
-      // If the day is already selected, retrieve the existing data
-      const existingData = workDaysArray[dayIndex];
-      this.openTimePickerDialog(existingData, branchIndex, 'edit');
-    } else {
-      // If the day is not selected, initialize a new object with default values
-      const newData = {
-        day: day,
-        from: null, // Provide default values for time if necessary
-        to: null,
-      };
-      this.openTimePickerDialog(newData, branchIndex);
-    }
+  openDay(index: any, data: any) {
+    this.openTimePickerDialog(data, index);
   }
 }

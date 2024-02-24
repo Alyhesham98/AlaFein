@@ -22,12 +22,10 @@ export class TimePickerComponent implements OnInit {
   }
 
   onSave() {
-    if (this.selectedDate && this.selectedTime) {
-      this.ref.close({
-        date: this.selectedDate,
-        startTime: this.selectedTime,
-        endTime: this.selectedTime,
-      });
+    if (this.selectedDate && this.selectedTime) {      
+      this.config.data[this.config.data.length - 1].startTime = new Date(this.selectedDate);
+      this.config.data[this.config.data.length - 1].endTime = new Date(this.selectedTime);
+      this.ref.close(this.config.data);
     } else {
       this.ref.close();
     }

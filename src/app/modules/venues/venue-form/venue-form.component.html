@@ -198,11 +198,9 @@
               <div class="col-xl-10 mt-3">
                 <p-selectButton
                   [options]="weekDays"
-                  formControlName="workDays"
                   [multiple]="true"
                   optionLabel="Name"
-                  optionValue="Id"
-                  (onChange)="openDayForEditing(branchIndex, $event.value)"
+                  (onChange)="openDay(branchIndex, $event.value)"
                 ></p-selectButton>
               </div>
               <div class="col-xl-2 mt-4">
