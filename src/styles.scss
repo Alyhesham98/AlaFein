@@ -144,3 +144,15 @@ h1 {
   font-weight: 400;
   color: black;
 }
+
+// Dropdown Styles
+
+::ng-deep {
+  ol,
+  ul {
+    padding-left: 0 !important;
+  }
+  ul {
+    margin-bottom: 0 !important;
+  }
+}

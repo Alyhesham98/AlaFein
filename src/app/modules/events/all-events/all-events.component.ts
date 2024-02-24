@@ -112,4 +112,25 @@ export class AllEventsComponent {
       'events/event-details/' + data.Id + '/' + data?.Status?.Name,
     ]);
   }
+
+  filter: boolean = false;
+
+  onSearch(event: any) {
+    this.filter = true;
+    this.evetnsService
+      .filterEvents({
+        pageSize: event?.rows ? event?.rows : this.pageSize,
+        pageNumber: event.page ? event.page + 1 : 1,
+        name: event.name ? event.name : null,
+        venue: event.venue ? event.venue : null,
+        isSpotlight: event.isSpotlight ? event.isSpotlight : null,
+        isApproved: event.isApproved ? event.isApproved : null,
+      })
+      .subscribe((res: any) => {
+        this.rowsData = res.Data;
+        this.pageNumber = res.PageNumber;
+        this.pageSize = res.PageSize;
+        this.totalRecords = res.PgTotal;
+      });
+  }
 }

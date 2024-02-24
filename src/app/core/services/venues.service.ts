@@ -34,6 +34,6 @@ export class VenuesService {
   }
 
   filterVenues(body: any) {
-    return this.http.post(`${this.url}AdminVenue/GetFilterPagination`, body);
+    return this.http.post(`${this.url}AdminVenue/GetFilterPaginated`, body);
   }
 }

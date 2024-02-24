@@ -69,4 +69,22 @@ export class VenuesComponent implements OnInit {
       res ? this.getAllVenues({ pageNumber: 1, pageSize: 10 }) : ''
     );
   }
+  filter: boolean = false;
+
+  onSearch(event: any) {
+    this.filter = true;
+    this.venuesService
+      .filterVenues({
+        pageSize: event?.rows ? event?.rows : this.pageSize,
+        pageNumber: event.page ? event.page + 1 : 1,
+        name: event.name ? event.name : null,
+        email: event.email ? event.email : null,
+      })
+      .subscribe((res: any) => {
+        this.rowsData = res.Data;
+        this.pageNumber = res.PageNumber;
+        this.pageSize = res.PageSize;
+        this.totalRecords = res.PgTotal;
+      });
+  }
 }

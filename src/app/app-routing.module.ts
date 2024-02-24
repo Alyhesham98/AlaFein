@@ -26,6 +26,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'notifications',
+    loadChildren: () =>
+      import('./modules/notifications/notifications.module').then(
+        (m) => m.NotificationsModule
+      ),
+  },
+  {
     path: 'venues',
     loadChildren: () =>
       import('./modules/venues/venues.module').then((m) => m.VenuesModule),

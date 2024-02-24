@@ -35,6 +35,6 @@ export class EventOrganizersService {
   }
 
   filterEventsOrganizers(body: any) {
-    return this.http.post(`${this.url}AdminEventOrganizer/GetFilterPagination`, body);
+    return this.http.post(`${this.url}AdminEventOrganizer/GetFilterPaginated`, body);
   }
 }

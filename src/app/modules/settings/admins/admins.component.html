@@ -16,11 +16,18 @@
     <div class="col">
       <app-custom-table
         [pageSize]="pageSize"
-        (pageNumber)="getAllAdmins($event)"
+        (pageNumber)="filter ? onSearch($event) : getAllAdmins($event)"
         [totalRecords]="totalRecords"
         [cols]="colsData"
         [rows]="rowsData"
         [pageType]="'Admin'"
+        [showFilter]="true"
+        [showSearch]="true"
+        [placeholderSearch]="'Search'"
+        [showFilterByRoleDropdown]="true"
+        [placeholderFilterByRoleDropdown]="'Filter by Role'"
+        [filterByRoleDropdownList]="adminRoles"
+        (filterOutput)="onSearch($event)"
       ></app-custom-table>
     </div>
   </div>

@@ -7,7 +7,14 @@ import { CategoriesComponent } from './categories/categories.component';
 const routes: Routes = [
   { path: 'admins', component: AdminsComponent },
   { path: 'categories', component: CategoriesComponent },
-  { path: 'facilities', component: FacilitiesComponent }
+  { path: 'facilities', component: FacilitiesComponent },
+  {
+    path: 'notifications',
+    loadChildren: () =>
+      import('./../notifications/notifications.module').then(
+        (m) => m.NotificationsModule
+      ),
+  },
 ];
 
 @NgModule({

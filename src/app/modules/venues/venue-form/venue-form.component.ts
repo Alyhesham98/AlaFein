@@ -59,7 +59,7 @@ export class VenueFormComponent implements OnInit {
       categoryId: new FormControl(null, Validators.required),
       photos: new FormControl([], Validators.required),
       venueFacilities: new FormControl([], Validators.required),
-      branches: this.formBuilder.array([])
+      branches: this.formBuilder.array([]),
     });
   }
 
@@ -144,7 +144,7 @@ export class VenueFormComponent implements OnInit {
       venue: this.venueForm.value,
     };
     console.log(body);
-    
+
     this.venuesService.createVenue(body).subscribe((res: any) => {
       this.ref.close(true);
 
@@ -162,13 +162,16 @@ export class VenueFormComponent implements OnInit {
     this.venueForm.reset();
   }
   daysArray: any[] = [];
-  openTimePickerDialog(data?: any, index?: any) {
+  newValue: any = {};
+  openTimePickerDialog(data?: any, index?: any, type?: any) {
     const ref = this.dialogService.open(TimePickerComponent, {
       header: 'Select Time Range',
       width: '70%',
       height: '40%',
       baseZIndex: 10000,
+      data: data,
     });
+    console.log(data);
 
     ref.onClose.subscribe((result: any) => {
       if (result) {
@@ -182,32 +185,66 @@ export class VenueFormComponent implements OnInit {
           hour: '2-digit',
           minute: '2-digit',
         });
-        let value = [];
 
-        if (data.value.length > 1) {
-          value.push(data.value.shift());
-        }
+        // console.log(newValue);
+
+        // Push the newValue into the workDays form control array
         const workDaysFormArray = this.branches.at(index).get('workDays');
-        let newValue = {
-          day: value[0], // Assuming result.day holds the selected day
-          from: dateStart ? dateStart : null,
-          to: dateEnd ? dateEnd : null,
-        };
-
         if (index > 0) {
           this.daysArray = [];
         }
-        this.daysArray.push(newValue);
+        for (let i = 0; i <= data.length; i++) {
+          this.newValue = {
+            day: data[i], // Assuming result.day holds the selected day
+            from: dateStart ? dateStart : null,
+            to: dateEnd ? dateEnd : null,
+          };
+        }
+        this.daysArray.push(this.newValue);
         if (
-          newValue.from !== null &&
-          newValue.to !== null &&
-          newValue.day !== null
+          this.newValue.from !== null &&
+          this.newValue.to !== null &&
+          this.newValue.day !== null
         ) {
           workDaysFormArray?.setValue(this.daysArray);
         } else {
           workDaysFormArray?.reset();
         }
+      } else {
+        // Handle if the dialog is closed without selecting a time range
+        this.branches.at(index).get('workDays')?.reset();
       }
     });
+  }
+
+  isDaySelected(branchIndex: number, day: string): boolean {
+    const workDays = this.branches.at(branchIndex).get('workDays')?.value;
+    return workDays.includes(day);
+  }
+
+  openDayForEditing(branchIndex: number, day: string) {
+    // Retrieve the FormControl for workDays
+    const workDaysControl = this.branches.at(branchIndex).get('workDays');
+
+    // Get the array of workDays from the FormControl
+    const workDaysArray = workDaysControl?.value;
+
+    // Find the index of the selected day in the array
+    const dayIndex = workDaysArray.findIndex((item: any) => item.day === day);
+
+    // Check if the day is already selected
+    if (dayIndex !== -1) {
+      // If the day is already selected, retrieve the existing data
+      const existingData = workDaysArray[dayIndex];
+      this.openTimePickerDialog(existingData, branchIndex, 'edit');
+    } else {
+      // If the day is not selected, initialize a new object with default values
+      const newData = {
+        day: day,
+        from: null, // Provide default values for time if necessary
+        to: null,
+      };
+      this.openTimePickerDialog(newData, branchIndex);
+    }
   }
 }

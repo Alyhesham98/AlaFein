@@ -15,6 +15,10 @@ export class CommentsComponent implements OnInit {
       text: 'Name',
     },
     {
+      field: 'Event.Name',
+      text: 'Event Name',
+    },
+    {
       field: 'User.Name',
       text: 'User',
     }
@@ -66,6 +70,25 @@ export class CommentsComponent implements OnInit {
             detail: 'Error Comment.',
           });
         }
+      });
+  }
+  
+  filter: boolean = false;
+
+  onSearch(event: any) {
+    this.filter = true;
+    this.commentService
+      .filterComment({
+        pageSize: event?.rows ? event?.rows : this.pageSize,
+        pageNumber: event.page ? event.page + 1 : 1,
+        name: event.name ? event.name : null,
+        event: event.event ? event.event : null,
+      })
+      .subscribe((res: any) => {
+        this.rowsData = res.Data;
+        this.pageNumber = res.PageNumber;
+        this.pageSize = res.PageSize;
+        this.totalRecords = res.PgTotal;
       });
   }
 }

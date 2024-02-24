@@ -5,134 +5,128 @@
   [columns]="cols"
   [tableStyle]="{ 'min-width': '60rem' }"
 >
-  <ng-template pTemplate="caption" *ngIf="filter">
+  <ng-template pTemplate="caption" *ngIf="showFilter">
     <div class="row d-flex justify-content-between">
-      <div class="col-4" *ngIf="isSearch">
-        <label style="visibility: hidden">Search</label>
+      <div class="col searchFilter" *ngIf="showSearch">
         <span class="p-input-icon-right w-100">
           <input
             pInputText
-            [(ngModel)]="searchChoice"
             class="w-100"
             type="text"
-            (keyup.enter)="filterChange(searchChoice)"
             [placeholder]="placeholderSearch"
+            [(ngModel)]="searchChoice"
           />
           <i class="pi pi-search"
             ><img src="../../../assets/svg/search.svg" alt=""
           /></i>
         </span>
       </div>
-      <div class="col-4" *ngIf="isTypeList">
-        <p-dropdown
-          [options]="typeList"
-          [(ngModel)]="typeChoice"
-          optionLabel="name"
-          [placeholder]="placeholderType"
-          [showClear]="true"
-          optionValue="code"
-          (onChange)="filterChange(typeChoice)"
-        ></p-dropdown>
+
+      <div class="col searchFilter" *ngIf="showSearchByName">
+        <span class="p-input-icon-right w-100">
+          <input
+            pInputText
+            class="w-100"
+            type="text"
+            [placeholder]="placeholderSearchByName"
+            [(ngModel)]="searchByName"
+          />
+          <i class="pi pi-search"
+            ><img src="../../../assets/svg/search.svg" alt=""
+          /></i>
+        </span>
       </div>
 
-      <div class="col-4" *ngIf="approvalStatusList">
-        <p-dropdown
-          [options]="approval"
-          [(ngModel)]="approvalStatusChoice"
-          [placeholder]="placeholderApproval"
-          [showClear]="true"
-          optionValue="code"
-          optionLabel="name"
-          (onChange)="filterChange(approvalStatusChoice)"
-        ></p-dropdown>
+      <div class="col searchFilter" *ngIf="showSearchByEmail">
+        <span class="p-input-icon-right w-100">
+          <input
+            pInputText
+            class="w-100"
+            type="text"
+            [placeholder]="placeholderSearchByEmail"
+            [(ngModel)]="searchByEmail"
+          />
+          <i class="pi pi-search"
+            ><img src="../../../assets/svg/search.svg" alt=""
+          /></i>
+        </span>
       </div>
 
-      <div class="col-4" *ngIf="isClientFilterList">
-        <label class="mb-2">Clients</label>
-        <p-dropdown
-          [options]="clientList"
-          [(ngModel)]="clientListChoice"
-          [placeholder]="placeholderClient"
-          [showClear]="true"
-          optionValue="code"
-          optionLabel="name"
-          (onChange)="filterChange(clientListChoice)"
-        ></p-dropdown>
+      <div class="col searchFilter" *ngIf="showSearchByEvent">
+        <span class="p-input-icon-right w-100">
+          <input
+            pInputText
+            class="w-100"
+            type="text"
+            [placeholder]="placeholderSearchByEvent"
+            [(ngModel)]="searchByEvent"
+          />
+          <i class="pi pi-search"
+            ><img src="../../../assets/svg/search.svg" alt=""
+          /></i>
+        </span>
       </div>
 
-      <div class="col-4" *ngIf="isCompanyFilterList">
-        <label class="mb-2">Companies</label>
-        <p-dropdown
-          [options]="companyList"
-          [(ngModel)]="companyListChoice"
-          [placeholder]="placeholderClient"
-          [showClear]="true"
-          optionValue="code"
-          optionLabel="name"
-          (onChange)="filterChange(companyListChoice)"
-        ></p-dropdown>
-      </div>
-      <div class="col-4 dropdown-container" *ngIf="isCompanyList">
-        <label class="mb-2">Company</label>
-        <p-dropdown
-          [filter]="true"
-          [options]="companiesList"
-          [(ngModel)]="companyChoice"
-          [placeholder]="placeholderCompany"
-          [showClear]="true"
-          optionValue="code"
-          optionLabel="name"
-          (onChange)="filterChange(companyChoice)"
-        ></p-dropdown>
+      <div class="col searchFilter" *ngIf="showSearchByVenue">
+        <span class="p-input-icon-right w-100">
+          <input
+            pInputText
+            class="w-100"
+            type="text"
+            [placeholder]="placeholderSearchByVenue"
+            [(ngModel)]="searchByVenue"
+          />
+          <i class="pi pi-search"
+            ><img src="../../../assets/svg/search.svg" alt=""
+          /></i>
+        </span>
       </div>
 
-      <div class="col-4" *ngIf="isStatusList">
-        <label class="mb-2">Status</label>
+      <div class="col" *ngIf="showFilterByRoleDropdown">
         <p-dropdown
-          [options]="statusList"
-          [(ngModel)]="StatusChoice"
-          [placeholder]="placeholderStatus"
-          [showClear]="true"
-          optionValue="Id"
           optionLabel="Name"
-          (onChange)="filterChange(StatusChoice)"
+          optionValue="Name"
+          [options]="filterByRoleDropdownList"
+          [placeholder]="placeholderFilterByRoleDropdown"
+          [showClear]="true"
+          [(ngModel)]="selectedFilterByRole"
         ></p-dropdown>
       </div>
 
-      <div class="col-4" *ngIf="isCountryList">
-        <label class="mb-2">Country</label>
+      <div class="col" *ngIf="showSpotlightDropdown">
         <p-dropdown
-          [options]="countryList"
-          [(ngModel)]="countryChoice"
-          [placeholder]="placeholderCountry"
-          [showClear]="true"
-          optionValue="Id"
           optionLabel="Name"
-          (onChange)="filterChange(countryChoice)"
+          optionValue="Value"
+          [options]="spotlightList"
+          [placeholder]="placeholderSpotlightDropdown"
+          [showClear]="true"
+          [(ngModel)]="spotlightDropdown"
         ></p-dropdown>
       </div>
 
-      <div class="col-4" *ngIf="isUserStatusList">
-        <label class="mb-2">Hospital</label>
+      <div class="col" *ngIf="showApprovedDropdown">
         <p-dropdown
-          [options]="userStatusList"
-          [(ngModel)]="hospitalChoice"
-          [placeholder]="placeholderUserStatus"
-          [showClear]="true"
-          optionValue="Id"
           optionLabel="Name"
-          (onChange)="filterChange(hospitalChoice)"
+          optionValue="Value"
+          [options]="approvedList"
+          [placeholder]="placeholderIsApprovedDropdown"
+          [showClear]="true"
+          [(ngModel)]="isApprovedDropdown"
         ></p-dropdown>
       </div>
-    </div>
-    <div *ngIf="isSortClearBtn" class="flex d-flex justify-content-end mt-2">
-      <button
-        pButton
-        label="Clear"
-        class="p-button-outlined"
-        icon="pi pi-filter-slash"
-        (click)="clear(dt1)"
-      ></button>
+
+      <div class="filterActions col">
+        <button class="btn filterBtn" (click)="onFilterSubmit()">
+          <span>FILTER</span>
+          <img
+            src="assets/icons/arrow-right.svg"
+            alt="Arrow Right"
+            width="17"
+            height="17"
+          />
+        </button>
+        <a class="btn resetBtn" (click)="onFilterReset()">RESET</a>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -191,6 +185,36 @@
                 style="border-radius: 50%"
                 alt="category"
               />
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'socialLinks'">
+            <div
+              *ngIf="rows?.socialLinks?.facebook"
+              style="min-width: 35px; border-radius: 20%; display: inline-block"
+            >
+              <a [href]="rows?.socialLinks?.facebook" target="_blank">
+                <img
+                  [src]="'../../../assets/facebook.svg'"
+                  width="30"
+                  height="30"
+                  style="border-radius: 20%"
+                  alt="category"
+                />
+              </a>
+            </div>
+            <div
+              *ngIf="rows?.socialLinks?.instagram"
+              style="min-width: 35px; border-radius: 20%; display: inline-block"
+            >
+              <a [href]="rows?.socialLinks?.instagram" target="_blank">
+                <img
+                  [src]="'../../../assets/instagram.svg'"
+                  width="30"
+                  height="30"
+                  style="border-radius: 20%"
+                  alt="category"
+                />
+              </a>
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'location'"> location </ng-template>

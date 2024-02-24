@@ -1,11 +1,13 @@
+<p-toast key="toast1"></p-toast>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <h1>EVENT ORGANIZERS</h1>
+      <h1>NOTIFICATIONS</h1>
     </div>
     <div class="col-md-6 d-md-flex justify-content-end">
       <button class="customBtn" (click)="show()">
-        CREATE NEW EVENT ORGANIZER
+        CREATE NEW NOTIFICATION
       </button>
     </div>
   </div>
@@ -18,17 +20,13 @@
     <div class="col">
       <app-custom-table
         [pageSize]="pageSize"
+        (onDeleteClicked)="deleteNotification($event)"
         [totalRecords]="totalRecords"
+        [actions]="actions"
+        (pageNumber)="getAllNotifcations($event)"
+        (userDetails)="show($event)"
         [cols]="colsData"
         [rows]="rowsData"
-        (pageNumber)="filter ? onSearch($event) : getAllEventOrganizers($event)"
-        [showSearch]="false"
-        [showFilter]="true"
-        [placeholderSearchByName]="'Search by Name'"
-        [showSearchByName]="true"
-        [showSearchByEmail]="true"
-        [placeholderSearchByEmail]="'Search By Email'"
-        (filterOutput)="onSearch($event)"
       ></app-custom-table>
     </div>
   </div>

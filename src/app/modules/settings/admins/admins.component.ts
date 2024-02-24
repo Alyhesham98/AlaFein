@@ -30,6 +30,8 @@ export class AdminsComponent implements OnInit {
   pageSize: number = 10;
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
+  adminRoles = [];
+  filter: boolean = false;
 
   constructor(
     public dialogService: DialogService,
@@ -41,6 +43,8 @@ export class AdminsComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     });
+
+    this.getDropdowns();
   }
 
   getAllAdmins(e: any) {
@@ -52,6 +56,12 @@ export class AdminsComponent implements OnInit {
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
+  }
+
+  getDropdowns() {
+    this.adminsService.getAdminsDropdown().subscribe((res: any) => {
+      this.adminRoles = res.Data;
+    });
   }
 
   show(data?: any) {
@@ -67,5 +77,22 @@ export class AdminsComponent implements OnInit {
     // this.ref.onClose.subscribe((res) =>
     //   res ? this.getAllAdmins({ pageNumber: 1, pageSize: 10 }) : ''
     // );
+  }
+
+  onSearch(event: any) {
+    this.filter = true;
+    this.adminsService
+      .filterAdmin({
+        pageSize: event?.rows ? event?.rows : this.pageSize,
+        pageNumber: event.page ? event.page + 1 : 1,
+        search: event.search ? event.search : null,
+        roleFilter: event.roleFilter ? event.roleFilter : null,
+      })
+      .subscribe((res: any) => {
+        this.rowsData = res.Data;
+        this.pageNumber = res.PageNumber;
+        this.pageSize = res.PageSize;
+        this.totalRecords = res.PgTotal;
+      });
   }
 }

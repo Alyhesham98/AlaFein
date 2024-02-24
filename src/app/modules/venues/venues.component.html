@@ -14,8 +14,20 @@
   </div>
   <div class="row">
     <div class="col">
-      <app-custom-table [pageSize]="pageSize" [totalRecords]="totalRecords" [cols]="colsData"
-        [rows]="rowsData"></app-custom-table>
+      <app-custom-table
+        (pageNumber)="filter ? onSearch($event) : getAllVenues($event)"
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+        [showSearch]="false"
+        [showFilter]="true"
+        [showSearchByEmail]="true"
+        [placeholderSearchByEmail]="'Search By Email'"
+        [showSearchByName]="true"
+        [placeholderSearchByName]="'Search by Venue'"
+        (filterOutput)="onSearch($event)"
+      ></app-custom-table>
     </div>
   </div>
 </div>

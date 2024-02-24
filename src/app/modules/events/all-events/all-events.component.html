@@ -22,16 +22,22 @@
         [isDots]="true"
         [actions]="actions"
         [pageType]="'Event'"
-        (pageNumber)="getAllEvents($event)"
+        (pageNumber)="filter ? onSearch($event) : getAllEvents($event)"
         (spotlightDetails)="changeSpotlightStatus($event)"
         (dataDetails)="getEventDetails($event)"
-        ></app-custom-table>
-        <!-- [filter]="true" -->
-        <!-- [placeholderSearch]="'Search'"
-        [isTypeList]="true"
-        [approvalStatusList]="true"
-        [placeholderType]="'Filter By Status'"
-        [placeholderApproval]="'Filter By Category'" -->
+        [showFilter]="true"
+        [showSearch]="false"
+        [showSearchByName]="true"
+        [placeholderSearchByName]="'Search By Name'"
+        [showSearchByVenue]="true"
+        [placeholderSearchByVenue]="'Search By Venue'"
+        [showSpotlightDropdown]="true"
+        [placeholderSpotlightDropdown]="'Search By Spotlight'"
+        [showApprovedDropdown]="true"
+        [placeholderIsApprovedDropdown]="'Search By Status'"
+        (filterOutput)="onSearch($event)"
+      ></app-custom-table>
+
     </div>
   </div>
 </div>

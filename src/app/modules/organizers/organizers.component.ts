@@ -20,7 +20,7 @@ export class OrganizersComponent implements OnInit {
       text: '# of Events',
     },
     {
-      field: 'ExpirationDate',
+      field: 'socialLinks',
       text: 'Social Links',
     },
     {
@@ -52,7 +52,20 @@ export class OrganizersComponent implements OnInit {
     this.eventOrganizersService
       .getAllEventOrganizers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
-        this.rowsData = data.Data;
+        data.Data.forEach((element: any) => {
+          this.rowsData.push({
+            Id: element.Id,
+            FirstName: element.FirstName,
+            LastName: element.LastName,
+            Email: element.Email,
+            Photo: element.Photo,
+            socialLinks: {
+              facebook: element.Facebook,
+              websiteURL: element.WebsiteURL,
+              instagram: element.Instagram,
+            },
+          });
+        });
         this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
@@ -72,5 +85,24 @@ export class OrganizersComponent implements OnInit {
     this.ref.onClose.subscribe((res) =>
       res ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 }) : ''
     );
+  }
+
+  filter: boolean = false;
+
+  onSearch(event: any) {
+    this.filter = true;
+    this.eventOrganizersService
+      .filterEventsOrganizers({
+        pageSize: event?.rows ? event?.rows : this.pageSize,
+        pageNumber: event.page ? event.page + 1 : 1,
+        name: event.name ? event.name : null,
+        email: event.email ? event.email : null,
+      })
+      .subscribe((res: any) => {
+        this.rowsData = res.Data;
+        this.pageNumber = res.PageNumber;
+        this.pageSize = res.PageSize;
+        this.totalRecords = res.PgTotal;
+      });
   }
 }

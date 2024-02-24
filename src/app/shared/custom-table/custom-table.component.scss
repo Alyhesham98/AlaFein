@@ -29,8 +29,40 @@
     font-size: 14px;
     cursor: pointer;
   }
+
+  .searchFilter {
+    .p-input-icon-right > i {
+      margin-top: -0.8rem;
+    }
+  }
+
+  .filterActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4rem;
+    .filterBtn {
+      width: 145px;
+      height: 49px;
+      border-radius: 12.17px;
+      color: white;
+      background-color: #0000f5;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16.22px, 20.28px, 16.22px, 20.28px;
+      span {
+        padding-right: 1rem;
+      }
+    }
+
+    .resetBtn {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0000f5;
+    }
+  }
 }
 
-.paraContent{
+.paraContent {
   width: 100%;
 }

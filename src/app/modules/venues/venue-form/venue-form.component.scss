@@ -149,8 +149,12 @@
   }
 }
 
-.selected {
-  /* Your selected style here */
-  border-color: black;
-  /* Add any other styles you want to apply when the control has a value */
+// .selected {
+//   /* Your selected style here */
+//   border-color: black;
+//   /* Add any other styles you want to apply when the control has a value */
+// }
+.has-value {
+  /* Add your desired styles here */
+  border: 2px solid green!important; /* For example */
 }

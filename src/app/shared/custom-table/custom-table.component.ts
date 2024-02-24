@@ -8,44 +8,72 @@ import { Table } from 'primeng/table';
   styleUrls: ['./custom-table.component.scss'],
 })
 export class CustomTableComponent {
+  @Input() showFilter: boolean = false;
+
+  // For Search
+  @Input() showSearch: boolean = true;
+  @Input() placeholderSearch!: string;
+
+  // For Filter by Role Dropdown
+  @Input() showFilterByRoleDropdown: boolean = false;
+  @Input() filterByRoleDropdownList: any[] = [];
+  @Input() placeholderFilterByRoleDropdown!: string;
+  selectedFilterByRole: any;
+
+  searchByName: any;
+  @Input() showSearchByName!: boolean;
+  @Input() placeholderSearchByName!: string;
+  searchByEmail: any;
+  @Input() showSearchByEmail!: boolean;
+  @Input() placeholderSearchByEmail!: string;
+  searchByEvent: any;
+  @Input() showSearchByEvent!: boolean;
+  @Input() placeholderSearchByEvent!: string;
+  searchByVenue: any;
+  @Input() showSearchByVenue!: boolean;
+  @Input() placeholderSearchByVenue!: string;
+
+  spotlightDropdown: any;
+  spotlightList: any = [
+    {
+      Name: 'Is Spotlight',
+      Value: true,
+    },
+    {
+      Name: 'Not Spotlight',
+      Value: false,
+    },
+  ];
+  @Input() showSpotlightDropdown!: boolean;
+  @Input() placeholderSpotlightDropdown!: string;
+
+  isApprovedDropdown: any;
+  approvedList: any = [
+    {
+      Name: 'Is Approved',
+      Value: true,
+    },
+    {
+      Name: 'Not Approved',
+      Value: false,
+    },
+  ];
+  @Input() showApprovedDropdown!: boolean;
+  @Input() placeholderIsApprovedDropdown!: string;
+
   @Input() isDots: boolean = false;
   @Input() isId: boolean = false;
   @Input() isEye: boolean = false;
   @Input() showAction: boolean = true;
-  @Input() isSortClearBtn: boolean = false;
-  @Input() isSearch: boolean = true;
-  @Input() isStatusList: boolean = false;
-  @Input() isCompanyList: boolean = false;
-  @Input() isCompanyFilterList: boolean = false;
-  @Input() companyList: any[] = [];
-  @Input() statusList: any[] = [];
-  @Input() userStatusList: any[] = [];
-  @Input() companiesList: any[] = [];
-  @Input() isCountryList: boolean = false;
-  @Input() countryList: any[] = [];
-  @Input() isTypeList: boolean = false;
-  @Input() typeList: any[] = [];
-  @Input() clientList: any[] = [];
   @Input() isRoleList: boolean = false;
   @Input() roleList: any[] = [];
-  @Input() isClientFilterList: boolean = false;
   @Input() cols: any[] = [];
   @Input() rows: any[] = [];
   @Output() pageNumber: EventEmitter<number> = new EventEmitter();
   @Input() pageSize: number = 10;
   @Input() totalRecords!: number;
-  @Input() placeholderStatus!: string;
-  @Input() placeholderUserStatus!: string;
   @Input() placeholderCompany!: string;
-  @Input() placeholderCountry!: string;
-  @Input() placeholderSearch!: string;
-  @Input() placeholderClient!: string;
-  @Input() placeholderType!: string;
-  @Input() placeholderApproval!: string;
-  @Input() isUserStatusList: boolean = false;
-  @Input() approvalStatusList: boolean = false;
   @Input() actions: any[] = [];
-  @Input() filter: boolean = false;
   @Output() dataDetails: EventEmitter<any> = new EventEmitter();
   @Output() confirmCredentail: EventEmitter<any> = new EventEmitter();
   @Output() userStatus: EventEmitter<any> = new EventEmitter();
@@ -65,25 +93,8 @@ export class CustomTableComponent {
   @Output() emailDetails: EventEmitter<any> = new EventEmitter();
 
   userStatusChoice: any;
-  companyListChoice: any;
-  StatusChoice: any;
-  companyChoice: any;
-  hospitalChoice: any;
-  clientListChoice: any;
-  approvalStatusChoice: any;
-  typeChoice: any;
   searchChoice: any;
-  countryChoice: any;
-  approval: any[] = [
-    {
-      name: 'Approved',
-      code: 'approve',
-    },
-    {
-      name: 'Unapproved',
-      code: 'unapprove',
-    },
-  ];
+
   type: any;
   @Input() pageType: any;
   constructor(private router: Router) {}
@@ -96,105 +107,27 @@ export class CustomTableComponent {
       event.name = null;
     }
 
-    if (this.typeChoice) {
-      event.isApproved = this.typeChoice === 'yes' ? true : false;
+    if (this.selectedFilterByRole) {
+      event.isApproved = this.selectedFilterByRole === 'yes' ? true : false;
     } else {
-      event.isApproved = this.typeChoice;
-    }
-
-    if (this.approvalStatusChoice) {
-      event.categoryId = this.approvalStatusChoice;
-    } else {
-      event.categoryId = this.approvalStatusChoice;
-    }
-
-    if (this.approvalStatusChoice) {
-      event.isApproved = this.approvalStatusChoice === 'yes' ? true : false;
-    } else {
-      event.isApproved = this.approvalStatus;
-    }
-
-    if (this.clientListChoice) {
-      event.client = this.clientListChoice;
-    } else {
-      event.client = null;
-    }
-
-    let submStatus = this.StatusChoice?.toString();
-    let userStatus = this.userStatusChoice?.toString();
-
-    if (submStatus) {
-      event.status = submStatus;
-    } else if (!userStatus && !submStatus) {
-      event.status = null;
-    }
-
-    if (userStatus) {
-      event.status = userStatus;
-    } else if (!userStatus && !submStatus) {
-      event.status = null;
+      event.isApproved = this.selectedFilterByRole;
     }
 
     this.pageNumber.emit(event);
   }
   ngOnInit(): void {}
   body: any = {};
-  filterChange(data: any) {
+
+  onFilterChange(data: any) {
     if (this.searchChoice) {
       this.body.search = this.searchChoice;
     } else {
       this.body.search = null;
     }
-
-    if (this.hospitalChoice) {
-      this.body.facilityId = this.hospitalChoice;
-    } else {
-      this.body.facilityId = null;
-    }
-
-    if (this.countryChoice) {
-      this.body.countryId = this.countryChoice;
-    } else {
-      this.body.countryId = null;
-    }
-
-    if (this.typeChoice) {
-      this.body.type = this.typeChoice;
+    if (this.selectedFilterByRole) {
+      this.body.type = this.selectedFilterByRole;
     } else {
       this.body.type = null;
-    }
-
-    if (this.approvalStatusChoice) {
-      this.body.adminApproved =
-        this.approvalStatusChoice === 'approve' ? true : false;
-    } else {
-      this.body.adminApproved = null;
-    }
-
-    if (this.clientListChoice) {
-      this.body.client = this.clientListChoice;
-    } else {
-      this.body.client = null;
-    }
-    if (this.companyChoice) {
-      this.body.company = this.companyChoice;
-    } else {
-      this.body.company = null;
-    }
-
-    let submStatus = this.StatusChoice?.toString();
-    let userStatus = this.userStatusChoice?.toString();
-
-    if (submStatus) {
-      this.body.status = submStatus;
-    } else if (!userStatus && !submStatus) {
-      this.body.status = null;
-    }
-
-    if (userStatus) {
-      this.body.status = userStatus;
-    } else if (!userStatus && !submStatus) {
-      this.body.status = null;
     }
 
     this.filterOutput.emit(this.body);
@@ -224,10 +157,6 @@ export class CustomTableComponent {
 
   statusChange(details: any) {
     this.userStatus.emit(details);
-  }
-
-  clear(table: Table) {
-    table.clear();
   }
 
   submitCredential(details: any) {
@@ -293,5 +222,69 @@ export class CustomTableComponent {
 
   search(event: any) {
     this.userSearch.emit(event.target.value);
+  }
+
+  onFilterSubmit() {
+    if (this.searchChoice) {
+      this.body.search = this.searchChoice;
+    } else {
+      this.body.search = null;
+    }
+
+    if (this.searchByName) {
+      this.body.name = this.searchByName;
+    } else {
+      this.body.name = null;
+    }
+
+    if (this.searchByEmail) {
+      this.body.email = this.searchByEmail;
+    } else {
+      this.body.email = null;
+    }
+
+    if (this.searchByEvent) {
+      this.body.event = this.searchByEvent;
+    } else {
+      this.body.event = null;
+    }
+
+    if (this.searchByVenue) {
+      this.body.venue = this.searchByVenue;
+    } else {
+      this.body.venue = null;
+    }
+
+    if (this.selectedFilterByRole) {
+      this.body.roleFilter = this.selectedFilterByRole;
+    } else {
+      this.body.roleFilter = null;
+    }
+
+    if (this.spotlightDropdown) {
+      this.body.isSpotlight = this.spotlightDropdown;
+    } else {
+      this.body.isSpotlight = null;
+    }
+
+    if (this.isApprovedDropdown) {
+      this.body.isApproved = this.isApprovedDropdown;
+    } else {
+      this.body.isApproved = null;
+    }
+
+    this.filterOutput.emit(this.body);
+    console.log('test: ', this.body);
+  }
+
+  onFilterReset() {
+    this.searchChoice = null;
+    this.searchByName = null;
+    this.searchByEmail = null;
+    this.searchByEvent = null;
+    this.searchByVenue = null;
+    this.selectedFilterByRole = null;
+    this.spotlightDropdown = null;
+    this.isApprovedDropdown = null;
   }
 }

@@ -1,0 +1,74 @@
+<div class="admin-dialog">
+  <div class="body">
+    <form class="admin-form" [formGroup]="notificationForm">
+      <h2>GENERAL INFORMATION</h2>
+      <div class="row">
+        <div class="col-xl-6 mb-4">
+          <input
+            type="text"
+            pInputText
+            formControlName="title"
+            placeholder="Title EN"
+          />
+        </div>
+        <div class="col-xl-6 mb-4">
+          <input
+            type="text"
+            pInputText
+            formControlName="titleAr"
+            placeholder="Title AR"
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xl-4 mb-xl-0">
+          <p-calendar
+            formControlName="schedule"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [readonlyInput]="true"
+            placeholder="Notification Date"
+            [showTime]="true"
+            class="custom-calendar"
+          ></p-calendar>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 mb-xl-0 mb-3">
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            formControlName="body"
+            placeholder="Body EN"
+          ></textarea>
+        </div>
+        <div class="col-xl-6 mb-xl-0 mb-3">
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            formControlName="bodyAr"
+            placeholder="Body AR"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer">
+    <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
+    <button
+      class="btn createBtn"
+      (click)="notificationDetails ? editNotification() : onSubmitForm()"
+      [disabled]="notificationForm.invalid"
+    >
+      <span>{{ this.notificationDetails ? "EDIT" : "CREATE" }}</span>
+      <img
+        src="assets/icons/arrow-right.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
+    </button>
+  </div>
+</div>
