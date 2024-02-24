@@ -1,5 +1,5 @@
 # Use official node image as the base image
-FROM node:16.14.0-alpine as build
+FROM node:18.15.0-alpine as build
 
 # Set the working directory
 WORKDIR /app
@@ -8,7 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Install all the dependencies
-RUN npm install
+#RUN npm cache clear --force
+RUN npm install --legacy-peer-deps
 
 # Generate the build of the application
 RUN npm run build
