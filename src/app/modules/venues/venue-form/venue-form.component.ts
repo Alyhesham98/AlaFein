@@ -68,10 +68,7 @@ export class VenueFormComponent implements OnInit {
       name: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       mapLink: new FormControl(null, Validators.required),
-      workDays: new FormControl(
-        this.daysArray.length > 0 ? this.daysArray : null,
-        Validators.required
-      ),
+      workDays: new FormControl(null, Validators.required),
     });
 
     // Add the new form group to the FormArray
@@ -168,7 +165,7 @@ export class VenueFormComponent implements OnInit {
     this.userForm.reset();
     this.venueForm.reset();
   }
-  daysArray: any[] = [];
+  selectedWeekDays: any[] = []; // Initialize an array to store selected weekdays
   newValue: any = {};
   openTimePickerDialog(data?: any, index?: any, type?: any) {
     const ref = this.dialogService.open(TimePickerComponent, {
@@ -192,19 +189,37 @@ export class VenueFormComponent implements OnInit {
           const dateEnd = endDate.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
-          });          
-          this.newValue = [{
-            day: element.Id, // Assuming result.day holds the selected day
-            from: dateStart ? dateStart : null,
-            to: dateEnd ? dateEnd : null,
-          }];
+          });
+          this.newValue = [
+            {
+              day: element.Id, // Assuming result.day holds the selected day
+              from: dateStart ? dateStart : null,
+              to: dateEnd ? dateEnd : null,
+            },
+          ];
           workDaysFormArray?.setValue(this.newValue);
+        });
+        data.forEach((element: any) => {
+          this.selectedWeekDays.push(element);
         });
       }
     });
   }
 
   openDay(index: any, data: any) {
-    this.openTimePickerDialog(data, index);
+    // Check if the selected weekday is already in the selectedWeekDays array
+    if (
+      this.selectedWeekDays.length > 0 &&
+      data.length < this.selectedWeekDays.length
+    ) {
+      if (this.selectedWeekDays === data) {
+        // If already selected, you may choose to do nothing or provide feedback to the user
+        this.openTimePickerDialog(data, index);
+      } else {
+        return; // Exit the function without opening the dialog
+      }
+    } else {
+      this.openTimePickerDialog(data, index);
+    }
   }
 }

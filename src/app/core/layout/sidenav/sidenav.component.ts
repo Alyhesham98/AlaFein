@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,13 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class SidenavComponent implements OnInit {
   userData: any;
   isSidebarActive = false;
-
+  constructor(private router:Router){}
   ngOnInit(): void {
     this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
   }
 
   toggleSidebar() {
-    this.isSidebarActive = !this.isSidebarActive;
-    
+    this.isSidebarActive = !this.isSidebarActive; 
+  }
+
+  logout(){
+    this.router.navigate(['/login']);
+    localStorage.removeItem('userData');
   }
 }
