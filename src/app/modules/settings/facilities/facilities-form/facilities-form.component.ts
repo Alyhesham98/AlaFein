@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FacilitiesService } from 'src/app/core/services/facilities.service';
@@ -19,7 +24,7 @@ export class FacilitiesFormComponent implements OnInit {
   ) {}
   facilityForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  uploadedImage: any;
+  uploadedImage: any = null;
   facilityDetails: any;
   ngOnInit(): void {
     this.createForm();
@@ -65,7 +70,23 @@ export class FacilitiesFormComponent implements OnInit {
         });
     }
   }
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.facilityForm.controls;
+  }
   createFaciliy() {
+
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.facilityForm);
     if (this.facilityForm.valid) {
       this.facilityService.createFacility(this.facilityForm.value).subscribe(
         (res: any) => {

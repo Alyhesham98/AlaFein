@@ -1,6 +1,6 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { EventOrganizersService } from 'src/app/core/services/event-organizers.service';
@@ -28,7 +28,7 @@ export class EventFormComponent implements OnInit {
   timeTo: any;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  uploadedImage: any;
+  uploadedImage: any=null;
   constructor(
     private eventService: EventsService,
     private eventOrganizersService: EventOrganizersService,
@@ -63,7 +63,7 @@ export class EventFormComponent implements OnInit {
       contactPerson: new FormControl(null),
       addtionalComment: new FormControl(null, Validators.required),
       repeat: new FormControl(null, Validators.required),
-      kidsAvailability: new FormControl(null, Validators.required),
+      kidsAvailability: new FormControl(false, Validators.required),
       url: new FormControl(null, Validators.required),
       paymentFee: new FormControl(null, Validators.required),
     });
@@ -102,8 +102,23 @@ export class EventFormComponent implements OnInit {
       });
     }
   }
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.eventForm.controls;
+  }
+  
   submitForm() {
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.eventForm);
     if (this.eventForm.valid) {
       this.onDateTimeCheck();
 

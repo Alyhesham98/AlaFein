@@ -180,8 +180,8 @@
                 [src]="
                   'https://alafein.azurewebsites.net/' + facility.ImagePath
                 "
-                width="70"
-                height="70"
+                width="30"
+                height="30"
                 style="border-radius: 50%"
                 alt="category"
               />
@@ -217,18 +217,44 @@
               </a>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="'location'"> location </ng-template>
+          <ng-template [ngSwitchCase]="'location'">
+            <a [href]="rows.Location">location</a>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'IsBlocked'">
+            <div style="min-width: 35px; display: inline-block">
+              <ng-container [ngSwitch]="rows.IsBlocked">
+                <ng-template [ngSwitchCase]="true">
+                  <div class="content-box content-box-blocked status-box">
+                    <p class="content-text-blocked">Blocked</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="false">
+                  <div class="content-box content-box-normal status-box">
+                    <p class="content-text-normal">Active</p>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'NumberOfEvents'">
+            0
+          </ng-template>
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">
-                <ng-template [ngSwitchCase]="'Normal'">
+                <ng-template [ngSwitchCase]="'REJECT'">
                   <div class="content-box content-box-normal status-box">
-                    <p class="content-text-normal">Normal</p>
+                    <p class="content-text-normal">REJECTED</p>
                   </div>
                 </ng-template>
-                <ng-template [ngSwitchCase]="'Premium'">
+                <ng-template [ngSwitchCase]="'ACCEPT'">
                   <div class="content-box content-box-premium status-box">
-                    <p class="content-text-premium">Premium</p>
+                    <p class="content-text-premium">ACCEPTED</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'PENDING'">
+                  <div class="content-box content-box-premium status-box">
+                    <p class="content-text-premium">PENDING</p>
                   </div>
                 </ng-template>
               </div>

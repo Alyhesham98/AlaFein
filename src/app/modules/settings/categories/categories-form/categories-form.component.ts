@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CategoriesService } from 'src/app/core/services/categories.service';
@@ -19,7 +19,7 @@ export class CategoriesFormComponent implements OnInit {
   ) {}
   categoryForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  uploadedImage: any;
+  uploadedImage: any = null;
   categoryDetails: any;
   ngOnInit(): void {
     this.createForm();
@@ -66,8 +66,22 @@ export class CategoriesFormComponent implements OnInit {
         });
     }
   }
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.categoryForm.controls;
+  }
   createCategory() {
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.categoryForm);
     if (this.categoryForm.valid) {
       this.categoryService.createCategory(this.categoryForm.value).subscribe(
         (res: any) => {

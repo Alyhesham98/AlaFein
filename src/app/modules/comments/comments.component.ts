@@ -12,7 +12,7 @@ export class CommentsComponent implements OnInit {
   colsData: any[] = [
     {
       field: 'Comment',
-      text: 'Name',
+      text: 'Comment',
     },
     {
       field: 'Event.Name',

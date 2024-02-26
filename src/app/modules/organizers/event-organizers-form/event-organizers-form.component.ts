@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { log } from 'console';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -15,7 +20,7 @@ export class EventOrganizersFormComponent implements OnInit {
   eventForm!: FormGroup;
   eventSecondForm!: FormGroup;
   eventTypes!: any[];
-  uploadedImage: any;
+  uploadedImage: any = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
@@ -47,10 +52,20 @@ export class EventOrganizersFormComponent implements OnInit {
     });
   }
 
-  getDropdown(){
-    this.eventOrganizersService.getEventOrganizersDropdown().subscribe((res:any)=>{
-      this.eventTypes = res.Data
-    })
+  getDropdown() {
+    this.eventOrganizersService
+      .getEventOrganizersDropdown()
+      .subscribe((res: any) => {
+        this.eventTypes = res.Data;
+      });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.eventForm.controls;
+  }
+
+  get g(): { [key: string]: AbstractControl } {
+    return this.eventSecondForm.controls;
   }
 
   onFileSelected(): void {
@@ -73,12 +88,20 @@ export class EventOrganizersFormComponent implements OnInit {
         });
     }
   }
-
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
   onSubmitForm() {
-    console.log(this.eventForm.valid);
-    console.log(this.eventSecondForm.valid);
-    
-    
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.eventForm);
+    this.markFormGroupTouched(this.eventSecondForm);
+
     if (this.eventForm.valid && this.eventSecondForm.valid) {
       const body = {
         user: this.eventForm.value,
@@ -96,12 +119,28 @@ export class EventOrganizersFormComponent implements OnInit {
           });
         },
         (err) => {
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'error',
-            summary: 'Error',
-            detail: err.Message,
-          });
+          if (err.error?.Errors?.length >= 1) {
+            err.error.Errors.forEach((element: any) => {
+              console.log(element);
+              
+              this.messageService.add({
+                key: 'toast1',
+                severity: 'error',
+                summary: 'Error',
+                detail: element,
+              });
+
+            })  
+          }
+
+          if (err.error?.Message) {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.error.Message,
+            });
+          } 
         }
       );
     } else {

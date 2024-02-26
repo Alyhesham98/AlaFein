@@ -10,6 +10,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [OrganizersComponent, EventOrganizersFormComponent],
@@ -22,6 +23,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    ToastModule
   ],
 })
 export class OrganizersModule {}

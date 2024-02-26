@@ -1,7 +1,10 @@
 <div class="container-fluid">
   <div class="row event-header">
     <div class="col-12 p-0">
-      <img src="assets/images/events/event-details-img.png" alt="Event Image" />
+      <img
+        [src]="'https://alafein.azurewebsites.net/' + eventDetails?.Poster"
+        alt="Event Image"
+      />
     </div>
     <div class="col-12">
       <h2 class="mt-4">{{ eventDetails?.Name }}</h2>
@@ -119,8 +122,17 @@
   </div>
   <div class="row">
     <div class="col event-actions">
-      <a class="rejectBtn" *ngIf="eventStatus === 'ACCEPT' || eventStatus === 'PENDING'" (click)="toggleStatus(2)">REJECT</a>
-      <button class="btn actionsBtn acceptBtn" *ngIf="eventStatus !== 'ACCEPT'" (click)="toggleStatus(1)">
+      <a
+        class="rejectBtn"
+        *ngIf="eventStatus === 'ACCEPT' || eventStatus === 'PENDING'"
+        (click)="toggleStatus(2)"
+        >REJECT</a
+      >
+      <button
+        class="btn actionsBtn acceptBtn"
+        *ngIf="eventStatus !== 'ACCEPT'"
+        (click)="toggleStatus(1)"
+      >
         ACCEPT <img src="assets/icons/arrow-right.svg" alt="Accept Button" />
       </button>
     </div>

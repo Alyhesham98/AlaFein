@@ -7,46 +7,187 @@
         <h2>GENERAL INFORMATION</h2>
         <div class="row">
           <div class="col-xl-4 mb-3">
-            <input type="text" pInputText formControlName="eventNameEN" placeholder="Event Name En" />
+            <input
+              type="text"
+              pInputText
+              formControlName="eventNameEN"
+              placeholder="Event Name En"
+            />
+            <div
+              *ngIf="
+                f['eventNameEN'].errors && f['eventNameEN'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['eventNameEN'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <input type="text" pInputText formControlName="eventNameAR" placeholder="Event Name Ar" />
+            <input
+              type="text"
+              pInputText
+              formControlName="eventNameAR"
+              placeholder="Event Name Ar"
+            />
+            <div
+              *ngIf="
+                f['eventNameAR'].errors && f['eventNameAR'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['eventNameAR'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <p-dropdown formControlName="categoryId" [options]="eventTypes" optionLabel="Name" optionValue="Id"
-              placeholder="Event Type"></p-dropdown>
+            <p-dropdown
+              formControlName="categoryId"
+              [options]="eventTypes"
+              optionLabel="Name"
+              optionValue="Id"
+              placeholder="Event Type"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['categoryId'].errors && f['categoryId'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['categoryId'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-xl-4 mb-xl-0 mb-3">
-            <textarea rows="5" cols="30" pInputTextarea formControlName="eventDescriptionEN"
-              placeholder="Event Description"></textarea>
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              formControlName="eventDescriptionEN"
+              placeholder="Event Description"
+            ></textarea>
+            <div
+              *ngIf="
+                f['eventDescriptionEN'].errors && f['eventDescriptionEN'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['eventDescriptionEN'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <div class="row">
               <div class="col-12 order-2 order-xl-1 mb-xl-3 mb-0">
-                <input type="text" pInputText formControlName="mainArtestNameEN" placeholder="Main Artist Name En" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="mainArtestNameEN"
+                  placeholder="Main Artist Name En"
+                />
+                <div
+                  *ngIf="
+                    f['mainArtestNameEN'].errors &&
+                    f['mainArtestNameEN'].touched
+                  "
+                  style="color: red"
+                >
+                  <small *ngIf="f['mainArtestNameEN'].errors['required']"
+                    >Field is required.</small
+                  >
+                </div>
               </div>
               <div class="col-12 order-1 order-xl-2 mb-xl-0 mb-3">
-                <p-calendar formControlName="dateFromTo" selectionMode="range" [iconDisplay]="'input'" [showIcon]="true"
-                  [readonlyInput]="true" placeholder="Event Date 'From - To'"></p-calendar>
+                <p-calendar
+                  formControlName="dateFromTo"
+                  selectionMode="range"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [readonlyInput]="true"
+                  placeholder="Event Date 'From - To'"
+                ></p-calendar>
+                <div
+                  *ngIf="
+                    f['dateFromTo'].errors &&
+                    f['dateFromTo'].touched
+                  "
+                  style="color: red"
+                >
+                  <small *ngIf="f['dateFromTo'].errors['required']"
+                    >Field is required.</small
+                  >
+                </div>
               </div>
             </div>
           </div>
           <div class="col-xl-4 mb-xl-0">
             <div class="row">
               <div class="col-12 mb-3">
-                <input type="text" pInputText formControlName="mainArtestNameAR" placeholder="Main Artist Name Ar" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="mainArtestNameAR"
+                  placeholder="Main Artist Name Ar"
+                />
+                <div
+                  *ngIf="
+                    f['mainArtestNameAR'].errors &&
+                    f['mainArtestNameAR'].touched
+                  "
+                  style="color: red"
+                >
+                  <small *ngIf="f['mainArtestNameAR'].errors['required']"
+                    >Field is required.</small
+                  >
+                </div>
               </div>
               <div class="col-12">
                 <div class="row">
                   <div class="col">
-                    <p-calendar formControlName="timeFrom" [timeOnly]="true" [readonlyInput]="true" hourFormat="12"
-                      placeholder="Time From"></p-calendar>
+                    <p-calendar
+                      formControlName="timeFrom"
+                      [timeOnly]="true"
+                      [readonlyInput]="true"
+                      hourFormat="12"
+                      placeholder="Time From"
+                    ></p-calendar>
+                    <div
+                      *ngIf="
+                        f['timeFrom'].errors &&
+                        f['timeFrom'].touched
+                      "
+                      style="color: red"
+                    >
+                      <small *ngIf="f['timeFrom'].errors['required']"
+                        >Field is required.</small
+                      >
+                    </div>
                   </div>
                   <div class="col">
-                    <p-calendar formControlName="timeTo" [timeOnly]="true" [readonlyInput]="true" hourFormat="12"
-                      placeholder="Time To"></p-calendar>
+                    <p-calendar
+                      formControlName="timeTo"
+                      [timeOnly]="true"
+                      [readonlyInput]="true"
+                      hourFormat="12"
+                      placeholder="Time To"
+                    ></p-calendar>
+                    <div
+                      *ngIf="
+                        f['timeTo'].errors &&
+                        f['timeTo'].touched
+                      "
+                      style="color: red"
+                    >
+                      <small *ngIf="f['timeTo'].errors['required']"
+                        >Field is required.</small
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
@@ -55,8 +196,23 @@
         </div>
         <div class="row">
           <div class="col-xl-4 mb-xl-0 my-2">
-            <p-dropdown formControlName="repeat" [options]="repeatTypes" optionLabel="Number" optionValue="Id"
-              placeholder="Repeat"></p-dropdown>
+            <p-dropdown
+              formControlName="repeat"
+              [options]="repeatTypes"
+              optionLabel="Number"
+              optionValue="Id"
+              placeholder="Repeat"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['repeat'].errors && f['repeat'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['repeat'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -64,16 +220,61 @@
         <h2>INFORMATION</h2>
         <div class="row">
           <div class="col-xl-4">
-            <p-dropdown formControlName="organizerId" [options]="organizersOptions" optionLabel="FirstName"
-              optionValue="Id" placeholder="Select an Organizer"></p-dropdown>
+            <p-dropdown
+              formControlName="organizerId"
+              [options]="organizersOptions"
+              optionLabel="FirstName"
+              optionValue="Id"
+              placeholder="Select an Organizer"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['organizerId'].errors && f['organizerId'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['organizerId'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 my-xl-0 my-3">
-            <p-dropdown formControlName="venueId" [options]="venuesOptions" optionLabel="Name"
-              placeholder="Select a Venue" (onChange)="onVenueSelected($event.value)"></p-dropdown>
+            <p-dropdown
+              formControlName="venueId"
+              [options]="venuesOptions"
+              optionLabel="Name"
+              placeholder="Select a Venue"
+              (onChange)="onVenueSelected($event.value)"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['venueId'].errors && f['venueId'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['venueId'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4" *ngIf="branchOptions">
-            <p-dropdown formControlName="branchId" [options]="branchOptions" optionLabel="Name" optionValue="Id"
-              placeholder="Select a Branch"></p-dropdown>
+            <p-dropdown
+              formControlName="branchId"
+              [options]="branchOptions"
+              optionLabel="Name"
+              optionValue="Id"
+              placeholder="Select a Branch"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['branchId'].errors && f['branchId'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['branchId'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -81,32 +282,144 @@
         <h2>ADDITIONAL INFORMATION</h2>
         <div class="row">
           <div class="col-xl-4 mb-4">
-            <p-dropdown formControlName="attendanceOption" [options]="attendanceOptions" optionLabel="Name"
-              placeholder="Attendance Options" (onChange)="onAttendanceSelected($event.value)"></p-dropdown>
+            <p-dropdown
+              formControlName="attendanceOption"
+              [options]="attendanceOptions"
+              optionLabel="Name"
+              placeholder="Attendance Options"
+              (onChange)="onAttendanceSelected($event.value)"
+            ></p-dropdown>
+            <div
+              *ngIf="
+                f['attendanceOption'].errors && f['attendanceOption'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['attendanceOption'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
-            <input #fileInput type="file" id="formFile" accept="image/*" style="display: none"
-              (change)="onFileSelected()" />
-            <input type="text" pInputText style="cursor: pointer;" formControlName="poster" (click)="fileInput.click()"
-              readonly="true" placeholder="Upload The Event Poster" />
+            <input
+              #fileInput
+              type="file"
+              id="formFile"
+              accept="image/*"
+              style="display: none"
+              (change)="onFileSelected()"
+            />
+            <input
+              type="text"
+              pInputText
+              style="cursor: pointer"
+              formControlName="poster"
+              (click)="fileInput.click()"
+              readonly="true"
+              placeholder="Upload The Event Poster"
+            />
             <small class="noteText mt-1">Preferred 96x96 .PNG</small>
+            <div
+            *ngIf="this.uploadedImage === null && isSubmit"
+            style="color: red"
+          >
+            <small *ngIf="this.uploadedImage === null"
+              >Poster is required.</small
+            >
+          </div>
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="contactPerson" placeholder="Event Contact" />
+            <input
+              type="text"
+              pInputText
+              formControlName="contactPerson"
+              placeholder="Event Contact"
+            />
             <small class="noteText mt-1">Optional</small>
+            <div
+              *ngIf="
+                f['contactPerson'].errors && f['contactPerson'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['contactPerson'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
-            <input type="text" pInputText formControlName="addtionalComment" placeholder="Additional Comments" />
+            <input
+              type="text"
+              pInputText
+              formControlName="addtionalComment"
+              placeholder="Additional Comments"
+            />
+            <div
+              *ngIf="
+                f['addtionalComment'].errors && f['addtionalComment'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['addtionalComment'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4" *ngIf="isPaymentAndURL">
-            <input type="text" pInputText formControlName="paymentFee" placeholder="Payment Fee" />
+            <input
+              type="text"
+              pInputText
+              formControlName="paymentFee"
+              placeholder="Payment Fee"
+            />
+            <div
+              *ngIf="
+                f['paymentFee'].errors && f['paymentFee'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['paymentFee'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4" *ngIf="isPaymentAndURL">
-            <input type="text" pInputText formControlName="url" placeholder="URL" />
+            <input
+              type="text"
+              pInputText
+              formControlName="url"
+              placeholder="URL"
+            />
+            <div
+              *ngIf="
+                f['url'].errors && f['url'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['url'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-12 mb-4">
-            <p-checkbox formControlName="kidsAvailability" [binary]="true" inputId="kidsAvailability"></p-checkbox>
-            <label style="margin-inline-start: 0.5rem" for="kidsAvailability">Kids Availability</label>
+            <p-checkbox
+              formControlName="kidsAvailability"
+              [binary]="true"
+              inputId="kidsAvailability"
+            ></p-checkbox>
+            <label style="margin-inline-start: 0.5rem" for="kidsAvailability"
+              >Kids Availability</label
+            >
+            <div
+              *ngIf="
+                f['kidsAvailability'].errors && f['kidsAvailability'].touched
+              "
+              style="color: red"
+            >
+              <small *ngIf="f['kidsAvailability'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -114,9 +427,14 @@
   </div>
   <div class="footer">
     <a class="btn resetBtn">RESET</a>
-    <button class="btn createBtn" (click)="submitForm()" [disabled]="eventForm.invalid">
+    <button class="btn createBtn" (click)="submitForm()">
       <span>CREATE</span>
-      <img src="assets/icons/arrow-right.svg" alt="Arrow Right" width="14" height="14" />
+      <img
+        src="assets/icons/arrow-right.svg"
+        alt="Arrow Right"
+        width="14"
+        height="14"
+      />
     </button>
   </div>
 </div>

@@ -19,7 +19,10 @@
           <span>HOME</span>
         </a>
       </li>
-      <li class="nav-item text-center d-flex justify-content-center w-100">
+      <li
+        *ngIf="userData?.Role !== 'Admin'"
+        class="nav-item text-center d-flex justify-content-center w-100"
+      >
         <a
           [routerLink]="'/users'"
           routerLinkActive="active"
@@ -127,7 +130,7 @@
               >CATEGORIES</a
             >
           </li>
-          <li>
+          <li *ngIf="userData?.Role !== 'Admin'">
             <a
               [routerLink]="'/settings/admins'"
               routerLinkActive="active"
@@ -152,11 +155,7 @@
             >
           </li>
           <li>
-            <a
-              (click)="logout()"
-              class="nav-link my-2 w-100"
-              >LOGOUT</a
-            >
+            <a (click)="logout()" class="nav-link my-2 w-100">LOGOUT</a>
           </li>
         </ul>
       </li>

@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AdminsService } from 'src/app/core/services/admins.service';
@@ -30,8 +35,22 @@ export class AdminFormComponent implements OnInit {
       password: new FormControl(null, Validators.required),
     });
   }
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
 
+  get f(): { [key: string]: AbstractControl } {
+    return this.adminForm.controls;
+  }
   onSubmitForm() {
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.adminForm);
     if (this.adminForm.valid) {
       this.adminService.createAdmin(this.adminForm.value).subscribe(
         (res: any) => {

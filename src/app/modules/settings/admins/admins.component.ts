@@ -74,9 +74,9 @@ export class AdminsComponent implements OnInit {
       data: data,
     });
 
-    // this.ref.onClose.subscribe((res) =>
-    //   res ? this.getAllAdmins({ pageNumber: 1, pageSize: 10 }) : ''
-    // );
+    this.ref.onClose.subscribe((res) =>
+      res ? this.getAllAdmins({ pageNumber: 1, pageSize: 10 }) : ''
+    );
   }
 
   onSearch(event: any) {

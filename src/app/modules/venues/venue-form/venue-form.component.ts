@@ -5,6 +5,7 @@ import {
   Validators,
   FormBuilder,
   FormArray,
+  AbstractControl,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -27,7 +28,7 @@ export class VenueFormComponent implements OnInit {
   venueFacilties!: any[];
   selectedWorkday: any;
   display: boolean = false;
-  uploadedImage: any;
+  uploadedImage: any=null;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
@@ -139,15 +140,47 @@ export class VenueFormComponent implements OnInit {
     });
   }
 
-  onFormSubmit() {
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.userForm.controls;
+  }
+
+  get g(): { [key: string]: AbstractControl } {
+    return this.venueForm.controls;
+  }
+
+  onFormSubmit(index?: any) {
     // let x = {
     //   venue:
     // }
+    this.isSubmit = false;
+
+    if (index) {
+      this.isSubmit = true;
+      this.markFormGroupTouched(this.userForm);
+      this.markFormGroupTouched(this.venueForm);
+      if (this.userForm.invalid) {
+        return;
+      } else {
+        this.formPageNumber = 2;
+      }
+      return;
+    }
     const body = {
       user: this.userForm.value,
       venue: this.venueForm.value,
     };
-    console.log(body);
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.venueForm);
 
     this.venuesService.createVenue(body).subscribe((res: any) => {
       this.ref.close(true);

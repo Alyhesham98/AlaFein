@@ -27,6 +27,14 @@
               >Upload the event organizer picture.</span
             >
           </div>
+          <div
+            *ngIf="this.uploadedImage === null && isSubmit"
+            style="color: red"
+          >
+            <small *ngIf="this.uploadedImage === null"
+              >Profile Picture is required.</small
+            >
+          </div>
         </div>
         <div class="row">
           <div class="col-xl-4 mb-3">
@@ -36,6 +44,14 @@
               formControlName="firstName"
               placeholder="First Name"
             />
+            <div
+              *ngIf="f['firstName'].errors && f['firstName'].touched"
+              style="color: red"
+            >
+              <small *ngIf="f['firstName'].errors['required']"
+                >First name is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <input
@@ -44,6 +60,14 @@
               formControlName="lastName"
               placeholder="Last Name"
             />
+            <div
+              *ngIf="f['lastName'].errors && f['lastName'].touched"
+              style="color: red"
+            >
+              <small *ngIf="f['lastName'].errors['required']"
+                >Last name is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <input
@@ -52,6 +76,14 @@
               formControlName="email"
               placeholder="Email"
             />
+            <div
+              *ngIf="f['email'].errors && f['email'].touched"
+              style="color: red"
+            >
+              <small *ngIf="f['email'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <input
@@ -60,6 +92,14 @@
               formControlName="password"
               placeholder="Password"
             />
+            <div
+              *ngIf="f['password'].errors && f['password'].touched"
+              style="color: red"
+            >
+              <small *ngIf="f['password'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -75,6 +115,14 @@
               formControlName="mapLink"
               placeholder="Map Link"
             />
+            <div
+              *ngIf="g['mapLink'].errors && g['mapLink'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['mapLink'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -83,6 +131,14 @@
               formControlName="address"
               placeholder="Address"
             />
+            <div
+              *ngIf="g['address'].errors && g['address'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['address'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -91,6 +147,14 @@
               formControlName="instagram"
               placeholder="Instagram Link"
             />
+            <div
+              *ngIf="g['instagram'].errors && g['instagram'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['instagram'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -99,6 +163,14 @@
               formControlName="facebook"
               placeholder="Facebook Link"
             />
+            <div
+              *ngIf="g['facebook'].errors && g['facebook'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['facebook'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -107,6 +179,14 @@
               formControlName="websiteURL"
               placeholder="Website Link"
             />
+            <div
+              *ngIf="g['websiteURL'].errors && g['websiteURL'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['websiteURL'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -115,6 +195,14 @@
               formControlName="other"
               placeholder="Other"
             />
+            <div
+              *ngIf="g['other'].errors && g['other'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['other'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
         <div class="row">
@@ -126,6 +214,14 @@
               formControlName="description"
               placeholder="Event Organizer Description"
             ></textarea>
+            <div
+              *ngIf="g['description'].errors && g['description'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['description'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <p-dropdown
@@ -135,6 +231,14 @@
               optionValue="Id"
               placeholder="Genre"
             ></p-dropdown>
+            <div
+              *ngIf="g['categoryId'].errors && g['categoryId'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['categoryId'].errors['required']"
+                >Field is required.</small
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -142,11 +246,7 @@
   </div>
   <div class="footer">
     <a class="btn resetBtn">RESET</a>
-    <button
-      class="btn createBtn"
-      (click)="onSubmitForm()"
-      [disabled]="eventForm.invalid && eventSecondForm.invalid"
-    >
+    <button class="btn createBtn" (click)="onSubmitForm()">
       <span>CREATE</span>
       <img
         src="assets/icons/arrow-right.svg"
@@ -157,3 +257,5 @@
     </button>
   </div>
 </div>
+
+<p-toast key="toast1"></p-toast>

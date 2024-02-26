@@ -10,6 +10,14 @@
             formControlName="title"
             placeholder="Title EN"
           />
+          <div
+            *ngIf="f['title'].errors && f['title'].touched"
+            style="color: red"
+          >
+            <small *ngIf="f['title'].errors['required']"
+              >Field is required.</small
+            >
+          </div>
         </div>
         <div class="col-xl-6 mb-4">
           <input
@@ -18,6 +26,14 @@
             formControlName="titleAr"
             placeholder="Title AR"
           />
+          <div
+            *ngIf="f['titleAr'].errors && f['titleAr'].touched"
+            style="color: red"
+          >
+            <small *ngIf="f['titleAr'].errors['required']"
+              >Field is required.</small
+            >
+          </div>
         </div>
       </div>
       <div class="row mb-3">
@@ -31,6 +47,14 @@
             [showTime]="true"
             class="custom-calendar"
           ></p-calendar>
+          <div
+            *ngIf="f['schedule'].errors && f['schedule'].touched"
+            style="color: red"
+          >
+            <small *ngIf="f['schedule'].errors['required']"
+              >Field is required.</small
+            >
+          </div>
         </div>
       </div>
       <div class="row">
@@ -42,6 +66,11 @@
             formControlName="body"
             placeholder="Body EN"
           ></textarea>
+          <div *ngIf="f['body'].errors && f['body'].touched" style="color: red">
+            <small *ngIf="f['body'].errors['required']"
+              >Field is required.</small
+            >
+          </div>
         </div>
         <div class="col-xl-6 mb-xl-0 mb-3">
           <textarea
@@ -51,6 +80,14 @@
             formControlName="bodyAr"
             placeholder="Body AR"
           ></textarea>
+          <div
+            *ngIf="f['bodyAr'].errors && f['bodyAr'].touched"
+            style="color: red"
+          >
+            <small *ngIf="f['bodyAr'].errors['required']"
+              >Field is required.</small
+            >
+          </div>
         </div>
       </div>
     </form>
@@ -60,7 +97,6 @@
     <button
       class="btn createBtn"
       (click)="notificationDetails ? editNotification() : onSubmitForm()"
-      [disabled]="notificationForm.invalid"
     >
       <span>{{ this.notificationDetails ? "EDIT" : "CREATE" }}</span>
       <img

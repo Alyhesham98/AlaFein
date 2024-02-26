@@ -28,6 +28,10 @@ export class UsersComponent implements OnInit {
       field: 'Email',
       text: 'Email',
     },
+    {
+      field: 'IsBlocked',
+      text: 'User Status',
+    },
   ];
   rowsData: any[] = [];
   pageNumber: number = 1;

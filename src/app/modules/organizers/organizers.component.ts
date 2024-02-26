@@ -16,7 +16,7 @@ export class OrganizersComponent implements OnInit {
       text: 'Organizer Name',
     },
     {
-      field: 'Status',
+      field: 'NumberOfEvents',
       text: '# of Events',
     },
     {
