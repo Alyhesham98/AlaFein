@@ -9,6 +9,8 @@ COPY . .
 
 # Install all the dependencies
 # RUN npm cache clear --force
+RUN npm config set fetch-retry-mintimeout 20000
+RUN npm config set fetch-retry-maxtimeout 120000
 RUN npm install --force
 
 
