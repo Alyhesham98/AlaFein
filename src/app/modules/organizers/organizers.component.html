@@ -29,6 +29,10 @@
         [showSearchByEmail]="true"
         [placeholderSearchByEmail]="'Search By Email'"
         (filterOutput)="onSearch($event)"
+        [actions]="actions"
+        [isDots]="true"
+        [pageType]="'Organizer'"
+        (dataDetails)="show($event)"
       ></app-custom-table>
     </div>
   </div>

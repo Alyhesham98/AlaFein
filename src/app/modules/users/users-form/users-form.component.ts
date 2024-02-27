@@ -43,10 +43,10 @@ export class UsersFormComponent implements OnInit {
   createForm() {
     this.usersForm = new FormGroup({
       id: new FormControl(null),
-      firstName: new FormControl(null, Validators.required),
+      firstName: new FormControl(null),
       lastName: new FormControl(null, Validators.required),
       photo: new FormControl(null, Validators.required),
-      phone: new FormControl(null, Validators.required),
+      // phone: new FormControl(null, Validators.required),
     });
   }
 

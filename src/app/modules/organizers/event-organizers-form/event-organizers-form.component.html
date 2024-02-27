@@ -8,6 +8,7 @@
             <input
               #fileInput
               type="file"
+              [disabled]="config?.data"
               id="formFile"
               accept="image/*"
               style="display: none"
@@ -43,6 +44,7 @@
               pInputText
               formControlName="firstName"
               placeholder="First Name"
+              [disabled]="config?.data"
             />
             <div
               *ngIf="f['firstName'].errors && f['firstName'].touched"
@@ -59,6 +61,7 @@
               pInputText
               formControlName="lastName"
               placeholder="Last Name"
+              [disabled]="config?.data"
             />
             <div
               *ngIf="f['lastName'].errors && f['lastName'].touched"
@@ -75,6 +78,7 @@
               pInputText
               formControlName="email"
               placeholder="Email"
+              [disabled]="config?.data"
             />
             <div
               *ngIf="f['email'].errors && f['email'].touched"
@@ -91,6 +95,7 @@
               pInputText
               formControlName="password"
               placeholder="Password"
+              [disabled]="config?.data"
             />
             <div
               *ngIf="f['password'].errors && f['password'].touched"

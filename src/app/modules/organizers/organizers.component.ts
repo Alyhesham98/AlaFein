@@ -29,7 +29,7 @@ export class OrganizersComponent implements OnInit {
     },
   ];
 
-  actions: any[] = ['canView', 'canDelete'];
+  actions: any[] = ['canView'];
   rowsData: any[] = [];
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -73,6 +73,8 @@ export class OrganizersComponent implements OnInit {
   }
 
   show(data?: any) {
+    console.log(data);
+    
     this.ref = this.dialogService.open(EventOrganizersFormComponent, {
       header: 'CREATE AN EVENT ORGANIZER',
       width: '80%',

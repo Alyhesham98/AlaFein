@@ -1,6 +1,11 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { EventOrganizersService } from 'src/app/core/services/event-organizers.service';
@@ -28,7 +33,7 @@ export class EventFormComponent implements OnInit {
   timeTo: any;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  uploadedImage: any=null;
+  uploadedImage: any = null;
   constructor(
     private eventService: EventsService,
     private eventOrganizersService: EventOrganizersService,
@@ -41,6 +46,10 @@ export class EventFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getEventsDropdown();
+
+    if (this.config.data) {
+      this.setFormData();
+    }
   }
 
   initForm() {
@@ -115,7 +124,7 @@ export class EventFormComponent implements OnInit {
   get f(): { [key: string]: AbstractControl } {
     return this.eventForm.controls;
   }
-  
+
   submitForm() {
     this.isSubmit = true;
     this.markFormGroupTouched(this.eventForm);
@@ -189,6 +198,32 @@ export class EventFormComponent implements OnInit {
 
     this.eventForm.patchValue({
       dates: datesArray,
+    });
+  }
+
+  setFormData() {
+    this.eventForm.setValue({
+      eventNameEN: this.config.data.Name,
+      eventNameAR: this.config.data.Name,
+      eventDescriptionEN: this.config.data.Description,
+      mainArtestNameEN: this.config.data,
+      mainArtestNameAR: this.config.data,
+      categoryId: this.config.data.Category.Id,
+      dateFromTo: this.config.data.Date,
+      timeFrom: this.config.data.Date,
+      timeTo: this.config.data.Date,
+      dates: this.config.data.Date,
+      venueId: this.config.data.Venue.Id,
+      organizerId: this.config.data.Organizer.Id,
+      branchId: this.config.data,
+      attendanceOption: this.config.data.AttendanceOption,
+      poster: this.config.data.Poster,
+      contactPerson: this.config.data,
+      addtionalComment: this.config.data,
+      repeat: this.config.data,
+      kidsAvailability: this.config.data,
+      url: this.config.data.URL,
+      paymentFee: this.config.data.PaymentFee,
     });
   }
 }

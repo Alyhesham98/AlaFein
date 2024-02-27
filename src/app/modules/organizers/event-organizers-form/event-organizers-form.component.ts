@@ -50,6 +50,9 @@ export class EventOrganizersFormComponent implements OnInit {
       description: new FormControl(null, Validators.required),
       categoryId: new FormControl(null, Validators.required),
     });
+    if(this.config.data){
+      this.setFormData();
+    }
   }
 
   getDropdown() {
@@ -151,5 +154,25 @@ export class EventOrganizersFormComponent implements OnInit {
   onResetForm() {
     this.eventForm.reset();
     this.eventSecondForm.reset();
+  }
+  
+  setFormData(){
+    this.eventForm.patchValue({
+      firstName: this.config.data.FirstName,
+      lastName: this.config.data.LastName,
+      email: this.config.data.Email,
+      password: this.config.data.Password,
+      profilePicture: this.config.data.Photo,
+    });
+    this.eventSecondForm.patchValue({
+      mapLink: this.config.data.MapLink,
+      address: this.config.data.Address,
+      instagram: this.config.data.Instagram,
+      facebook: this.config.data.Facebook,
+      websiteURL: this.config.data.WebsiteURL,
+      other: this.config.data.Other,
+      description: this.config.data.Description,
+      categoryId: this.config.data.CategoryId,
+    });
   }
 }
