@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { VenuesService } from 'src/app/core/services/venues.service';
 import { TimePickerComponent } from './time-picker/time-picker.component';
+import { EgyptianPhoneNumberValidator } from 'src/app/core/validators/egyptian-phone-number-validation';
 
 @Component({
   selector: 'app-venue-form',
@@ -54,7 +55,7 @@ export class VenueFormComponent implements OnInit {
       facebook: new FormControl(null, Validators.required),
       websiteURL: new FormControl(null, Validators.required),
       other: new FormControl(null, Validators.required),
-      phoneNumber: new FormControl(null, Validators.required),
+      phoneNumber: new FormControl(null, [Validators.required, EgyptianPhoneNumberValidator()]),
       venueName: new FormControl(null, Validators.required),
       venueDescription: new FormControl(null, Validators.required),
       categoryId: new FormControl(null, Validators.required),

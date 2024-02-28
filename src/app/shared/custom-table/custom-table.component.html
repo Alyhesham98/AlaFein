@@ -3,7 +3,9 @@
   [globalFilterFields]="['id', 'date', 'status', 'progress']"
   [value]="rows"
   [columns]="cols"
+  [reorderableColumns]="showReOrder"
   [tableStyle]="{ 'min-width': '60rem' }"
+  (onRowReorder)="onRowReorder($event)"
 >
   <ng-template pTemplate="caption" *ngIf="showFilter">
     <div class="row d-flex justify-content-between">
@@ -129,12 +131,24 @@
       </div>
     </div>
   </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
+  <ng-template pTemplate="header" let-cols>
+    <tr *ngIf="!showReOrder">
       <th
         [pSortableColumn]="col.field"
         style="width: 15%"
         *ngFor="let col of cols"
+      >
+        {{ col.text }} <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th pSortableColumn="action" style="width: 20%" *ngIf="showAction"></th>
+    </tr>
+    <tr *ngIf="showReOrder">
+      <th style="width: 3rem"></th>
+      <th
+        [pSortableColumn]="col.field"
+        style="width: 15%"
+        *ngFor="let col of cols"
+        pReorderableColumn
       >
         {{ col.text }} <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
@@ -152,7 +166,7 @@
       </td>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rows let-i="rowIndex">
+  <ng-template pTemplate="body" let-rows let-i="rowIndex" *ngIf="!showReOrder">
     <tr>
       <td *ngFor="let col of cols">
         <ng-container [ngSwitch]="col.field">
@@ -236,9 +250,442 @@
               </ng-container>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="'NumberOfEvents'">
-            0
+          <ng-template [ngSwitchCase]="'NumberOfEvents'"> 0 </ng-template>
+          <ng-template [ngSwitchCase]="'Status'">
+            <ng-container [ngSwitch]="rows.Status">
+              <div style="min-width: 35px; display: inline-block">
+                <ng-template [ngSwitchCase]="'Premium'">
+                  <div class="content-box content-box-normal status-box">
+                    <p class="content-text-normal">PREMIUM</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'Normal'">
+                  <div class="content-box content-box-premium status-box">
+                    <p class="content-text-premium">NORMAL</p>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
           </ng-template>
+          <ng-template [ngSwitchCase]="'Status.Name'">
+            <ng-container [ngSwitch]="rows.Status.Name">
+              <div style="min-width: 35px; display: inline-block">
+                <ng-template [ngSwitchCase]="'REJECT'">
+                  <div class="content-box content-box-normal status-box">
+                    <p class="content-text-normal">REJECTED</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'ACCEPT'">
+                  <div class="content-box content-box-premium status-box">
+                    <p class="content-text-premium">ACCEPTED</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'PENDING'">
+                  <div class="content-box content-box-premium status-box">
+                    <p class="content-text-premium">PENDING</p>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'Image'">
+            <div
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                [src]="'https://alafein.azurewebsites.net/' + rows.Image"
+                width="70"
+                height="70"
+                style="border-radius: 50%"
+                alt="category"
+              />
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'ImagePath'">
+            <div
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                [src]="'https://alafein.azurewebsites.net/' + rows.ImagePath"
+                width="70"
+                height="70"
+                style="border-radius: 50%"
+                alt="category"
+              />
+            </div>
+          </ng-template>
+
+          <ng-template ngSwitchDefault>
+            {{ getValue(rows, col.field) }}
+          </ng-template>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="!isDots">
+          <section class="d-flex justify-content-end" style="padding: 20px">
+            <ng-container *ngFor="let action of actions">
+              <ng-container *ngIf="action === 'canView'">
+                <div>
+                  <a
+                    class="paraContent d-flex align-items-center"
+                    style="cursor: pointer"
+                    (click)="routeDetails(rows)"
+                  >
+                    <img src="../../../../assets/icon/view.svg" alt="View" />
+                  </a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action === 'canEmail'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="sendEmail(rows)"
+                  >
+                    <img src="../../../../assets/icon/email.svg" alt="Email" />
+                  </a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="action === 'canEdit'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="editRouteDetails(rows)"
+                  >
+                    <img
+                      src="../../../../assets/svg/edit.svg"
+                      alt="Edit"
+                      width="18"
+                      height="18"
+                    />
+                  </a>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="action === 'canDelete'">
+                <div class="ms-3">
+                  <a
+                    class="paraContent d-flex align-items-end"
+                    style="cursor: pointer"
+                    (click)="onDelete(rows)"
+                  >
+                    <img src="../../../../assets/svg/delete.svg" alt="Delete" />
+                  </a>
+                </div>
+              </ng-container>
+            </ng-container>
+          </section>
+        </ng-container>
+        <ng-container *ngIf="isDots">
+          <p-overlayPanel #op>
+            <section>
+              <ng-container *ngFor="let action of actions">
+                <ng-container *ngIf="action === 'canView'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="routeDetails(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/view.svg"
+                            alt="View"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>View {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canBlock'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent d-flex align-items-start"
+                      style="cursor: pointer"
+                      (click)="blockChange(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-12">
+                          <img
+                            src="../../../../assets/svg/block.svg"
+                            alt="Block"
+                            width="15"
+                            height="15"
+                          />
+                          <span style="margin-left: 10px">{{
+                            !rows.IsBlocked
+                              ? "Block " + pageType
+                              : "Unblock " + pageType
+                          }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canEdit'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent d-flex align-items-end"
+                      (click)="editRouteDetails(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/edit.svg"
+                            alt="Edit"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Update {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="action === 'canDelete'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="onDelete(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/delete.svg"
+                            alt="Delete"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Remove {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="action === 'canSpotlight'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="spotlight(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/approve-icon-table.svg"
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Spotlight {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canApprove'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="approve(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/approve-icon-table.svg"
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Publish {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canStatus'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="approve(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            [src]="
+                              rows.Status.Name === 'Normal'
+                                ? '../../../assets/svg/approve-icon-table.svg'
+                                : '../../../assets/svg/decline-icon-table.svg'
+                            "
+                            alt="Approve"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>{{
+                            rows.Status.Name === "Normal"
+                              ? "Make User Premium"
+                              : "Make User Normal"
+                          }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="action === 'canDecline'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="disapprove(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-2">
+                          <img
+                            src="../../../assets/svg/decline-icon-table.svg"
+                            alt="Decline"
+                            width="15"
+                            height="15"
+                          />
+                        </div>
+                        <div class="col-10">
+                          <span>Archive {{ pageType }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </section>
+          </p-overlayPanel>
+          <a style="cursor: pointer" (click)="op.toggle($event)"
+            ><img src="../../../../assets/icons/dots.png" alt="Dots"
+          /></a>
+        </ng-container>
+
+        <ng-container *ngIf="isEye">
+          <a style="cursor: pointer" (click)="routeDetails(rows)"
+            ><img src="../../../../assets/svg/view.svg" alt="View"
+          /></a>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-rows
+    let-i="rowIndex"
+    let-columns="cols"
+    *ngIf="showReOrder"
+  >
+    <tr [pReorderableRow]="i">
+      <td pReorderableRowHandle>
+        <span><img src="../../../assets/drag_indicator.svg" alt="drag" /></span>
+      </td>
+      <td *ngFor="let col of cols">
+        <ng-container [ngSwitch]="col.field">
+          <ng-template [ngSwitchCase]="'FirstName'">
+            <div
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                *ngIf="pageType !== 'Admin'"
+                [src]="'https://alafein.azurewebsites.net/' + rows.Photo"
+                width="50"
+                height="50"
+                style="border-radius: 50%"
+                alt="category"
+              />
+              {{ rows.FirstName }}
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'Facility'">
+            <div
+              *ngFor="let facility of rows.Facility"
+              style="min-width: 35px; border-radius: 50%; display: inline-block"
+            >
+              <img
+                [src]="
+                  'https://alafein.azurewebsites.net/' + facility.ImagePath
+                "
+                width="30"
+                height="30"
+                style="border-radius: 50%"
+                alt="category"
+              />
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'socialLinks'">
+            <div
+              *ngIf="rows?.socialLinks?.facebook"
+              style="min-width: 35px; border-radius: 20%; display: inline-block"
+            >
+              <a [href]="rows?.socialLinks?.facebook" target="_blank">
+                <img
+                  [src]="'../../../assets/facebook.svg'"
+                  width="30"
+                  height="30"
+                  style="border-radius: 20%"
+                  alt="category"
+                />
+              </a>
+            </div>
+            <div
+              *ngIf="rows?.socialLinks?.instagram"
+              style="min-width: 35px; border-radius: 20%; display: inline-block"
+            >
+              <a [href]="rows?.socialLinks?.instagram" target="_blank">
+                <img
+                  [src]="'../../../assets/instagram.svg'"
+                  width="30"
+                  height="30"
+                  style="border-radius: 20%"
+                  alt="category"
+                />
+              </a>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'location'">
+            <a [href]="rows.Location">location</a>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'IsBlocked'">
+            <div style="min-width: 35px; display: inline-block">
+              <ng-container [ngSwitch]="rows.IsBlocked">
+                <ng-template [ngSwitchCase]="true">
+                  <div class="content-box content-box-blocked status-box">
+                    <p class="content-text-blocked">Blocked</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="false">
+                  <div class="content-box content-box-normal status-box">
+                    <p class="content-text-normal">Active</p>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'NumberOfEvents'"> 0 </ng-template>
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">

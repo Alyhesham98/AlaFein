@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
       text: 'User name',
     },
     {
-      field: 'Status.Name',
+      field: 'Status',
       text: 'Status',
     },
     {
@@ -59,7 +59,15 @@ export class UsersComponent implements OnInit {
     this.userService
       .getAllUsers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
-        this.rowsData = data.Data;
+        data.Data.forEach((element: any) => {
+          this.rowsData.push({
+            Id: element.Id,
+            FirstName: element.FirstName,
+            Status: element.Status.Name,
+            Email: element.Email,
+            IsBlocked: element.IsBlocked,
+          });
+        });
         this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;

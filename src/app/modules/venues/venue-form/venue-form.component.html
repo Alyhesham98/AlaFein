@@ -138,6 +138,14 @@
                 >Field is required.</small
               >
             </div>
+            <div
+              *ngIf="g['phoneNumber'].errors && g['phoneNumber'].touched"
+              style="color: red"
+            >
+              <small *ngIf="g['phoneNumber'].errors['egyptianPhoneNumber']"
+                >Phone Number Must be +20 (1234567890)</small
+              >
+            </div>
           </div>
           <div class="col-xl-4 mb-xl-0 mb-3">
             <p-dropdown

@@ -9,7 +9,7 @@ import { Table } from 'primeng/table';
 })
 export class CustomTableComponent {
   @Input() showFilter: boolean = false;
-
+  @Input() showReOrder: boolean = false;
   // For Search
   @Input() showSearch: boolean = true;
   @Input() placeholderSearch!: string;
@@ -91,6 +91,7 @@ export class CustomTableComponent {
   @Output() spotlightDetails: EventEmitter<any> = new EventEmitter();
   @Output() blockStatus: EventEmitter<any> = new EventEmitter();
   @Output() emailDetails: EventEmitter<any> = new EventEmitter();
+  @Output() reOrderDetails: EventEmitter<any> = new EventEmitter();
 
   userStatusChoice: any;
   searchChoice: any;
@@ -185,6 +186,18 @@ export class CustomTableComponent {
   }
   onDelete(details: any) {
     this.onDeleteClicked.emit(details);
+  }
+
+  onRowReorder(event: any) {
+    const dropIndex = event.dropIndex;
+
+    // Retrieve the data of the rows being reordered
+    const droppedRow = this.rows[dropIndex];
+    const body={
+      index: dropIndex,
+      id: droppedRow.id
+    }
+    this.spotlightDetails.emit(body);
   }
 
   date!: Date;

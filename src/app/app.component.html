@@ -1,12 +1,12 @@
-<ngx-ui-loader></ngx-ui-loader>
-
+<!-- <ngx-ui-loader></ngx-ui-loader> -->
+<app-loader></app-loader>
 <section class="sidenavSection" *ngIf="isLoggedIn">
-  <div class="container-fluid" style="height: 100%;">
+  <div class="container-fluid" style="height: 100%">
     <div class="row">
       <div class="col-3 col-lg-2 p-0">
         <app-sidenav></app-sidenav>
       </div>
-      <div class="col-9 col-lg-10 mb-4" style="margin-top: 1.8rem !important;">
+      <div class="col-9 col-lg-10 mb-4" style="margin-top: 1.8rem !important">
         <router-outlet></router-outlet>
       </div>
     </div>

@@ -11,6 +11,8 @@ import { InputFieldComponent } from './input-field/input-field.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
+import { DragDropModule } from 'primeng/dragdrop';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
     CustomTableComponent,
     InputFieldComponent,
     FileUploadComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -28,12 +31,14 @@ import { InputTextModule } from 'primeng/inputtext';
     OverlayPanelModule,
     ReactiveFormsModule,
     FileUploadModule,
-    InputTextModule
+    InputTextModule,
+    DragDropModule,
   ],
   exports: [
     SystemTableCardComponent,
     CustomTableComponent,
     InputFieldComponent,
+    LoaderComponent
   ],
 })
 export class SharedModule {}
