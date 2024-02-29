@@ -73,8 +73,8 @@ export class EventFormComponent implements OnInit {
       addtionalComment: new FormControl(null, Validators.required),
       repeat: new FormControl(null, Validators.required),
       kidsAvailability: new FormControl(false, Validators.required),
-      url: new FormControl(null, Validators.required),
-      paymentFee: new FormControl(null, Validators.required),
+      url: new FormControl('', Validators.required),
+      paymentFee: new FormControl(0, Validators.required),
     });
   }
 
@@ -128,6 +128,8 @@ export class EventFormComponent implements OnInit {
   submitForm() {
     this.isSubmit = true;
     this.markFormGroupTouched(this.eventForm);
+    console.log(this.eventForm);
+    
     if (this.eventForm.valid) {
       this.onDateTimeCheck();
 
@@ -167,10 +169,17 @@ export class EventFormComponent implements OnInit {
 
   onAttendanceSelected(attendanceOption: any) {
     if (attendanceOption.Id === 0 || attendanceOption.Id === 1) {
+      this.eventForm.get('paymentFee')?.setValidators(Validators.required);
+      this.eventForm.get('url')?.setValidators(Validators.required);
       this.isPaymentAndURL = true;
     } else {
+      this.eventForm.get('paymentFee')?.setValidators(null);
+      this.eventForm.get('url')?.setValidators(null);
       this.isPaymentAndURL = false;
     }
+    this.eventForm.get('paymentFee')?.updateValueAndValidity();
+    this.eventForm.get('url')?.updateValueAndValidity();
+
   }
 
   onDateTimeCheck() {
