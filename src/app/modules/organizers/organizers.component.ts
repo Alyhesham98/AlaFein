@@ -73,20 +73,19 @@ export class OrganizersComponent implements OnInit {
   }
 
   show(data?: any) {
-    console.log(data);
-    
-    this.ref = this.dialogService.open(EventOrganizersFormComponent, {
-      header: 'CREATE AN EVENT ORGANIZER',
-      width: '80%',
-      height: 'auto',
-      contentStyle: { overflow: 'auto' },
-      maximizable: false,
-      data: data,
+    this.eventOrganizersService.getOrganizerById(data.Id).subscribe((res:any) => {
+      this.ref = this.dialogService.open(EventOrganizersFormComponent, {
+        header: 'CREATE AN EVENT ORGANIZER',
+        width: '80%',
+        height: 'auto',
+        contentStyle: { overflow: 'auto' },
+        maximizable: false,
+        data: res.Data,
+      });
+      this.ref.onClose.subscribe((res) =>
+        res ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 }) : ''
+      );
     });
-
-    this.ref.onClose.subscribe((res) =>
-      res ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 }) : ''
-    );
   }
 
   filter: boolean = false;

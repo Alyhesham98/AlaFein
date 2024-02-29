@@ -46,6 +46,8 @@ export class EventDetailsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
 
   show(data?: any) {
+    console.log(data);
+    
     this.ref = this.dialogService.open(EventFormComponent, {
       header: 'EVENT FORM SUBMISSION',
       width: '80%',

@@ -75,7 +75,6 @@ export class FacilitiesComponent {
   }
 
   onDeleteFacility(data: any) {
-    console.log(data);
     this.facilityService.deleteFacility(data.Id).subscribe((res: any) => {
       if (res.Succeeded) {
         this.getFacilities({ pageNumber: 1, pageSize: 10 });

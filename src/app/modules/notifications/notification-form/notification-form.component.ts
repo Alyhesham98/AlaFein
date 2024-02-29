@@ -41,7 +41,6 @@ export class NotificationFormComponent {
     }
   }
   setFormData(): void {
-    console.log(this.notificationDetails);
     let schedule = new Date(this.notificationDetails?.Schedule);
     this.notificationForm.patchValue({
       id: this.notificationDetails?.Id,
@@ -66,6 +65,13 @@ export class NotificationFormComponent {
     return this.notificationForm.controls;
   }
   onSubmitForm() {
+    const scheduleValue: Date = this.notificationForm.get('schedule')?.value;
+    if (scheduleValue) {
+      // Clone the original date to avoid modifying the original object
+      const adjustedDate: Date = new Date(scheduleValue.getTime());
+      adjustedDate.setHours(adjustedDate.getHours() + 2); // Add two hours
+      this.notificationForm.get('schedule')?.setValue(adjustedDate.toISOString());
+    }
     this.isSubmit = true;
     this.markFormGroupTouched(this.notificationForm);
     if (this.notificationForm.valid) {

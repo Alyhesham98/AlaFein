@@ -12,7 +12,6 @@ export class SidenavComponent implements OnInit {
   constructor(private router:Router){}
   ngOnInit(): void {
     this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
-    console.log(this.userData);
     
   }
 

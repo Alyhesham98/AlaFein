@@ -8,7 +8,6 @@
             <input
               #fileInput
               type="file"
-              [disabled]="config?.data"
               id="formFile"
               accept="image/*"
               style="display: none"
@@ -89,7 +88,7 @@
               >
             </div>
           </div>
-          <div class="col-xl-4 mb-xl-0 mb-3">
+          <div class="col-xl-4 mb-xl-0 mb-3" *ngIf="!editMode">
             <input
               type="password"
               pInputText
@@ -252,7 +251,7 @@
   <div class="footer">
     <a class="btn resetBtn">RESET</a>
     <button class="btn createBtn" (click)="onSubmitForm()">
-      <span>CREATE</span>
+      <span>{{editMode? 'EDIT': 'CREATE'}}</span>
       <img
         src="assets/icons/arrow-right.svg"
         alt="Arrow Right"

@@ -23,6 +23,10 @@ export class EventOrganizersService {
     );
   }
 
+  getOrganizerById(id:any){
+    return this.http.get(`${this.url}AdminEventOrganizer/Detail/${id}`);
+  }
+
   getEventOrganizersDropdown() {
     return this.http.get(`${this.url}AdminEventOrganizer/Dropdown`);
   }
@@ -36,5 +40,9 @@ export class EventOrganizersService {
 
   filterEventsOrganizers(body: any) {
     return this.http.post(`${this.url}AdminEventOrganizer/GetFilterPaginated`, body);
+  }
+
+  updateOrganizer(body: any) {
+    return this.http.put(`${this.url}AdminEventOrganizer/Update`, body);
   }
 }

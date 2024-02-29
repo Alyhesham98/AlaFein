@@ -22,7 +22,7 @@ export class EventOrganizersFormComponent implements OnInit {
   eventTypes!: any[];
   uploadedImage: any = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
-
+  editMode: boolean = false;
   constructor(
     private eventOrganizersService: EventOrganizersService,
     private messageService: MessageService,
@@ -33,6 +33,7 @@ export class EventOrganizersFormComponent implements OnInit {
   ngOnInit(): void {
     this.getDropdown();
     this.eventForm = new FormGroup({
+      id: new FormControl(null),
       firstName: new FormControl(null, Validators.required),
       lastName: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
@@ -50,7 +51,8 @@ export class EventOrganizersFormComponent implements OnInit {
       description: new FormControl(null, Validators.required),
       categoryId: new FormControl(null, Validators.required),
     });
-    if(this.config.data){
+    if (this.config.data) {
+      this.editMode = true;
       this.setFormData();
     }
   }
@@ -110,42 +112,75 @@ export class EventOrganizersFormComponent implements OnInit {
         user: this.eventForm.value,
         organizer: this.eventSecondForm.value,
       };
-      this.eventOrganizersService.createEventOrganizer(body).subscribe(
-        (res: any) => {
-          this.ref.close(true);
+      if (this.editMode) {
+        this.eventOrganizersService.updateOrganizer(body).subscribe(
+          (res: any) => {
+            this.ref.close(true);
 
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'success',
-            summary: 'Success',
-            detail: res.Message,
-          });
-        },
-        (err) => {
-          if (err.error?.Errors?.length >= 1) {
-            err.error.Errors.forEach((element: any) => {
-              console.log(element);
-              
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
+            });
+          },
+          (err) => {
+            if (err.error?.Errors?.length >= 1) {
+              err.error.Errors.forEach((element: any) => {
+                this.messageService.add({
+                  key: 'toast1',
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: element,
+                });
+              });
+            }
+
+            if (err.error?.Message) {
               this.messageService.add({
                 key: 'toast1',
                 severity: 'error',
                 summary: 'Error',
-                detail: element,
+                detail: err.error.Message,
               });
-
-            })  
+            }
           }
+        );
+      } else {
+        this.eventOrganizersService.createEventOrganizer(body).subscribe(
+          (res: any) => {
+            this.ref.close(true);
 
-          if (err.error?.Message) {
             this.messageService.add({
               key: 'toast1',
-              severity: 'error',
-              summary: 'Error',
-              detail: err.error.Message,
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
             });
-          } 
-        }
-      );
+          },
+          (err) => {
+            if (err.error?.Errors?.length >= 1) {
+              err.error.Errors.forEach((element: any) => {
+                this.messageService.add({
+                  key: 'toast1',
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: element,
+                });
+              });
+            }
+
+            if (err.error?.Message) {
+              this.messageService.add({
+                key: 'toast1',
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error.Message,
+              });
+            }
+          }
+        );
+      }
     } else {
       return;
     }
@@ -155,15 +190,17 @@ export class EventOrganizersFormComponent implements OnInit {
     this.eventForm.reset();
     this.eventSecondForm.reset();
   }
-  
-  setFormData(){
+
+  setFormData() {
+    this.eventForm.get('password')?.clearValidators();
     this.eventForm.patchValue({
-      firstName: this.config.data.FirstName,
-      lastName: this.config.data.LastName,
-      email: this.config.data.Email,
-      password: this.config.data.Password,
-      profilePicture: this.config.data.Photo,
+      id: this.config.data.User.Id,
+      firstName: this.config.data.User.FirstName,
+      lastName: this.config.data.User.LastName,
+      email: this.config.data.User.Email,
+      profilePicture: this.config.data.User.ProfilePicture,
     });
+    this.uploadedImage = this.config.data.User.ProfilePicture;
     this.eventSecondForm.patchValue({
       mapLink: this.config.data.MapLink,
       address: this.config.data.Address,
@@ -172,7 +209,7 @@ export class EventOrganizersFormComponent implements OnInit {
       websiteURL: this.config.data.WebsiteURL,
       other: this.config.data.Other,
       description: this.config.data.Description,
-      categoryId: this.config.data.CategoryId,
+      categoryId: this.config.data.Category.Id,
     });
   }
 }

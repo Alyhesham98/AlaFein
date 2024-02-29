@@ -76,7 +76,6 @@ export class CategoriesComponent {
   }
 
   onDeleteCategory(data: any) {
-    console.log(data);
     this.categoryService.deleteCategory(data.Id).subscribe((res: any) => {
       if (res.Succeeded) {
         this.getCategories({ pageNumber: 1, pageSize: 10 });

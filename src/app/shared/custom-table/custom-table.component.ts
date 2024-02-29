@@ -287,7 +287,6 @@ export class CustomTableComponent {
     }
 
     this.filterOutput.emit(this.body);
-    console.log('test: ', this.body);
   }
 
   onFilterReset() {

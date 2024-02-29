@@ -24,7 +24,6 @@ export class SystemOverviewComponent implements OnInit {
       { type: 'This Month', code: 'month' },
       { type: 'This Year', code: 'year' },
     ];
-    console.log(this.data);
     
     this.dataTypes = {
       cardName: 'System Overview',

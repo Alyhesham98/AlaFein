@@ -3,6 +3,7 @@
   [globalFilterFields]="['id', 'date', 'status', 'progress']"
   [value]="rows"
   [columns]="cols"
+  [lazy]="true"
   [reorderableColumns]="showReOrder"
   [tableStyle]="{ 'min-width': '60rem' }"
   (onRowReorder)="onRowReorder($event)"
