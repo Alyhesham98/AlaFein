@@ -8,6 +8,7 @@
             <input
               #fileInput
               type="file"
+              [disabled]="config?.data"
               id="formFile"
               accept="image/*"
               style="display: none"
@@ -37,13 +38,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xl-4 mb-3">
+          <div class="col-xl-4 mb-3" *ngIf="!editMode">
             <input
               type="text"
               pInputText
               formControlName="firstName"
               placeholder="First Name"
-              [disabled]="config?.data"
             />
             <div
               *ngIf="f['firstName'].errors && f['firstName'].touched"
@@ -54,13 +54,13 @@
               >
             </div>
           </div>
-          <div class="col-xl-4 mb-xl-0 mb-3">
+          <div class="col-xl-4 mb-xl-0 mb-3" *ngIf="!editMode">
             <input
               type="text"
               pInputText
               formControlName="lastName"
               placeholder="Last Name"
-              [disabled]="config?.data"
+              [disabled]="editMode"
             />
             <div
               *ngIf="f['lastName'].errors && f['lastName'].touched"
@@ -71,7 +71,7 @@
               >
             </div>
           </div>
-          <div class="col-xl-4 mb-xl-0 mb-3">
+          <div class="col-xl-4 mb-xl-0 mb-3" *ngIf="!config.data">
             <input
               type="email"
               pInputText

@@ -42,6 +42,7 @@ export class EventOrganizersFormComponent implements OnInit {
     });
 
     this.eventSecondForm = new FormGroup({
+      id: new FormControl(null),
       mapLink: new FormControl(null, Validators.required),
       address: new FormControl(null, Validators.required),
       instagram: new FormControl(null, Validators.required),
@@ -113,7 +114,7 @@ export class EventOrganizersFormComponent implements OnInit {
         organizer: this.eventSecondForm.value,
       };
       if (this.editMode) {
-        this.eventOrganizersService.updateOrganizer(body).subscribe(
+        this.eventOrganizersService.updateOrganizer(this.eventSecondForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
 
@@ -193,23 +194,27 @@ export class EventOrganizersFormComponent implements OnInit {
 
   setFormData() {
     this.eventForm.get('password')?.clearValidators();
+    this.eventForm.get('email')?.clearValidators();
+    this.eventForm.get('firstName')?.clearValidators();
+    this.eventForm.get('lastName')?.clearValidators();
+
     this.eventForm.patchValue({
-      id: this.config.data.User.Id,
-      firstName: this.config.data.User.FirstName,
-      lastName: this.config.data.User.LastName,
-      email: this.config.data.User.Email,
-      profilePicture: this.config.data.User.ProfilePicture,
+      id: this.config.data.organizer.User.Id,
+      firstName: this.config.data.organizer.User.FirstName,
+      lastName: this.config.data.organizer.User.LastName,
+      profilePicture: this.config.data.organizer.User.ProfilePicture,
     });
-    this.uploadedImage = this.config.data.User.ProfilePicture;
+    this.uploadedImage = this.config.data.organizer.User.ProfilePicture;
     this.eventSecondForm.patchValue({
-      mapLink: this.config.data.MapLink,
-      address: this.config.data.Address,
-      instagram: this.config.data.Instagram,
-      facebook: this.config.data.Facebook,
-      websiteURL: this.config.data.WebsiteURL,
-      other: this.config.data.Other,
-      description: this.config.data.Description,
-      categoryId: this.config.data.Category.Id,
+      id: this.config.data.id,
+      mapLink: this.config.data.organizer.MapLink,
+      address: this.config.data.organizer.Address,
+      instagram: this.config.data.organizer.Instagram,
+      facebook: this.config.data.organizer.Facebook,
+      websiteURL: this.config.data.organizer.WebsiteURL,
+      other: this.config.data.organizer.Other,
+      description: this.config.data.organizer.Description,
+      categoryId: this.config.data.organizer.Category.Id,
     });
   }
 }

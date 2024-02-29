@@ -16,7 +16,7 @@ export class OrganizersComponent implements OnInit {
       text: 'Organizer Name',
     },
     {
-      field: 'NumberOfEvents',
+      field: 'EventCount',
       text: '# of Events',
     },
     {
@@ -74,13 +74,17 @@ export class OrganizersComponent implements OnInit {
 
   show(data?: any) {
     this.eventOrganizersService.getOrganizerById(data.Id).subscribe((res:any) => {
+      let body = {
+        id: data.Id,
+        organizer: res.Data,
+      }
       this.ref = this.dialogService.open(EventOrganizersFormComponent, {
         header: 'CREATE AN EVENT ORGANIZER',
         width: '80%',
         height: 'auto',
         contentStyle: { overflow: 'auto' },
         maximizable: false,
-        data: res.Data,
+        data: body,
       });
       this.ref.onClose.subscribe((res) =>
         res ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 }) : ''
