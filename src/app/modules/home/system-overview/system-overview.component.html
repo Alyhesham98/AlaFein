@@ -1,7 +1,7 @@
 <div class="system-overview">
   <div class="row" *ngIf="systemType === 'mini'">
     <div class="col">
-      <app-system-table-card [cardData]="dataTypes" [systemType]="'mini'" [showFilter]="true"></app-system-table-card>
+      <app-system-table-card [cardData]="dataTypes" [systemType]="'mini'" (filterOutput)="filterDataChange($event)" [showFilter]="true"></app-system-table-card>
     </div>
   </div>
   <div class="row" *ngIf="systemType === 'extended'">

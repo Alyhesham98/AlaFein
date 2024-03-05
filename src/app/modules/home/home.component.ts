@@ -79,4 +79,8 @@ export class HomeComponent implements OnInit {
       };
     });
   }
+
+  filterDataChange(data: any) {
+    
+  }
 }

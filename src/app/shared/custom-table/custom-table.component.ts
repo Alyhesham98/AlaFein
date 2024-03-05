@@ -193,7 +193,6 @@ export class CustomTableComponent {
 
     // Retrieve the data of the rows being reordered
     const droppedRow = this.rows[dropIndex];
-    console.log(droppedRow);
     
     const body={
       index: dropIndex,

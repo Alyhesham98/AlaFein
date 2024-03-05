@@ -65,7 +65,6 @@ export class NotificationsComponent {
             minutes < 10 ? '0' : ''
           }${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${am_pm}`;
 
-          console.log(formattedSchedule);
           this.rowsData.push({
             Title: element.Title,
             Body: element.Body,

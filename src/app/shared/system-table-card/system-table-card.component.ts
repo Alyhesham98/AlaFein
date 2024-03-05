@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-system-table-card',
@@ -11,7 +11,7 @@ export class SystemTableCardComponent implements OnInit {
   @Input() showFilter: boolean = false;
   calendarFilter: any[] = [];
   selectedCalendar: any[] = [];
-
+  @Output() filterOutput = new EventEmitter<any>();
   ngOnInit() {
     this.calendarFilter = [
       { type: 'This Week', code: 'week' },
@@ -50,5 +50,16 @@ export class SystemTableCardComponent implements OnInit {
       return '—';
     }
     return result;
+  }
+  body: any = {};
+
+  onFilterChange(data: any) {    
+    if (this.selectedCalendar) {
+      this.body.duration = this.selectedCalendar;
+    } else {
+      this.body.duration = null;
+    }
+
+    this.filterOutput.emit(this.body);
   }
 }

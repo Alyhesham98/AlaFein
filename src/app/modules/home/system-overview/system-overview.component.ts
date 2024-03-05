@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-system-overview',
@@ -13,7 +13,7 @@ export class SystemOverviewComponent implements OnInit {
   @Input() users!: number;
   @Input() venue!: number;
   @Input() systemOverviewData: any = {};
-
+  @Output() filterData = new EventEmitter<any>();
   calendarFilter: any[] = [];
   selectedCalendar: any[] = [];
   dataTypes: any = {};
@@ -52,5 +52,9 @@ export class SystemOverviewComponent implements OnInit {
       ],
     };
 
+  }
+
+  filterDataChange(data:any){
+    this.filterData.emit(data);
   }
 }

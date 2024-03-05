@@ -3,6 +3,7 @@
     <app-system-overview
       [systemType]="'mini'"
       [data]="data"
+      (filterData)="filterDataChange($event)"
     ></app-system-overview>
   </div>
 

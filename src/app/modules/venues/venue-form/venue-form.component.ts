@@ -29,7 +29,7 @@ export class VenueFormComponent implements OnInit {
   venueFacilties!: any[];
   selectedWorkday: any;
   display: boolean = false;
-  uploadedImage: any=null;
+  uploadedImage: any = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
@@ -55,7 +55,10 @@ export class VenueFormComponent implements OnInit {
       facebook: new FormControl(null, Validators.required),
       websiteURL: new FormControl(null, Validators.required),
       other: new FormControl(null, Validators.required),
-      phoneNumber: new FormControl(null, [Validators.required, EgyptianPhoneNumberValidator()]),
+      phoneNumber: new FormControl(null, [
+        Validators.required,
+        EgyptianPhoneNumberValidator(),
+      ]),
       venueName: new FormControl(null, Validators.required),
       venueDescription: new FormControl(null, Validators.required),
       categoryId: new FormControl(null, Validators.required),
@@ -242,14 +245,28 @@ export class VenueFormComponent implements OnInit {
 
   openDay(index: any, data: any) {
     // Check if the selected weekday is already in the selectedWeekDays array
+    const uniqueEntries: { [key: number]: any } = {};
+    this.selectedWeekDays.forEach((entry: any) => {
+      uniqueEntries[entry.Id] = entry;
+    });
+
+    this.selectedWeekDays = Object.values(uniqueEntries);
     if (
       this.selectedWeekDays.length > 0 &&
       data.length < this.selectedWeekDays.length
     ) {
+
       if (this.selectedWeekDays === data) {
         // If already selected, you may choose to do nothing or provide feedback to the user
         this.openTimePickerDialog(data, index);
       } else {
+        const arr2Ids: Set<number> = new Set(
+          data.map((entry: any) => entry.Id)
+        );
+
+        this.selectedWeekDays = this.selectedWeekDays.filter((entry) =>
+          arr2Ids.has(entry.Id)
+        );
         return; // Exit the function without opening the dialog
       }
     } else {

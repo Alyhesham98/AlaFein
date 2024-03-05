@@ -67,7 +67,6 @@ export class EventSpotlightComponent {
   }
 
   reOrderDetails(event: any) {
-    console.log(event);
   }
   ref: DynamicDialogRef | undefined;
 
