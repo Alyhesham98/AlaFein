@@ -46,4 +46,12 @@ export class AdminsService {
   updateAdmin(body: any) {
     return this.http.patch(`${this.url}Admin/Update`, body);
   }
+
+  getFilterDropdown(){
+    return this.http.get(`${this.url}Dashboard/Dropdown`);
+  }
+
+  getFilteredDashboard(body:any){
+    return this.http.post(`${this.url}Dashboard/GetFilter`,body);
+  }
 }

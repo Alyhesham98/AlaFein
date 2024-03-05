@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AdminsService } from 'src/app/core/services/admins.service';
 
 @Component({
   selector: 'app-system-table-card',
@@ -12,12 +13,11 @@ export class SystemTableCardComponent implements OnInit {
   calendarFilter: any[] = [];
   selectedCalendar: any[] = [];
   @Output() filterOutput = new EventEmitter<any>();
+  constructor(private adminService: AdminsService) {}
   ngOnInit() {
-    this.calendarFilter = [
-      { type: 'This Week', code: 'week' },
-      { type: 'This Month', code: 'month' },
-      { type: 'This Year', code: 'year' },
-    ];
+    if (this.showFilter) {
+      this.getFilterDropdown();
+    }
   }
 
   getValue(obj: any, path: any, columnType = ''): string {
@@ -53,7 +53,13 @@ export class SystemTableCardComponent implements OnInit {
   }
   body: any = {};
 
-  onFilterChange(data: any) {    
+  getFilterDropdown() {
+    this.adminService.getFilterDropdown().subscribe((res: any) => {
+      this.calendarFilter = res.Data;
+    });
+  }
+
+  onFilterChange(data: any) {
     if (this.selectedCalendar) {
       this.body.duration = this.selectedCalendar;
     } else {

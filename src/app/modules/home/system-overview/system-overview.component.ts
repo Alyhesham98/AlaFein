@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-system-overview',
   templateUrl: './system-overview.component.html',
   styleUrls: ['./system-overview.component.scss'],
 })
-export class SystemOverviewComponent implements OnInit {
+export class SystemOverviewComponent implements OnInit,OnChanges {
   @Input() systemType!: string;
   @Input() data: any;
   @Input() event!: number;
@@ -19,11 +19,6 @@ export class SystemOverviewComponent implements OnInit {
   dataTypes: any = {};
 
   ngOnInit(): void {
-    this.calendarFilter = [
-      { type: 'This Week', code: 'week' },
-      { type: 'This Month', code: 'month' },
-      { type: 'This Year', code: 'year' },
-    ];
     
     this.dataTypes = {
       cardName: 'System Overview',
@@ -52,6 +47,37 @@ export class SystemOverviewComponent implements OnInit {
       ],
     };
 
+  }
+
+  ngOnChanges(changes: any): void {
+    if(changes?.data?.currentValue&&changes?.data?.previousValue){
+      this.dataTypes = {
+        cardName: 'System Overview',
+        filterDate: '01 NOV - 07 NOV 2023',
+        cardsData: [
+          {
+            name: 'Events',
+            type: 'Total Events',
+            count: changes.data?.currentValue?.event,
+          },
+          {
+            name: 'Users',
+            type: 'New Users',
+            count: changes.data?.currentValue?.users,
+          },
+          {
+            name: 'Events',
+            type: 'New Event Organizer',
+            count: changes.data?.currentValue?.eventOrganizer,
+          },
+          {
+            name: 'Venues',
+            type: 'New Venues',
+            count: changes.data?.currentValue?.venue,
+          },
+        ],
+      };
+    }
   }
 
   filterDataChange(data:any){
