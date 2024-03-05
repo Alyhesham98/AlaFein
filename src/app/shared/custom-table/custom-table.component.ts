@@ -101,9 +101,7 @@ export class CustomTableComponent {
   constructor(private router: Router) {}
   page = 0;
   size = 10;
-  onPageChange(event: any) {
-    console.log('test');
-    
+  onPageChange(event: any) {    
     if (this.searchChoice) {
       event.name = this.searchChoice;
     } else {
