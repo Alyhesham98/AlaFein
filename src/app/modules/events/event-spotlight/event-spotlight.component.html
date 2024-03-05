@@ -1,23 +1,27 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <h1>EVENT SPOTLIGHT</h1>
-        </div>
+  <div class="row">
+    <div class="col">
+      <h1>EVENT SPOTLIGHT</h1>
     </div>
-    <div class="row">
-        <div class="col">
-            <hr>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr />
     </div>
-    <div class="row">
-        <div class="col">
-            <app-custom-table
-            [pageSize]="pageSize"
-            [totalRecords]="totalRecords"
-            [cols]="colsData"
-            [rows]="rowsData"
-            [showReOrder]="true"
-          ></app-custom-table>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-custom-table
+        [pageSize]="pageSize"
+        [totalRecords]="totalRecords"
+        [cols]="colsData"
+        [rows]="rowsData"
+        [showReOrder]="true"
+        (pageNumber)="getSpotlightEvents($event)"
+        (reOrderDetails)="reOrderDetails($event)"
+        [actions]="actions"
+        (dataDetails)="show($event)"
+      ></app-custom-table>
     </div>
+  </div>
 </div>

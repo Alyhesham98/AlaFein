@@ -46,14 +46,11 @@ export class EventFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getEventsDropdown();
-
-    if (this.config.data) {
-      this.setFormData();
-    }
   }
 
   initForm() {
     this.eventForm = new FormGroup({
+      id: new FormControl(null),
       eventNameEN: new FormControl(null, Validators.required),
       eventNameAR: new FormControl(null, Validators.required),
       eventDescriptionEN: new FormControl(null, Validators.required),
@@ -91,6 +88,9 @@ export class EventFormComponent implements OnInit {
       this.attendanceOptions = res?.Data?.Attendance;
       this.repeatOptions = res?.Data?.Repeat;
       this.venuesOptions = res?.Data?.Venue;
+      if (this.config.data) {
+        this.setFormData();
+      }
     });
   }
   onFileSelected(): void {
@@ -128,36 +128,58 @@ export class EventFormComponent implements OnInit {
   submitForm() {
     this.isSubmit = true;
     this.markFormGroupTouched(this.eventForm);
-    console.log(this.eventForm);
-    
+
     if (this.eventForm.valid) {
-      this.onDateTimeCheck();
 
       this.eventForm.patchValue({
         venueId: this.eventForm.get('venueId')?.value.Id,
         attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
       });
+      if (this.config.data) {
+        this.eventService.updateParentEvent(this.eventForm.value).subscribe(
+          (res: any) => {
+            this.ref.close(true);
 
-      this.eventService.createEvent(this.eventForm.value).subscribe(
-        (res: any) => {
-          this.ref.close(true);
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
+            });
+          },
+          (err) => {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.error.Message,
+            });
+          }
+        );
+      } else {
+        this.onDateTimeCheck();
 
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'success',
-            summary: 'Success',
-            detail: res.Message,
-          });
-        },
-        (err) => {
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'error',
-            summary: 'Error',
-            detail: err.error.Message,
-          });
-        }
-      );
+        this.eventService.createEvent(this.eventForm.value).subscribe(
+          (res: any) => {
+            this.ref.close(true);
+
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
+            });
+          },
+          (err) => {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.error.Message,
+            });
+          }
+        );
+      }
     } else {
       return;
     }
@@ -168,7 +190,12 @@ export class EventFormComponent implements OnInit {
   }
 
   onAttendanceSelected(attendanceOption: any) {
-    if (attendanceOption.Id === 0 || attendanceOption.Id === 1) {
+    if (
+      attendanceOption.Id === 0 ||
+      attendanceOption.Id === 1 ||
+      attendanceOption === 1||
+      attendanceOption === 0
+    ) {
       this.eventForm.get('paymentFee')?.setValidators(Validators.required);
       this.eventForm.get('url')?.setValidators(Validators.required);
       this.isPaymentAndURL = true;
@@ -179,7 +206,6 @@ export class EventFormComponent implements OnInit {
     }
     this.eventForm.get('paymentFee')?.updateValueAndValidity();
     this.eventForm.get('url')?.updateValueAndValidity();
-
   }
 
   onDateTimeCheck() {
@@ -211,28 +237,56 @@ export class EventFormComponent implements OnInit {
   }
 
   setFormData() {
+    this.onAttendanceSelected(this.config.data.data.AttendanceOption);
+
+    // Extracting date and time values
+    const dateFrom = new Date(this.config?.data?.data?.Dates[0]);
+    const dateTo = new Date(this.config?.data?.data?.Dates[1]);
+    const timeFrom = this.formatTime(dateFrom);
+    const timeTo = this.formatTime(dateTo);
+
     this.eventForm.setValue({
-      eventNameEN: this.config.data.Name,
-      eventNameAR: this.config.data.Name,
-      eventDescriptionEN: this.config.data.Description,
-      mainArtestNameEN: this.config.data,
-      mainArtestNameAR: this.config.data,
-      categoryId: this.config.data.Category.Id,
-      dateFromTo: this.config.data.Date,
-      timeFrom: this.config.data.Date,
-      timeTo: this.config.data.Date,
-      dates: this.config.data.Date,
-      venueId: this.config.data.Venue.Id,
-      organizerId: this.config.data.Organizer.Id,
-      branchId: this.config.data,
-      attendanceOption: this.config.data.AttendanceOption,
-      poster: this.config.data.Poster,
-      contactPerson: this.config.data.URL,
-      addtionalComment: this.config.data.URL,
-      repeat: this.config.data,
-      kidsAvailability: this.config.data,
-      url: this.config.data.URL,
-      paymentFee: this.config.data.PaymentFee,
+      eventNameEN: this.config.data.data.EventNameEN,
+      eventNameAR: this.config.data.data.EventNameAR,
+      eventDescriptionEN: this.config.data.data.EventDescriptionEN,
+      mainArtestNameEN: this.config.data.data.MainArtestNameEN,
+      mainArtestNameAR: this.config.data.data.MainArtestNameAR,
+      categoryId: this.config.data.data.CategoryId,
+      dateFromTo: [dateFrom, dateTo],
+      timeFrom: timeFrom,
+      timeTo: timeTo,
+      dates: this.config.data.data.Dates,
+      venueId: this.config.data.data.VenueId,
+      organizerId: this.config.data.data.OrganizerId,
+      branchId: this.config.data.data.BranchId,
+      attendanceOption: this.config.data.data.AttendanceOption,
+      poster: this.config.data.data.Poster,
+      contactPerson: this.config.data.data.ContactPerson,
+      addtionalComment: this.config.data.data.AddtionalComment,
+      repeat: this.config.data.data.Repeat,
+      kidsAvailability: this.config.data.data.KidsAvailability,
+      url: this.config.data.data.URL,
+      paymentFee: this.config.data.data.PaymentFee,
+      id: +this.config.data.submissionId,
     });
+    this.uploadedImage = this.config?.data?.data?.Poster;
+    this.eventForm.get('poster')?.setValue(this.config?.data?.data?.Poster);
+    this.venuesOptions?.filter((x: any) => {
+      if (x.Id === this.config?.data?.data?.VenueId) {
+        this.onVenueSelected(x);
+        this.eventForm.get('venueId')?.setValue(x);
+      }
+    });
+  }
+
+  formatTime(date: Date): string {
+    let hours = date.getHours();
+    let minutes: number | string = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    const strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
   }
 }

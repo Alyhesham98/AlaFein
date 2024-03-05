@@ -29,6 +29,7 @@ export class AdminFormComponent implements OnInit {
   ngOnInit(): void {
     this.getDropdowns();
     this.adminForm = new FormGroup({
+      id: new FormControl(null),
       firstName: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
       roleId: new FormControl(null, Validators.required),
@@ -52,26 +53,49 @@ export class AdminFormComponent implements OnInit {
     this.isSubmit = true;
     this.markFormGroupTouched(this.adminForm);
     if (this.adminForm.valid) {
-      this.adminService.createAdmin(this.adminForm.value).subscribe(
-        (res: any) => {
-          this.ref.close(true);
+      if (this.config.data) {
+        this.adminService.updateAdmin(this.adminForm.getRawValue()).subscribe(
+          (res: any) => {
+            this.ref.close(true);
 
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'success',
-            summary: 'Success',
-            detail: res.Message,
-          });
-        },
-        (err) => {
-          this.messageService.add({
-            key: 'toast1',
-            severity: 'error',
-            summary: 'Error',
-            detail: err.Message,
-          });
-        }
-      );
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
+            });
+          },
+          (err) => {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.Message,
+            });
+          }
+        );
+      } else {
+        this.adminService.createAdmin(this.adminForm.value).subscribe(
+          (res: any) => {
+            this.ref.close(true);
+
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'success',
+              summary: 'Success',
+              detail: res.Message,
+            });
+          },
+          (err) => {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: err.Message,
+            });
+          }
+        );
+      }
     } else {
       return;
     }
@@ -84,6 +108,28 @@ export class AdminFormComponent implements OnInit {
   getDropdowns() {
     this.adminService.getAdminsDropdown().subscribe((res: any) => {
       this.adminTypes = res.Data;
+      if (this.config.data) {
+        this.setFormData();
+      }
+    });
+  }
+
+  setFormData() {
+    this.adminForm.get('password')?.setValidators(null);
+    this.adminForm.get('email')?.disable();
+    this.adminForm.get('roleId')?.disable();
+
+    this.adminForm.setValue({
+      id: this.config?.data?.Id,
+      firstName: this.config?.data?.FirstName,
+      email: this.config?.data?.Email,
+      roleId: this.config?.data?.RoleName,
+      password: null,
+    });
+    this.adminTypes?.filter((x: any) => {
+      if (x.Name === this.config?.data?.RoleName) {
+        this.adminForm.get('roleId')?.setValue(x.Id);
+      }
     });
   }
 }

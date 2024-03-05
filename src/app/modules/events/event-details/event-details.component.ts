@@ -15,15 +15,17 @@ export class EventDetailsComponent implements OnInit {
   eventId: any;
   eventDetails: any;
   eventStatus: any;
+  submissionId: any;
   constructor(
     private activeRoute: ActivatedRoute,
     private eventService: EventsService,
     private router: Router,
-    public dialogService: DialogService,
+    public dialogService: DialogService
   ) {
     this.activeRoute.params.forEach((params: any) => {
       this.eventId = params.id;
       this.eventStatus = params.status;
+      this.submissionId = params.parentId;
     });
   }
   ngOnInit(): void {
@@ -46,19 +48,25 @@ export class EventDetailsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
 
   show(data?: any) {
-    console.log(data);
-    
-    this.ref = this.dialogService.open(EventFormComponent, {
-      header: 'EVENT FORM SUBMISSION',
-      width: '80%',
-      height: 'auto',
-      contentStyle: { overflow: 'auto' },
-      maximizable: false,
-      data: data,
-    });
+    this.eventService
+      .getParentDetails(this.submissionId)
+      .subscribe((res: any) => {
+        let body = {
+          data: res.Data,
+          submissionId: this.submissionId,
+        };
+        this.ref = this.dialogService.open(EventFormComponent, {
+          header: 'EVENT FORM SUBMISSION',
+          width: '80%',
+          height: 'auto',
+          contentStyle: { overflow: 'auto' },
+          maximizable: false,
+          data: body,
+        });
 
-    this.ref.onClose.subscribe((res) =>
-      this.router.navigate(['events/all-events'])
-    );
+        this.ref.onClose.subscribe((res) =>
+          this.router.navigate(['events/all-events'])
+        );
+      });
   }
 }

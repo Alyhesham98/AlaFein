@@ -251,7 +251,6 @@
               </ng-container>
             </div>
           </ng-template>
-          <ng-template [ngSwitchCase]="'NumberOfEvents'"> 0 </ng-template>
           <ng-template [ngSwitchCase]="'Status'">
             <ng-container [ngSwitch]="rows.Status">
               <div style="min-width: 35px; display: inline-block">
@@ -315,7 +314,6 @@
               />
             </div>
           </ng-template>
-
           <ng-template ngSwitchDefault>
             {{ getValue(rows, col.field) }}
           </ng-template>
@@ -332,7 +330,7 @@
                     style="cursor: pointer"
                     (click)="routeDetails(rows)"
                   >
-                    <img src="../../../../assets/icon/view.svg" alt="View" />
+                    <img src="../../../assets/svg/view.svg" alt="View" />
                   </a>
                 </div>
               </ng-container>
@@ -606,6 +604,7 @@
       </td>
       <td *ngFor="let col of cols">
         <ng-container [ngSwitch]="col.field">
+          {{ col.field }}
           <ng-template [ngSwitchCase]="'FirstName'">
             <div
               style="min-width: 35px; border-radius: 50%; display: inline-block"
@@ -734,7 +733,6 @@
               />
             </div>
           </ng-template>
-
           <ng-template ngSwitchDefault>
             {{ getValue(rows, col.field) }}
           </ng-template>
@@ -751,7 +749,7 @@
                     style="cursor: pointer"
                     (click)="routeDetails(rows)"
                   >
-                    <img src="../../../../assets/icon/view.svg" alt="View" />
+                    <img src="../../../../assets/svg/view.svg" alt="View" />
                   </a>
                 </div>
               </ng-container>

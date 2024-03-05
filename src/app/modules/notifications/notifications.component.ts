@@ -50,7 +50,28 @@ export class NotificationsComponent {
     this.notifcationService
       .getAllNotifications(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
-        this.rowsData = data.Data;
+        data.Data.forEach((element: any) => {
+          const schedule = new Date(element.Schedule);
+          const day = schedule.getDate();
+          const month = schedule.getMonth() + 1; // Months are zero-indexed
+          const year = schedule.getFullYear() % 100; // Getting only the last two digits of the year
+          const hours = schedule.getHours();
+          const minutes = schedule.getMinutes();
+          const seconds = schedule.getSeconds();
+          const am_pm = hours >= 12 ? 'PM' : 'AM';
+          const formattedSchedule = `${day < 10 ? '0' : ''}${day}/${
+            month < 10 ? '0' : ''
+          }${month}/${year < 10 ? '0' : ''}${year} ${hours % 12 || 12}:${
+            minutes < 10 ? '0' : ''
+          }${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${am_pm}`;
+
+          console.log(formattedSchedule);
+          this.rowsData.push({
+            Title: element.Title,
+            Body: element.Body,
+            Schedule: element.Schedule ? formattedSchedule : '-',
+          });
+        });
         this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;

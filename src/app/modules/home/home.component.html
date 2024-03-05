@@ -1,19 +1,28 @@
 <div class="container-fluid">
   <div class="system-overview-mini" *ngIf="data">
-    <app-system-overview [systemType]="'mini'" [data]="data"></app-system-overview>
+    <app-system-overview
+      [systemType]="'mini'"
+      [data]="data"
+    ></app-system-overview>
   </div>
 
   <div class="system-data-tables mt-4">
     <div class="row">
       <div class="col-lg-6" *ngFor="let systemData of tablesData">
-       <div class="mt-4">
-        <app-system-table-card [cardData]="systemData" [systemType]="'extended'"></app-system-table-card>
-       </div>
+        <div class="mt-4">
+          <app-system-table-card
+            [cardData]="systemData"
+            [systemType]="'extended'"
+          ></app-system-table-card>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="system-overview-extended mt-5">
-    <app-system-overview [systemType]="'extended'"></app-system-overview>
+    <app-system-overview
+      [systemType]="'extended'"
+      [systemOverviewData]="systemOverviewData"
+    ></app-system-overview>
   </div>
 </div>

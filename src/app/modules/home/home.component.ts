@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   dashboard!: any;
   data!: any;
   dataArra: any[] = [];
+  systemOverviewData: any = {};
   getDashboard() {
     this.adminService.getDashboard().subscribe((res: any) => {
       this.dashboard = res.Data;
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
         users: this.dashboard.Users,
         venue: this.dashboard.Venue,
       };
-      
+
       this.tablesData = [
         {
           cardName: 'Top Users',
@@ -63,6 +64,19 @@ export class HomeComponent implements OnInit {
           tableData: this.dashboard.TopCategories,
         },
       ];
+
+      this.systemOverviewData = {
+        cardName: 'System Overview',
+        filterDate: '01 NOV - 07 NOV 2023',
+        tableCols: [
+          { key: 'Name', value: 'Event Name' },
+          { key: 'Category.Name', value: 'Category' },
+          { key: 'Venue.Name', value: 'Venue' },
+          { key: 'Organizer.Name', value: 'Event Organizer' },
+          { key: 'Date', value: 'Event Date' },
+        ],
+        tableData: res?.Data?.SystemOverview,
+      };
     });
   }
 }

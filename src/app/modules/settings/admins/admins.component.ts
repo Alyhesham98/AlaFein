@@ -24,7 +24,7 @@ export class AdminsComponent implements OnInit {
       text: 'Email',
     },
   ];
-  actions: any[] = ['canView', 'canDelete'];
+  actions: any[] = ['canView'];
   rowsData: any[] = [];
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -32,7 +32,6 @@ export class AdminsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   adminRoles = [];
   filter: boolean = false;
-
   constructor(
     public dialogService: DialogService,
     private adminsService: AdminsService

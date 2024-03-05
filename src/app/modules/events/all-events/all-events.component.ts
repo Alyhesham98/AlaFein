@@ -113,7 +113,7 @@ export class AllEventsComponent {
 
   getEventDetails(data: any) {
     this.router.navigate([
-      'events/event-details/' + data.Id + '/' + data?.Status?.Name,
+      'events/event-details/' + data.Id + '/' + data?.Status?.Name+ '/' + data?.SubmissionId,
     ]);
   }
 

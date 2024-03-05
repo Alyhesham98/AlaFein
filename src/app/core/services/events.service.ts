@@ -44,6 +44,10 @@ export class EventsService {
     return this.http.post(`${this.url}AdminSubmission/Add`, body);
   }
 
+  updateParentEvent(body: any) {
+    return this.http.put(`${this.url}AdminSubmission/Update`, body);
+  }
+
   uploadEventImage(body: any) {
     return this.http.post(`${this.url}AdminSubmission/UploadPosterImage`, body);
   }
@@ -58,6 +62,10 @@ export class EventsService {
 
   filterEvents(body: any) {
     return this.http.post(`${this.url}AdminEvent/GetFilterPagination`, body);
+  }
+
+  getParentDetails(id: any) {
+    return this.http.get(`${this.url}AdminSubmission/GetParentDetails/${id}`);
   }
 
 }

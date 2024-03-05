@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SystemTableCardComponent implements OnInit {
   @Input() cardData: any = {};
   @Input() systemType!: string;
-
+  @Input() showFilter: boolean = false;
   calendarFilter: any[] = [];
   selectedCalendar: any[] = [];
 

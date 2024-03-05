@@ -59,6 +59,7 @@ export class OrganizersComponent implements OnInit {
             LastName: element.LastName,
             Email: element.Email,
             Photo: element.Photo,
+            EventCount: element.EventCount,
             socialLinks: {
               facebook: element.Facebook,
               websiteURL: element.WebsiteURL,

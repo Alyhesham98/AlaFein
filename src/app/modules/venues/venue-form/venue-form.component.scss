@@ -156,5 +156,37 @@
 // }
 .has-value {
   /* Add your desired styles here */
-  border: 2px solid green!important; /* For example */
+  border: 2px solid green !important; /* For example */
+}
+/* Add padding between each choice */
+::ng-deep .custom-select .p-button {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+/* Apply full border with border radius */
+::ng-deep .custom-select .p-button.p-button-text-only {
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 30%; /* Border radius */
+}
+
+::ng-deep .p-buttonset .p-button:not(:last-child) {
+  border-right: 1px solid #ccc;
+  border-radius: 30%;
+}
+
+::ng-deep .p-buttonset .p-button:last-of-type {
+  border-top-left-radius: 30%;
+  border-bottom-left-radius: 30%;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 30%;
+}
+
+::ng-deep .p-selectbutton .p-button.p-highlight:hover {
+  border: 1.25px solid #000000 !important;
+  background: transparent !important;
+}
+
+::ng-deep .p-selectbutton .p-button.p-highlight {
+  border: 1.25px solid #000000 !important;
+  background: transparent !important;
 }

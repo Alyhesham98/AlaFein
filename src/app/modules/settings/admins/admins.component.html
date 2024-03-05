@@ -28,6 +28,8 @@
         [placeholderFilterByRoleDropdown]="'Filter by Role'"
         [filterByRoleDropdownList]="adminRoles"
         (filterOutput)="onSearch($event)"
+        [actions]="actions"
+        (dataDetails)="show($event)"
       ></app-custom-table>
     </div>
   </div>

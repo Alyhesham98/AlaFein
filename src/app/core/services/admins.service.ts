@@ -42,4 +42,8 @@ export class AdminsService {
   getDashboard() {
     return this.http.get(`${this.url}Dashboard/Dashboard`);
   }
+
+  updateAdmin(body: any) {
+    return this.http.patch(`${this.url}Admin/Update`, body);
+  }
 }

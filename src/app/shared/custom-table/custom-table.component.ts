@@ -193,11 +193,13 @@ export class CustomTableComponent {
 
     // Retrieve the data of the rows being reordered
     const droppedRow = this.rows[dropIndex];
+    console.log(droppedRow);
+    
     const body={
       index: dropIndex,
-      id: droppedRow.id
+      id: droppedRow.Id
     }
-    this.spotlightDetails.emit(body);
+    this.reOrderDetails.emit(body);
   }
 
   date!: Date;

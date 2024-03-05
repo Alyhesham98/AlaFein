@@ -42,6 +42,7 @@
             optionLabel="Name"
             optionValue="Id"
             placeholder="Type"
+            [disabled]="config.data"
           ></p-dropdown>
           <div
             *ngIf="f['roleId'].errors && f['roleId'].touched"
@@ -52,7 +53,7 @@
             >
           </div>
         </div>
-        <div class="col-xl-4 mb-4">
+        <div class="col-xl-4 mb-4" *ngIf="!config.data">
           <input
             type="text"
             pInputText
