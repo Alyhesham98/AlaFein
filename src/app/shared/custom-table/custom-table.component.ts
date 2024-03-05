@@ -102,6 +102,8 @@ export class CustomTableComponent {
   page = 0;
   size = 10;
   onPageChange(event: any) {
+    console.log('test');
+    
     if (this.searchChoice) {
       event.name = this.searchChoice;
     } else {
