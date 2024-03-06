@@ -428,6 +428,31 @@
                     </a>
                   </div>
                 </ng-container>
+                <ng-container *ngIf="action === 'canVerify'">
+                  <div class="mb-2">
+                    <a
+                      class="paraContent d-flex align-items-start"
+                      style="cursor: pointer"
+                      (click)="blockChange(rows)"
+                    >
+                      <div class="row">
+                        <div class="col-12">
+                          <img
+                            src="../../../../assets/svg/block.svg"
+                            alt="Block"
+                            width="15"
+                            height="15"
+                          />
+                          <span style="margin-left: 10px">{{
+                            !rows.IsBlocked
+                              ? "unverified " + pageType
+                              : "Verify " + pageType
+                          }}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
                 <ng-container *ngIf="action === 'canEdit'">
                   <div class="mb-2">
                     <a
@@ -499,7 +524,7 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="action === 'canApprove'">
-                  <div class="mb-2">
+                  <div class="mb-2" *ngIf="!rows.IsPublished">
                     <a
                       class="paraContent"
                       style="cursor: pointer"
@@ -517,6 +542,35 @@
                         <div class="col-10">
                           <span>Publish {{ pageType }}</span>
                         </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="mb-2" *ngIf="rows.IsPublished">
+                    <a
+                      class="paraContent"
+                      style="cursor: pointer"
+                      (click)="approve(rows)"
+                    >
+                      <div class="row">
+                        <a
+                          class="paraContent"
+                          style="cursor: pointer"
+                          (click)="disapprove(rows)"
+                        >
+                          <div class="row">
+                            <div class="col-2">
+                              <img
+                                src="../../../assets/svg/decline-icon-table.svg"
+                                alt="Decline"
+                                width="15"
+                                height="15"
+                              />
+                            </div>
+                            <div class="col-10">
+                              <span>Archive {{ pageType }}</span>
+                            </div>
+                          </div>
+                        </a>
                       </div>
                     </a>
                   </div>

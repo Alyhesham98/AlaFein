@@ -33,7 +33,10 @@
         [actions]="actions"
         [isDots]="true"
         (dataDetails)="show($event)"
+        (blockStatus)="changeUserBlock($event)"
       ></app-custom-table>
     </div>
   </div>
 </div>
+
+<p-toast key="toast1"></p-toast>

@@ -30,7 +30,7 @@ export class CategoriesComponent {
   pageSize: number = 10;
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
-  actions: any[] = ['canEdit', 'canDelete', 'canApprove', 'canDecline'];
+  actions: any[] = ['canEdit', 'canDelete', 'canApprove'];
 
   constructor(
     private categoryService: CategoriesService,
@@ -103,7 +103,7 @@ export class CategoriesComponent {
           key: 'toast1',
           severity: 'success',
           summary: 'Success',
-          detail: data.IsPublished?'Category Published Successfully!':'Category Archived Successfully!',
+          detail: !data.IsPublished?'Category Published Successfully!':'Category Archived Successfully!',
         });
         this.getCategories({ pageNumber: 1, pageSize: 10 });
       } else {
@@ -111,7 +111,7 @@ export class CategoriesComponent {
           key: 'toast1',
           severity: 'error',
           summary: 'Error',
-          detail: data.IsPublished?'Error Publishing Category.':'Error Archiving Category.',
+          detail: !data.IsPublished?'Error Publishing Category.':'Error Archiving Category.',
         });
       }
     });

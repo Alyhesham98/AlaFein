@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { EventOrganizersService } from 'src/app/core/services/event-organizers.service';
 import { EventOrganizersFormComponent } from './event-organizers-form/event-organizers-form.component';
+import { UsersService } from 'src/app/core/services/users.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-organizers',
   templateUrl: './organizers.component.html',
   styleUrls: ['./organizers.component.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class OrganizersComponent implements OnInit {
   colsData: any[] = [
@@ -29,7 +31,7 @@ export class OrganizersComponent implements OnInit {
     },
   ];
 
-  actions: any[] = ['canView'];
+  actions: any[] = ['canView', 'canVerify'];
   rowsData: any[] = [];
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -38,7 +40,9 @@ export class OrganizersComponent implements OnInit {
 
   constructor(
     public dialogService: DialogService,
-    private eventOrganizersService: EventOrganizersService
+    private eventOrganizersService: EventOrganizersService,
+    private userService: UsersService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -48,12 +52,38 @@ export class OrganizersComponent implements OnInit {
     });
   }
 
+  changeUserBlock(data: any) {
+    this.userService.toggleBlock({ id: data.UserId }).subscribe((res: any) => {
+      if (res.Succeeded) {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: !data.IsBlocked
+            ? 'User Verified Successfully!'
+            : 'User UnVerified Successfully!',
+        });
+        this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 });
+      } else {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'error',
+          summary: 'Error',
+          detail: !data.IsBlocked
+            ? 'Error Verified User.'
+            : 'Error UnVerified User.',
+        });
+      }
+    });
+  }
+
   getAllEventOrganizers(e: any) {
     this.eventOrganizersService
       .getAllEventOrganizers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
         data.Data.forEach((element: any) => {
           this.rowsData.push({
+            UserId: element.UserId,
             Id: element.Id,
             FirstName: element.FirstName,
             LastName: element.LastName,
@@ -74,23 +104,40 @@ export class OrganizersComponent implements OnInit {
   }
 
   show(data?: any) {
-    this.eventOrganizersService.getOrganizerById(data.Id).subscribe((res:any) => {
-      let body = {
-        id: data.Id,
-        organizer: res.Data,
-      }
+    if (data?.Id) {
+      this.eventOrganizersService
+        .getOrganizerById(data.Id)
+        .subscribe((res: any) => {
+          let body = {
+            id: data.Id,
+            organizer: res.Data,
+          };
+          this.ref = this.dialogService.open(EventOrganizersFormComponent, {
+            header: 'CREATE AN EVENT ORGANIZER',
+            width: '80%',
+            height: 'auto',
+            contentStyle: { overflow: 'auto' },
+            maximizable: false,
+            data: body,
+          });
+          this.ref.onClose.subscribe((res) =>
+            res
+              ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 })
+              : ''
+          );
+        });
+    } else {
       this.ref = this.dialogService.open(EventOrganizersFormComponent, {
         header: 'CREATE AN EVENT ORGANIZER',
         width: '80%',
         height: 'auto',
         contentStyle: { overflow: 'auto' },
         maximizable: false,
-        data: body,
       });
       this.ref.onClose.subscribe((res) =>
         res ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 }) : ''
       );
-    });
+    }
   }
 
   filter: boolean = false;

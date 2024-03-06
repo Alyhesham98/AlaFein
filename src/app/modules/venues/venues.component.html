@@ -27,7 +27,12 @@
         [showSearchByName]="true"
         [placeholderSearchByName]="'Search by Venue'"
         (filterOutput)="onSearch($event)"
+        [actions]="actions"
+        [isDots]="true"
+        [pageType]="'Venue'"
+        (blockStatus)="changeUserBlock($event)"
       ></app-custom-table>
     </div>
   </div>
 </div>
+<p-toast key="toast1"></p-toast>

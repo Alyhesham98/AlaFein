@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { VenuesService } from 'src/app/core/services/venues.service';
 import { VenueFormComponent } from './venue-form/venue-form.component';
 import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { UsersService } from 'src/app/core/services/users.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-venues',
   templateUrl: './venues.component.html',
   styleUrls: ['./venues.component.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class VenuesComponent implements OnInit {
   colsData: any[] = [
@@ -34,10 +36,12 @@ export class VenuesComponent implements OnInit {
   pageSize: number = 10;
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
-
+  actions: any[] = ['canVerify'];
   constructor(
     public dialogService: DialogService,
-    private venuesService: VenuesService
+    private venuesService: VenuesService,
+    private userService: UsersService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +57,31 @@ export class VenuesComponent implements OnInit {
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;
       });
+  }
+
+  changeUserBlock(data: any) {
+    this.userService.toggleBlock({ id: data.UserId }).subscribe((res: any) => {
+      if (res.Succeeded) {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: !data.IsBlocked
+            ? 'User Verified Successfully!'
+            : 'User UnVerified Successfully!',
+        });
+        this.getAllVenues({ pageNumber: 1, pageSize: 10 });
+      } else {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'error',
+          summary: 'Error',
+          detail: !data.IsBlocked
+            ? 'Error Verified User.'
+            : 'Error UnVerified User.',
+        });
+      }
+    });
   }
 
   show(data?: any) {
