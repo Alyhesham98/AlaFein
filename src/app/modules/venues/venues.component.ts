@@ -29,6 +29,10 @@ export class VenuesComponent implements OnInit {
       field: 'Email',
       text: 'Email',
     },
+    {
+      field: 'userStatus',
+      text: 'User Status',
+    },
   ];
 
   rowsData: any[] = [];
@@ -52,7 +56,15 @@ export class VenuesComponent implements OnInit {
     this.venuesService
       .getAllVenues(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
-        this.rowsData = data.Data;
+        data.Data.forEach((element: any) => {
+          this.rowsData.push({
+            FirstName: element.FirstName,
+            location: element.location,
+            Facility: element.Facility,
+            Email: element.Email,
+            userStatus: element.IsBlocked,
+          });
+        });
         this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;

@@ -29,6 +29,10 @@ export class OrganizersComponent implements OnInit {
       field: 'Email',
       text: 'Email',
     },
+    {
+      field: 'userStatus',
+      text: 'User Status',
+    },
   ];
 
   actions: any[] = ['canView', 'canVerify'];
@@ -90,6 +94,7 @@ export class OrganizersComponent implements OnInit {
             Email: element.Email,
             Photo: element.Photo,
             EventCount: element.EventCount,
+            userStatus: element.IsBlocked,
             socialLinks: {
               facebook: element.Facebook,
               websiteURL: element.WebsiteURL,

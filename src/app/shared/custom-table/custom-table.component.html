@@ -267,6 +267,22 @@
               </div>
             </ng-container>
           </ng-template>
+          <ng-template [ngSwitchCase]="'userStatus'">
+            <ng-container [ngSwitch]="rows.userStatus">
+              <div style="min-width: 35px; display: inline-block">
+                <ng-template [ngSwitchCase]="true">
+                  <div class="content-box content-box-normal status-box">
+                    <p class="content-text-normal">Not Verified</p>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="false">
+                  <div class="content-box content-box-premium status-box">
+                    <p class="content-text-premium">Verified</p>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-template>
           <ng-template [ngSwitchCase]="'Status.Name'">
             <ng-container [ngSwitch]="rows.Status.Name">
               <div style="min-width: 35px; display: inline-block">
