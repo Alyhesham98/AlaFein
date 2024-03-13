@@ -169,6 +169,7 @@ export class VenueFormComponent implements OnInit {
     this.isSubmit = false;
 
     if (index) {
+      this.changeValidation();
       this.isSubmit = true;
       this.markFormGroupTouched(this.userForm);
       this.markFormGroupTouched(this.venueForm);
@@ -255,7 +256,6 @@ export class VenueFormComponent implements OnInit {
       this.selectedWeekDays.length > 0 &&
       data.length < this.selectedWeekDays.length
     ) {
-
       if (this.selectedWeekDays === data) {
         // If already selected, you may choose to do nothing or provide feedback to the user
         this.openTimePickerDialog(data, index);
@@ -271,6 +271,33 @@ export class VenueFormComponent implements OnInit {
       }
     } else {
       this.openTimePickerDialog(data, index);
+    }
+  }
+
+  changeValidation(formControl?: any) {
+    if (
+      this.venueForm.get('facebook').valid ||
+      this.venueForm.get('instagram').valid ||
+      this.venueForm.get('websiteURL').valid ||
+      this.venueForm.get('other').valid
+    ) {
+      this.venueForm.get('facebook').setValidators(null);
+      this.venueForm.get('facebook').setValidators(null);
+      this.venueForm.get('facebook').setValidators(null);
+      this.venueForm.get('facebook').setValidators(null);
+
+      formControl.updateValueAndValidity();
+    } else if (
+      this.venueForm.get('facebook').invalid &&
+      this.venueForm.get('instagram').invalid &&
+      this.venueForm.get('websiteURL').invalid &&
+      this.venueForm.get('other').invalid
+    ) {
+      this.venueForm.get('facebook').setValidators(Validators.required);
+      this.venueForm.get('facebook').setValidators(Validators.required);
+      this.venueForm.get('facebook').setValidators(Validators.required);
+      this.venueForm.get('facebook').setValidators(Validators.required);
+      formControl.updateValueAndValidity();
     }
   }
 }

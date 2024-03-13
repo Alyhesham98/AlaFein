@@ -54,8 +54,8 @@ export class EventFormComponent implements OnInit {
       eventNameEN: new FormControl(null, Validators.required),
       eventNameAR: new FormControl(null, Validators.required),
       eventDescriptionEN: new FormControl(null, Validators.required),
-      mainArtestNameEN: new FormControl(null, Validators.required),
-      mainArtestNameAR: new FormControl(null, Validators.required),
+      mainArtestNameEN: new FormControl(null),
+      mainArtestNameAR: new FormControl(null),
       categoryId: new FormControl(null, Validators.required),
       dateFromTo: new FormControl(null, Validators.required),
       timeFrom: new FormControl(null, Validators.required),
@@ -67,8 +67,8 @@ export class EventFormComponent implements OnInit {
       attendanceOption: new FormControl(null, Validators.required),
       poster: new FormControl(null, Validators.required),
       contactPerson: new FormControl(null),
-      addtionalComment: new FormControl(null, Validators.required),
-      repeat: new FormControl(null, Validators.required),
+      addtionalComment: new FormControl(null),
+      repeat: new FormControl(null),
       kidsAvailability: new FormControl(false, Validators.required),
       url: new FormControl('', Validators.required),
       paymentFee: new FormControl(0, Validators.required),
@@ -130,7 +130,6 @@ export class EventFormComponent implements OnInit {
     this.markFormGroupTouched(this.eventForm);
 
     if (this.eventForm.valid) {
-
       this.eventForm.patchValue({
         venueId: this.eventForm.get('venueId')?.value.Id,
         attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
@@ -193,7 +192,7 @@ export class EventFormComponent implements OnInit {
     if (
       attendanceOption.Id === 0 ||
       attendanceOption.Id === 1 ||
-      attendanceOption === 1||
+      attendanceOption === 1 ||
       attendanceOption === 0
     ) {
       this.eventForm.get('paymentFee')?.setValidators(Validators.required);
