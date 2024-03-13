@@ -14,9 +14,7 @@
               placeholder="Event Name En"
             />
             <div
-              *ngIf="
-                f['eventNameEN'].errors && f['eventNameEN'].touched
-              "
+              *ngIf="f['eventNameEN'].errors && f['eventNameEN'].touched"
               style="color: red"
             >
               <small *ngIf="f['eventNameEN'].errors['required']"
@@ -32,9 +30,7 @@
               placeholder="Event Name Ar"
             />
             <div
-              *ngIf="
-                f['eventNameAR'].errors && f['eventNameAR'].touched
-              "
+              *ngIf="f['eventNameAR'].errors && f['eventNameAR'].touched"
               style="color: red"
             >
               <small *ngIf="f['eventNameAR'].errors['required']"
@@ -51,9 +47,7 @@
               placeholder="Event Type"
             ></p-dropdown>
             <div
-              *ngIf="
-                f['categoryId'].errors && f['categoryId'].touched
-              "
+              *ngIf="f['categoryId'].errors && f['categoryId'].touched"
               style="color: red"
             >
               <small *ngIf="f['categoryId'].errors['required']"
@@ -73,7 +67,8 @@
             ></textarea>
             <div
               *ngIf="
-                f['eventDescriptionEN'].errors && f['eventDescriptionEN'].touched
+                f['eventDescriptionEN'].errors &&
+                f['eventDescriptionEN'].touched
               "
               style="color: red"
             >
@@ -113,10 +108,7 @@
                   placeholder="Event Date 'From - To'"
                 ></p-calendar>
                 <div
-                  *ngIf="
-                    f['dateFromTo'].errors &&
-                    f['dateFromTo'].touched
-                  "
+                  *ngIf="f['dateFromTo'].errors && f['dateFromTo'].touched"
                   style="color: red"
                 >
                   <small *ngIf="f['dateFromTo'].errors['required']"
@@ -158,10 +150,7 @@
                       placeholder="Time From"
                     ></p-calendar>
                     <div
-                      *ngIf="
-                        f['timeFrom'].errors &&
-                        f['timeFrom'].touched
-                      "
+                      *ngIf="f['timeFrom'].errors && f['timeFrom'].touched"
                       style="color: red"
                     >
                       <small *ngIf="f['timeFrom'].errors['required']"
@@ -178,10 +167,7 @@
                       placeholder="Time To"
                     ></p-calendar>
                     <div
-                      *ngIf="
-                        f['timeTo'].errors &&
-                        f['timeTo'].touched
-                      "
+                      *ngIf="f['timeTo'].errors && f['timeTo'].touched"
                       style="color: red"
                     >
                       <small *ngIf="f['timeTo'].errors['required']"
@@ -204,9 +190,7 @@
               placeholder="Repeat"
             ></p-dropdown>
             <div
-              *ngIf="
-                f['repeat'].errors && f['repeat'].touched
-              "
+              *ngIf="f['repeat'].errors && f['repeat'].touched"
               style="color: red"
             >
               <small *ngIf="f['repeat'].errors['required']"
@@ -228,9 +212,7 @@
               placeholder="Select an Organizer"
             ></p-dropdown>
             <div
-              *ngIf="
-                f['organizerId'].errors && f['organizerId'].touched
-              "
+              *ngIf="f['organizerId'].errors && f['organizerId'].touched"
               style="color: red"
             >
               <small *ngIf="f['organizerId'].errors['required']"
@@ -247,9 +229,7 @@
               (onChange)="onVenueSelected($event.value)"
             ></p-dropdown>
             <div
-              *ngIf="
-                f['venueId'].errors && f['venueId'].touched
-              "
+              *ngIf="f['venueId'].errors && f['venueId'].touched"
               style="color: red"
             >
               <small *ngIf="f['venueId'].errors['required']"
@@ -266,9 +246,7 @@
               placeholder="Select a Branch"
             ></p-dropdown>
             <div
-              *ngIf="
-                f['branchId'].errors && f['branchId'].touched
-              "
+              *ngIf="f['branchId'].errors && f['branchId'].touched"
               style="color: red"
             >
               <small *ngIf="f['branchId'].errors['required']"
@@ -320,14 +298,6 @@
               placeholder="Upload The Event Poster"
             />
             <small class="noteText mt-1">Preferred 96x96 .PNG</small>
-            <div
-            *ngIf="this.uploadedImage === null && isSubmit"
-            style="color: red"
-          >
-            <small *ngIf="this.uploadedImage === null"
-              >Poster is required.</small
-            >
-          </div>
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -338,9 +308,7 @@
             />
             <small class="noteText mt-1">Optional</small>
             <div
-              *ngIf="
-                f['contactPerson'].errors && f['contactPerson'].touched
-              "
+              *ngIf="f['contactPerson'].errors && f['contactPerson'].touched"
               style="color: red"
             >
               <small *ngIf="f['contactPerson'].errors['required']"
@@ -374,9 +342,7 @@
               placeholder="Payment Fee"
             />
             <div
-              *ngIf="
-                f['paymentFee'].errors && f['paymentFee'].touched
-              "
+              *ngIf="f['paymentFee'].errors && f['paymentFee'].touched"
               style="color: red"
             >
               <small *ngIf="f['paymentFee'].errors['required']"
@@ -391,12 +357,7 @@
               formControlName="url"
               placeholder="URL"
             />
-            <div
-              *ngIf="
-                f['url'].errors && f['url'].touched
-              "
-              style="color: red"
-            >
+            <div *ngIf="f['url'].errors && f['url'].touched" style="color: red">
               <small *ngIf="f['url'].errors['required']"
                 >Field is required.</small
               >
