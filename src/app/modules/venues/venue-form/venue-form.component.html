@@ -171,7 +171,7 @@
               pInputText
               formControlName="instagram"
               placeholder="Instagram Link"
-              (onChange)="changeValidation('instagram')"
+              (change)="changeValidation('instagram')"
             />
             <div
               *ngIf="g['instagram'].errors && g['instagram'].touched"
@@ -188,7 +188,7 @@
               pInputText
               formControlName="facebook"
               placeholder="Facebook Link"
-              (onChange)="changeValidation('facebook')"
+              (change)="changeValidation('facebook')"
             />
             <div
               *ngIf="g['facebook'].errors && g['facebook'].touched"
@@ -205,7 +205,7 @@
               pInputText
               formControlName="websiteURL"
               placeholder="Website URL"
-              (onChange)="changeValidation('websiteURL')"
+              (change)="changeValidation('websiteURL')"
             />
             <div
               *ngIf="g['websiteURL'].errors && g['websiteURL'].touched"
@@ -218,7 +218,7 @@
           </div>
           <div class="col-xl-4 mb-4">
             <input
-              (onChange)="changeValidation('other')"
+              (change)="changeValidation('other')"
               type="text"
               pInputText
               formControlName="other"

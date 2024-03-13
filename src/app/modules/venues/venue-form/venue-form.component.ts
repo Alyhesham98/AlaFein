@@ -51,10 +51,10 @@ export class VenueFormComponent implements OnInit {
     });
 
     this.venueForm = new FormGroup({
-      instagram: new FormControl(null, Validators.required),
-      facebook: new FormControl(null, Validators.required),
-      websiteURL: new FormControl(null, Validators.required),
-      other: new FormControl(null, Validators.required),
+      instagram: new FormControl(null),
+      facebook: new FormControl(null),
+      websiteURL: new FormControl(null),
+      other: new FormControl(null),
       phoneNumber: new FormControl(null, [
         Validators.required,
         EgyptianPhoneNumberValidator(),
@@ -275,29 +275,41 @@ export class VenueFormComponent implements OnInit {
   }
 
   changeValidation(formControl?: any) {
-    if (
-      this.venueForm.get('facebook').valid ||
-      this.venueForm.get('instagram').valid ||
-      this.venueForm.get('websiteURL').valid ||
-      this.venueForm.get('other').valid
-    ) {
-      this.venueForm.get('facebook').setValidators(null);
-      this.venueForm.get('facebook').setValidators(null);
-      this.venueForm.get('facebook').setValidators(null);
-      this.venueForm.get('facebook').setValidators(null);
+    console.log('testsadf');
 
-      formControl.updateValueAndValidity();
-    } else if (
-      this.venueForm.get('facebook').invalid &&
-      this.venueForm.get('instagram').invalid &&
-      this.venueForm.get('websiteURL').invalid &&
-      this.venueForm.get('other').invalid
+    if (
+      this.venueForm.get('facebook')?.value !== null ||
+      this.venueForm.get('instagram')?.value !== null ||
+      this.venueForm.get('websiteURL')?.value !== null ||
+      this.venueForm.get('other')?.value !== null
     ) {
-      this.venueForm.get('facebook').setValidators(Validators.required);
-      this.venueForm.get('facebook').setValidators(Validators.required);
-      this.venueForm.get('facebook').setValidators(Validators.required);
-      this.venueForm.get('facebook').setValidators(Validators.required);
-      formControl.updateValueAndValidity();
+      this.venueForm.get('facebook')?.setValidators(null);
+      this.venueForm.get('instagram')?.setValidators(null);
+      this.venueForm.get('websiteURL')?.setValidators(null);
+      this.venueForm.get('other')?.setValidators(null);
+      this.venueForm.get('facebook')?.updateValueAndValidity();
+      this.venueForm.get('instagram')?.updateValueAndValidity();
+      this.venueForm.get('websiteURL')?.updateValueAndValidity();
+      this.venueForm.get('other')?.updateValueAndValidity();
+      this.markFormGroupTouched(this.venueForm);
+      this.venueForm.updateValueAndValidity();
+    } else if (
+      this.venueForm.get('facebook')?.value === null &&
+      this.venueForm.get('instagram')?.value === null &&
+      this.venueForm.get('websiteURL')?.value === null &&
+      this.venueForm.get('other')?.value === null
+    ) {
+      console.log('test y');
+      this.venueForm.get('facebook')?.setValidators(Validators.required);
+      this.venueForm.get('instagram')?.setValidators(Validators.required);
+      this.venueForm.get('websiteURL')?.setValidators(Validators.required);
+      this.venueForm.get('other')?.setValidators(Validators.required);
+      this.venueForm.get('facebook')?.updateValueAndValidity();
+      this.venueForm.get('instagram')?.updateValueAndValidity();
+      this.venueForm.get('websiteURL')?.updateValueAndValidity();
+      this.venueForm.get('other')?.updateValueAndValidity();
+      this.markFormGroupTouched(this.venueForm);
+      this.venueForm.updateValueAndValidity();
     }
   }
 }
