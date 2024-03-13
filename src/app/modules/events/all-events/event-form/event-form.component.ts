@@ -65,7 +65,7 @@ export class EventFormComponent implements OnInit {
       organizerId: new FormControl(null, Validators.required),
       branchId: new FormControl(null, Validators.required),
       attendanceOption: new FormControl(null, Validators.required),
-      poster: new FormControl(null, Validators.required),
+      poster: new FormControl(null),
       contactPerson: new FormControl(null),
       addtionalComment: new FormControl(null),
       repeat: new FormControl(null),
