@@ -64,13 +64,13 @@ export class EventFormComponent implements OnInit {
       VenueId: new FormControl(null, Validators.required),
       OrganizerId: new FormControl(null, Validators.required),
       venueId: new FormControl(null),
-      organizerId: new FormControl(null, Validators.required),
+      organizerId: new FormControl(null),
       branchId: new FormControl(null, Validators.required),
       attendanceOption: new FormControl(null, Validators.required),
       poster: new FormControl(null),
       contactPerson: new FormControl(null),
       addtionalComment: new FormControl(null),
-      repeat: new FormControl(null),
+      repeat: new FormControl(0),
       kidsAvailability: new FormControl(false, Validators.required),
       url: new FormControl('', Validators.required),
       paymentFee: new FormControl(0, Validators.required),
@@ -135,6 +135,7 @@ export class EventFormComponent implements OnInit {
       this.eventForm.patchValue({
         venueId: this.eventForm.get('VenueId')?.value.Id,
         attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
+        organizerId: this.eventForm.get('OrganizerId')?.value,
       });
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
@@ -161,10 +162,6 @@ export class EventFormComponent implements OnInit {
         );
       } else {
         this.onDateTimeCheck();
-        this.eventForm.patchValue({
-          venueId: this.eventForm.get('VenueId')?.value.Id,
-          attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
-        });
         this.eventService.createEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -279,7 +276,9 @@ export class EventFormComponent implements OnInit {
     });
     this.uploadedImage = this.config?.data?.data?.Poster;
     this.eventForm.get('poster')?.setValue(this.config?.data?.data?.Poster);
-    this.eventForm.get('organizerId')?.setValue(this.config?.data?.data?.Organizer.Id);
+    this.eventForm
+      .get('organizerId')
+      ?.setValue(this.config?.data?.data?.Organizer.Id);
     this.eventForm.get('venueId')?.setValue(this.config?.data?.data?.Venue.Id);
 
     this.venuesOptions?.filter((x: any) => {
