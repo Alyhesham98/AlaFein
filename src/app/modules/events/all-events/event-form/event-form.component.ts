@@ -239,8 +239,8 @@ export class EventFormComponent implements OnInit {
     this.onAttendanceSelected(this.config.data.data.AttendanceOption);
 
     // Extracting date and time values
-    const dateFrom = new Date(this.config?.data?.data?.Dates[0]);
-    const dateTo = new Date(this.config?.data?.data?.Dates[1]);
+    const dateFrom = new Date(this.config?.data?.data?.Date[0]);
+    const dateTo = new Date(this.config?.data?.data?.Date[1]);
     const timeFrom = this.formatTime(dateFrom);
     const timeTo = this.formatTime(dateTo);
 
@@ -250,19 +250,19 @@ export class EventFormComponent implements OnInit {
       eventDescriptionEN: this.config.data.data.EventDescriptionEN,
       mainArtestNameEN: this.config.data.data.MainArtestNameEN,
       mainArtestNameAR: this.config.data.data.MainArtestNameAR,
-      categoryId: this.config.data.data.CategoryId,
+      categoryId: this.config.data.data.Category.Id,
       dateFromTo: [dateFrom, dateTo],
       timeFrom: timeFrom,
       timeTo: timeTo,
-      dates: this.config.data.data.Dates,
-      venueId: this.config.data.data.VenueId,
-      organizerId: this.config.data.data.OrganizerId,
-      branchId: this.config.data.data.BranchId,
+      dates: this.config.data.data.Date,
+      venueId: this.config.data.data.Venue.Id,
+      organizerId: this.config.data.data.Organizer.Id,
+      branchId: this.config.data.data.Branch.Id,
       attendanceOption: this.config.data.data.AttendanceOption,
       poster: this.config.data.data.Poster,
       contactPerson: this.config.data.data.ContactPerson,
       addtionalComment: this.config.data.data.AddtionalComment,
-      repeat: this.config.data.data.Repeat,
+      repeat: 1,
       kidsAvailability: this.config.data.data.KidsAvailability,
       url: this.config.data.data.URL,
       paymentFee: this.config.data.data.PaymentFee,
@@ -270,8 +270,9 @@ export class EventFormComponent implements OnInit {
     });
     this.uploadedImage = this.config?.data?.data?.Poster;
     this.eventForm.get('poster')?.setValue(this.config?.data?.data?.Poster);
+
     this.venuesOptions?.filter((x: any) => {
-      if (x.Id === this.config?.data?.data?.VenueId) {
+      if (x.Id === this.config?.data?.data?.Venue.Id) {
         this.onVenueSelected(x);
         this.eventForm.get('venueId')?.setValue(x);
       }

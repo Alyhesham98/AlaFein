@@ -65,7 +65,7 @@ export class EventsService {
   }
 
   getParentDetails(id: any) {
-    return this.http.get(`${this.url}AdminSubmission/GetParentDetails/${id}`);
+    return this.http.get(`${this.url}AdminSubmission/Details/${id}`);
   }
 
 }
