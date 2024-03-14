@@ -61,7 +61,9 @@ export class EventFormComponent implements OnInit {
       timeFrom: new FormControl(null, Validators.required),
       timeTo: new FormControl(null, Validators.required),
       dates: new FormControl([]),
-      venueId: new FormControl(null, Validators.required),
+      VenueId: new FormControl(null, Validators.required),
+      OrganizerId: new FormControl(null, Validators.required),
+      venueId: new FormControl(null),
       organizerId: new FormControl(null, Validators.required),
       branchId: new FormControl(null, Validators.required),
       attendanceOption: new FormControl(null, Validators.required),
@@ -131,9 +133,11 @@ export class EventFormComponent implements OnInit {
 
     if (this.eventForm.valid) {
       this.eventForm.patchValue({
-        venueId: this.eventForm.get('venueId')?.value.Id,
+        venueId: this.eventForm.get('VenueId')?.value.Id,
         attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
       });
+      this.eventForm.removeControl('VenueId');
+      this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
         this.eventService.updateParentEvent(this.eventForm.value).subscribe(
           (res: any) => {
@@ -157,7 +161,10 @@ export class EventFormComponent implements OnInit {
         );
       } else {
         this.onDateTimeCheck();
-
+        this.eventForm.patchValue({
+          venueId: this.eventForm.get('VenueId')?.value.Id,
+          attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
+        });
         this.eventService.createEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -236,7 +243,7 @@ export class EventFormComponent implements OnInit {
   }
 
   setFormData() {
-    this.onAttendanceSelected(this.config.data.data.AttendanceOption);
+    this.onAttendanceSelected(this.config.data.data.AttendanceOption.Id);
 
     // Extracting date and time values
     const dateFrom = new Date(this.config?.data?.data?.Date[0]);
@@ -254,27 +261,31 @@ export class EventFormComponent implements OnInit {
       dateFromTo: [dateFrom, dateTo],
       timeFrom: timeFrom,
       timeTo: timeTo,
-      dates: this.config.data.data.Date,
+      dates: [dateFrom, dateTo],
       venueId: this.config.data.data.Venue.Id,
+      VenueId: this.config.data.data.Venue.Id,
       organizerId: this.config.data.data.Organizer.Id,
+      OrganizerId: this.config.data.data.Organizer.Id,
       branchId: this.config.data.data.Branch.Id,
-      attendanceOption: this.config.data.data.AttendanceOption,
+      attendanceOption: this.config.data.data.AttendanceOption.Id,
       poster: this.config.data.data.Poster,
       contactPerson: this.config.data.data.ContactPerson,
       addtionalComment: this.config.data.data.AddtionalComment,
       repeat: 1,
       kidsAvailability: this.config.data.data.KidsAvailability,
-      url: this.config.data.data.URL,
+      url: this.config.data.data.URL ? this.config.data.data.URL : '  ',
       paymentFee: this.config.data.data.PaymentFee,
       id: +this.config.data.submissionId,
     });
     this.uploadedImage = this.config?.data?.data?.Poster;
     this.eventForm.get('poster')?.setValue(this.config?.data?.data?.Poster);
+    this.eventForm.get('organizerId')?.setValue(this.config?.data?.data?.Organizer.Id);
+    this.eventForm.get('venueId')?.setValue(this.config?.data?.data?.Venue.Id);
 
     this.venuesOptions?.filter((x: any) => {
       if (x.Id === this.config?.data?.data?.Venue.Id) {
         this.onVenueSelected(x);
-        this.eventForm.get('venueId')?.setValue(x);
+        this.eventForm.get('VenueId')?.setValue(x);
       }
     });
   }
