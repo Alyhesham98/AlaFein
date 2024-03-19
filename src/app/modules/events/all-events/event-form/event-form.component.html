@@ -44,6 +44,7 @@
               [options]="eventTypes"
               optionLabel="Name"
               optionValue="Id"
+              [showClear]="true"
               placeholder="Event Type"
             ></p-dropdown>
             <div
@@ -186,6 +187,7 @@
               formControlName="repeat"
               [options]="repeatTypes"
               optionLabel="Number"
+              [showClear]="true"
               optionValue="Id"
               placeholder="Repeat"
             ></p-dropdown>
@@ -209,6 +211,7 @@
               [options]="organizersOptions"
               optionLabel="FirstName"
               optionValue="Id"
+              [showClear]="true"
               placeholder="Select an Organizer"
             ></p-dropdown>
             <div
@@ -225,6 +228,7 @@
               formControlName="VenueId"
               [options]="venuesOptions"
               optionLabel="Name"
+              [showClear]="true"
               placeholder="Select a Venue"
               (onChange)="onVenueSelected($event.value)"
             ></p-dropdown>
@@ -243,6 +247,7 @@
               [options]="branchOptions"
               optionLabel="Name"
               optionValue="Id"
+              [showClear]="true"
               placeholder="Select a Branch"
             ></p-dropdown>
             <div
@@ -265,6 +270,7 @@
               [options]="attendanceOptions"
               optionLabel="Name"
               optionValue="Id"
+              [showClear]="true"
               placeholder="Attendance Options"
               (onChange)="onAttendanceSelected($event.value)"
             ></p-dropdown>

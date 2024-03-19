@@ -43,7 +43,7 @@ export class EventOrganizersFormComponent implements OnInit {
 
     this.eventSecondForm = new FormGroup({
       id: new FormControl(null),
-      mapLink: new FormControl(null, Validators.required),
+      mapLink: new FormControl(null),
       address: new FormControl(null, Validators.required),
       instagram: new FormControl(null, Validators.required),
       facebook: new FormControl(null, Validators.required),

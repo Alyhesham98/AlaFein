@@ -86,6 +86,7 @@
           [options]="calendarFilter"
           [(ngModel)]="selectedCalendar"
           optionLabel="Name"
+          [showClear]="true"
           styleClass="filter-dropdown"
           placeholder="Select a Filter"
           (ngModelChange)="onFilterChange(selectedCalendar)"
