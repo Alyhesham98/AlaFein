@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UsersService } from 'src/app/core/services/users.service';
@@ -31,7 +36,11 @@ export class UsersFormComponent implements OnInit {
     }
   }
   setFormData(): void {
-    this.uploadedImage = this.usersDetails.Photo;
+    console.log(this.usersDetails);
+
+    this.uploadedImage = this.usersDetails.Photo
+      ? this.usersDetails.Photo
+      : null;
     this.usersForm.patchValue({
       id: this.usersDetails?.Id,
       firstName: this.usersDetails?.FirstName,
@@ -39,6 +48,19 @@ export class UsersFormComponent implements OnInit {
       photo: this.usersDetails?.Photo,
       phone: this.usersDetails?.phone,
     });
+  }
+  isSubmit: boolean = false;
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.usersForm.controls;
   }
   createForm() {
     this.usersForm = new FormGroup({
@@ -72,7 +94,9 @@ export class UsersFormComponent implements OnInit {
   }
 
   updateUser() {
-    if (this.usersForm.valid) {
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.usersForm);
+    if (this.usersForm.valid && this.uploadedImage) {
       this.userService.updateAdmin(this.usersForm.value).subscribe(
         (res: any) => {
           this.ref.close(true);

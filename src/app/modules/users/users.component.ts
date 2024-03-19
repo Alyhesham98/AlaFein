@@ -66,6 +66,7 @@ export class UsersComponent implements OnInit {
             Status: element.Status.Name,
             Email: element.Email,
             IsBlocked: element.IsBlocked,
+            Photo: element.Photo,
           });
         });
         this.totalRecords = data.PgTotal;

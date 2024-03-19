@@ -28,6 +28,11 @@
           [ngClass]="this.uploadedImage ? 'image-uploaded' : ''"
         />
         <span class="category-text">Edit the picture</span>
+        <div *ngIf="this.uploadedImage === null && isSubmit" style="color: red">
+          <small *ngIf="this.uploadedImage === null"
+            >Profile Picture is required.</small
+          >
+        </div>
       </div>
     </div>
     <div class="row">
@@ -36,12 +41,28 @@
           [placeholder]="'First Name'"
           formControlName="firstName"
         ></app-input-field>
+        <div
+          *ngIf="f['firstName'].errors && f['firstName'].touched"
+          style="color: red"
+        >
+          <small *ngIf="f['firstName'].errors['required']"
+            >Field is required.</small
+          >
+        </div>
       </div>
       <div class="col-md-4">
         <app-input-field
           [placeholder]="'Last Name'"
           formControlName="lastName"
         ></app-input-field>
+        <div
+          *ngIf="f['lastName'].errors && f['lastName'].touched"
+          style="color: red"
+        >
+          <small *ngIf="f['lastName'].errors['required']"
+            >Field is required.</small
+          >
+        </div>
       </div>
       <!-- <div class="col-md-4">
         <app-input-field
