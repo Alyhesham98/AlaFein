@@ -533,7 +533,14 @@
                           />
                         </div>
                         <div class="col-10">
-                          <span>Spotlight {{ pageType }}</span>
+                          <span
+                            >{{
+                              rows.IsSpotlight
+                                ? "Remove Spotlighted"
+                                : "Spotlight"
+                            }}
+                            {{ pageType }}</span
+                          >
                         </div>
                       </div>
                     </a>
@@ -981,7 +988,9 @@
                         <div class="col-10">
                           <span
                             >{{
-                              rows.IsSpotlight ? "Remove Spotlighted" : "Spotlight"
+                              rows.IsSpotlight
+                                ? "Remove Spotlighted"
+                                : "Spotlight"
                             }}
                             {{ pageType }}</span
                           >
