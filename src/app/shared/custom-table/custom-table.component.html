@@ -674,7 +674,6 @@
       </td>
       <td *ngFor="let col of cols">
         <ng-container [ngSwitch]="col.field">
-          {{ col.field }}
           <ng-template [ngSwitchCase]="'FirstName'">
             <div
               style="min-width: 35px; border-radius: 50%; display: inline-block"
@@ -980,7 +979,12 @@
                           />
                         </div>
                         <div class="col-10">
-                          <span>Spotlight {{ pageType }}</span>
+                          <span
+                            >{{
+                              rows.IsSpotlight ? "Remove Spotlighted" : "Spotlight"
+                            }}
+                            {{ pageType }}</span
+                          >
                         </div>
                       </div>
                     </a>

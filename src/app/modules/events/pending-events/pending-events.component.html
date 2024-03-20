@@ -18,6 +18,7 @@
         [rows]="rowsData"
         [isDots]="true"
         [actions]="actions"
+        (pageNumber)="getPendingEvents($event)"
         (dataDetails)="getEventDetails($event)"
         [pageType]="'Events'"
       ></app-custom-table>

@@ -3,12 +3,13 @@ import { EventsService } from 'src/app/core/services/events.service';
 import { EventFormComponent } from '../all-events/event-form/event-form.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-event-spotlight',
   templateUrl: './event-spotlight.component.html',
   styleUrls: ['./event-spotlight.component.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class EventSpotlightComponent {
   colsData: any[] = [
@@ -41,11 +42,12 @@ export class EventSpotlightComponent {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalRecords!: number;
-  actions: any[] = ['canView'];
+  actions: any[] = ['canView', 'canSpotlight'];
   constructor(
     private evetnsService: EventsService,
     private router: Router,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    public messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -66,8 +68,32 @@ export class EventSpotlightComponent {
       });
   }
 
-  reOrderDetails(event: any) {
+  changeSpotlightStatus(data: any) {
+    this.evetnsService
+      .toggleSpotlight({ id: data.Id })
+      .subscribe((res: any) => {
+        if (res.Succeeded) {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'success',
+            summary: 'Success',
+            detail: data.IsSpotlight
+              ? 'Remove Spotlighted Event Successfully'
+              : 'Event Spotlighted Successfully!',
+          });
+          this.getSpotlightEvents({ pageNumber: 1, pageSize: 10 });
+        } else {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error Spotlight Event.',
+          });
+        }
+      });
   }
+
+  reOrderDetails(event: any) {}
   ref: DynamicDialogRef | undefined;
 
   show(data?: any) {

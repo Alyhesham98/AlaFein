@@ -82,7 +82,9 @@ export class AllEventsComponent {
             key: 'toast1',
             severity: 'success',
             summary: 'Success',
-            detail: 'Event Spotlighted Successfully!',
+            detail: data.IsSpotlight
+              ? 'Remove Spotlighted Event Successfully'
+              : 'Event Spotlighted Successfully!',
           });
           this.getAllEvents({ pageNumber: 1, pageSize: 10 });
         } else {
@@ -113,7 +115,12 @@ export class AllEventsComponent {
 
   getEventDetails(data: any) {
     this.router.navigate([
-      'events/event-details/' + data.Id + '/' + data?.Status?.Name+ '/' + data?.SubmissionId,
+      'events/event-details/' +
+        data.Id +
+        '/' +
+        data?.Status?.Name +
+        '/' +
+        data?.SubmissionId,
     ]);
   }
 

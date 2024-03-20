@@ -17,6 +17,9 @@
         [cols]="colsData"
         [rows]="rowsData"
         [showReOrder]="true"
+        [isDots]="true"
+        [pageType]="'Event'"
+        (spotlightDetails)="changeSpotlightStatus($event)"
         (pageNumber)="getSpotlightEvents($event)"
         (reOrderDetails)="reOrderDetails($event)"
         [actions]="actions"
@@ -25,3 +28,4 @@
     </div>
   </div>
 </div>
+<p-toast key="toast1"></p-toast>
