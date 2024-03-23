@@ -202,6 +202,7 @@ export class VenueFormComponent implements OnInit {
   onResetForm() {
     this.userForm.reset();
     this.venueForm.reset();
+    this.uploadedImage = null;
   }
   selectedWeekDays: any[] = []; // Initialize an array to store selected weekdays
   newValue: any = {};
@@ -299,7 +300,6 @@ export class VenueFormComponent implements OnInit {
       this.venueForm.get('websiteURL')?.value === null &&
       this.venueForm.get('other')?.value === null
     ) {
-      console.log('test y');
       this.venueForm.get('facebook')?.setValidators(Validators.required);
       this.venueForm.get('instagram')?.setValidators(Validators.required);
       this.venueForm.get('websiteURL')?.setValidators(Validators.required);

@@ -250,9 +250,9 @@
     </form>
   </div>
   <div class="footer">
-    <a class="btn resetBtn">RESET</a>
+    <a class="btn resetBtn" (click)="resetForm()">RESET</a>
     <button class="btn createBtn" (click)="onSubmitForm()">
-      <span>{{editMode? 'EDIT': 'CREATE'}}</span>
+      <span>{{ editMode ? "EDIT" : "CREATE" }}</span>
       <img
         src="assets/icons/arrow-right.svg"
         alt="Arrow Right"

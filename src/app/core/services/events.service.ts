@@ -68,4 +68,7 @@ export class EventsService {
     return this.http.get(`${this.url}AdminSubmission/Details/${id}`);
   }
 
+  reOrderSpotLight(body: any) {
+    return this.http.patch(`${this.url}AdminEvent/SpotlightOrder`, body);
+  }
 }

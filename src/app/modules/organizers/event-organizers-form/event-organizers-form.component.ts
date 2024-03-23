@@ -58,6 +58,12 @@ export class EventOrganizersFormComponent implements OnInit {
     }
   }
 
+  resetForm() {
+    this.eventForm.reset();
+    this.eventSecondForm.reset();
+    this.uploadedImage = null;
+  }
+
   getDropdown() {
     this.eventOrganizersService
       .getEventOrganizersDropdown()
@@ -114,39 +120,41 @@ export class EventOrganizersFormComponent implements OnInit {
         organizer: this.eventSecondForm.value,
       };
       if (this.editMode) {
-        this.eventOrganizersService.updateOrganizer(this.eventSecondForm.value).subscribe(
-          (res: any) => {
-            this.ref.close(true);
+        this.eventOrganizersService
+          .updateOrganizer(this.eventSecondForm.value)
+          .subscribe(
+            (res: any) => {
+              this.ref.close(true);
 
-            this.messageService.add({
-              key: 'toast1',
-              severity: 'success',
-              summary: 'Success',
-              detail: res.Message,
-            });
-          },
-          (err) => {
-            if (err.error?.Errors?.length >= 1) {
-              err.error.Errors.forEach((element: any) => {
+              this.messageService.add({
+                key: 'toast1',
+                severity: 'success',
+                summary: 'Success',
+                detail: res.Message,
+              });
+            },
+            (err) => {
+              if (err.error?.Errors?.length >= 1) {
+                err.error.Errors.forEach((element: any) => {
+                  this.messageService.add({
+                    key: 'toast1',
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: element,
+                  });
+                });
+              }
+
+              if (err.error?.Message) {
                 this.messageService.add({
                   key: 'toast1',
                   severity: 'error',
                   summary: 'Error',
-                  detail: element,
+                  detail: err.error.Message,
                 });
-              });
+              }
             }
-
-            if (err.error?.Message) {
-              this.messageService.add({
-                key: 'toast1',
-                severity: 'error',
-                summary: 'Error',
-                detail: err.error.Message,
-              });
-            }
-          }
-        );
+          );
       } else {
         this.eventOrganizersService.createEventOrganizer(body).subscribe(
           (res: any) => {

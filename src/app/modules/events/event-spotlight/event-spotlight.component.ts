@@ -93,7 +93,31 @@ export class EventSpotlightComponent {
       });
   }
 
-  reOrderDetails(event: any) {}
+  reOrderDetails(event: any) {
+    console.log(event);
+    let body = {
+      id: event.id,
+      spotlightOrder: event.index,
+    };
+    this.evetnsService.reOrderSpotLight(body).subscribe((res: any) => {
+      if (res.Succeeded) {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Spotlight Order Updated Successfully!',
+        });
+        this.getSpotlightEvents({ pageNumber: 1, pageSize: 10 });
+      } else {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error Updating Spotlight Order.',
+        });
+      }
+    });
+  }
   ref: DynamicDialogRef | undefined;
 
   show(data?: any) {

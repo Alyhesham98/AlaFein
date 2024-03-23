@@ -299,4 +299,9 @@ export class EventFormComponent implements OnInit {
     const strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
   }
+
+  resetForm() {
+    this.eventForm.reset();
+    this.uploadedImage = null;
+  }
 }
