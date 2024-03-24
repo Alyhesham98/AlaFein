@@ -138,6 +138,7 @@
         [pSortableColumn]="col.field"
         style="width: 15%"
         *ngFor="let col of cols"
+        (click)="sortData(col.field)"
       >
         {{ col.text }} <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
@@ -150,6 +151,7 @@
         style="width: 15%"
         *ngFor="let col of cols"
         pReorderableColumn
+        (click)="sortData(col.field)"
       >
         {{ col.text }} <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>

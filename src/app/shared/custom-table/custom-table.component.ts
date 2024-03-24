@@ -95,13 +95,15 @@ export class CustomTableComponent {
 
   userStatusChoice: any;
   searchChoice: any;
-
+  // Define variables to store sorting information
+  sortField!: string;
+  sortOrder!: number; // 1 for ascending, -1 for descending
   type: any;
   @Input() pageType: any;
   constructor(private router: Router) {}
   page = 0;
   size = 10;
-  onPageChange(event: any) {    
+  onPageChange(event: any) {
     if (this.searchChoice) {
       event.name = this.searchChoice;
     } else {
@@ -116,7 +118,11 @@ export class CustomTableComponent {
 
     this.pageNumber.emit(event);
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Initialize sorting variables
+    this.sortField = 'defaultColumn'; // Change this to the default sorting column
+    this.sortOrder = 1; // Default sort order
+  }
   body: any = {};
 
   onFilterChange(data: any) {
@@ -150,6 +156,44 @@ export class CustomTableComponent {
   }
   onTypeChange(selectedValue: any) {
     this.typeSearch.emit(selectedValue.value);
+  }
+
+  sortData(field: string): void {
+    if (field === this.sortField) {
+      // If same column is clicked again, toggle the sort order
+      this.sortOrder = -this.sortOrder;
+    } else {
+      // If a new column is clicked, set the new sort field and default to ascending order
+      this.sortField = field;
+      this.sortOrder = 1;
+    }
+
+    // Perform sorting based on the selected field and order
+    this.rows.sort((a, b) => {
+      if (this.sortField.includes('.')) {
+        // If it does, split the field by dot
+        const parts = this.sortField.split('.');
+        // Access the nested property using the split parts
+        var valueA = a[parts[0]][parts[1]];
+        var valueB = b[parts[0]][parts[1]];
+        console.log(valueA);
+        console.log(valueB);
+      } else {
+        // Otherwise, proceed with regular property access
+        var valueA = a[this.sortField];
+        var valueB = b[this.sortField];
+        console.log(valueA);
+        console.log(valueB);
+      }
+
+      if (valueA < valueB) {
+        return -1 * this.sortOrder;
+      } else if (valueA > valueB) {
+        return 1 * this.sortOrder;
+      } else {
+        return 0;
+      }
+    });
   }
 
   onApprovalStatusChange(selectedValue: any) {
@@ -193,11 +237,11 @@ export class CustomTableComponent {
 
     // Retrieve the data of the rows being reordered
     const droppedRow = this.rows[dropIndex];
-    
-    const body={
+
+    const body = {
       index: dropIndex,
-      id: droppedRow.Id
-    }
+      id: droppedRow.Id,
+    };
     this.reOrderDetails.emit(body);
   }
 
