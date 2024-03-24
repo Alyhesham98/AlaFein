@@ -225,4 +225,42 @@ export class EventOrganizersFormComponent implements OnInit {
       categoryId: this.config.data.organizer.Category.Id,
     });
   }
+
+  changeValidation(formControl?: any) {
+    console.log('testsadf');
+
+    if (
+      this.eventSecondForm.get('facebook')?.value !== null ||
+      this.eventSecondForm.get('instagram')?.value !== null ||
+      this.eventSecondForm.get('websiteURL')?.value !== null ||
+      this.eventSecondForm.get('other')?.value !== null
+    ) {
+      this.eventSecondForm.get('facebook')?.setValidators(null);
+      this.eventSecondForm.get('instagram')?.setValidators(null);
+      this.eventSecondForm.get('websiteURL')?.setValidators(null);
+      this.eventSecondForm.get('other')?.setValidators(null);
+      this.eventSecondForm.get('facebook')?.updateValueAndValidity();
+      this.eventSecondForm.get('instagram')?.updateValueAndValidity();
+      this.eventSecondForm.get('websiteURL')?.updateValueAndValidity();
+      this.eventSecondForm.get('other')?.updateValueAndValidity();
+      this.markFormGroupTouched(this.eventSecondForm);
+      this.eventSecondForm.updateValueAndValidity();
+    } else if (
+      this.eventSecondForm.get('facebook')?.value === null &&
+      this.eventSecondForm.get('instagram')?.value === null &&
+      this.eventSecondForm.get('websiteURL')?.value === null &&
+      this.eventSecondForm.get('other')?.value === null
+    ) {
+      this.eventSecondForm.get('facebook')?.setValidators(Validators.required);
+      this.eventSecondForm.get('instagram')?.setValidators(Validators.required);
+      this.eventSecondForm.get('websiteURL')?.setValidators(Validators.required);
+      this.eventSecondForm.get('other')?.setValidators(Validators.required);
+      this.eventSecondForm.get('facebook')?.updateValueAndValidity();
+      this.eventSecondForm.get('instagram')?.updateValueAndValidity();
+      this.eventSecondForm.get('websiteURL')?.updateValueAndValidity();
+      this.eventSecondForm.get('other')?.updateValueAndValidity();
+      this.markFormGroupTouched(this.eventSecondForm);
+      this.eventSecondForm.updateValueAndValidity();
+    }
+  }
 }

@@ -104,9 +104,11 @@
                   formControlName="dateFromTo"
                   selectionMode="range"
                   [iconDisplay]="'input'"
+                  [minDate]="minDate"
                   [showIcon]="true"
                   [readonlyInput]="true"
                   placeholder="Event Date 'From - To'"
+                  (onSelect)="handleDateSelection($event)"
                 ></p-calendar>
                 <div
                   *ngIf="f['dateFromTo'].errors && f['dateFromTo'].touched"

@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { start } from 'repl';
 import { EventOrganizersService } from 'src/app/core/services/event-organizers.service';
 import { EventsService } from 'src/app/core/services/events.service';
 
@@ -31,7 +32,7 @@ export class EventFormComponent implements OnInit {
   dateFromTo: any;
   timeFrom: any;
   timeTo: any;
-
+  minDate = new Date();
   @ViewChild('fileInput') fileInput!: ElementRef;
   uploadedImage: any = null;
   constructor(
@@ -72,8 +73,8 @@ export class EventFormComponent implements OnInit {
       addtionalComment: new FormControl(null),
       repeat: new FormControl(0),
       kidsAvailability: new FormControl(false, Validators.required),
-      url: new FormControl('', Validators.required),
-      paymentFee: new FormControl(0, Validators.required),
+      url: new FormControl(null, Validators.required),
+      paymentFee: new FormControl(null, Validators.required),
     });
   }
 
@@ -121,6 +122,12 @@ export class EventFormComponent implements OnInit {
         this.markFormGroupTouched(control);
       }
     });
+  }
+  handleDateSelection(selectedDates: any) {
+    if (selectedDates && selectedDates.length === 1) {
+      selectedDates[1] = selectedDates[0];
+      this.eventForm.get('dateFromTo')?.setValue(selectedDates);
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -224,15 +231,27 @@ export class EventFormComponent implements OnInit {
       'en-US'
     );
 
+    let date = new Date(this.eventForm.get('timeFrom')?.value);
+    date.setHours(date.getHours() + 2);
+    let timeToDate = new Date(this.eventForm.get('timeTo')?.value);
+    timeToDate.setHours(timeToDate.getHours() + 2);
+    this.eventForm.get('timeFrom')?.setValue(date.toISOString());
+    this.eventForm.get('timeTo')?.setValue(timeToDate.toISOString());
     const startDateTime =
       formatDate(dateRange[0], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
     const endDateTime =
-      formatDate(dateRange[1], 'yyyy-MM-dd', 'en-US') + ' ' + toTime;
-
-    const datesArray = [
-      new Date(startDateTime).toISOString(),
-      new Date(endDateTime).toISOString(),
-    ];
+      formatDate(
+        dateRange[1] ? dateRange[1] : dateRange[0],
+        'yyyy-MM-dd',
+        'en-US'
+      ) +
+      ' ' +
+      toTime;
+    let startDate = new Date(startDateTime);
+    let endDate = new Date(endDateTime);
+    startDate.setHours(startDate.getHours() + 2);
+    endDate.setHours(endDate.getHours() + 2);
+    const datesArray = [startDate.toISOString(), endDate.toISOString()];
 
     this.eventForm.patchValue({
       dates: datesArray,
