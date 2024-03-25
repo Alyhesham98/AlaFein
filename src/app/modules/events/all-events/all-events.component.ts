@@ -56,7 +56,7 @@ export class AllEventsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getAllEvents({
+       this.getAllEvents({
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     });

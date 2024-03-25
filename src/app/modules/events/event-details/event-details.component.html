@@ -124,14 +124,17 @@
     <div class="col event-actions">
       <a
         class="rejectBtn"
-        *ngIf="eventStatus === 'ACCEPT' || eventStatus === 'PENDING'"
+        *ngIf="
+          (eventStatus === 'ACCEPT' || eventStatus === 'PENDING') &&
+          userData.Role === 'Super Admin'
+        "
         (click)="toggleStatus(2)"
         >REJECT</a
       >
       <button class="customBtn" (click)="show(eventDetails)">MODIFY</button>
       <button
         class="btn actionsBtn acceptBtn"
-        *ngIf="eventStatus !== 'ACCEPT'"
+        *ngIf="eventStatus !== 'ACCEPT' && userData.Role === 'Super Admin'"
         (click)="toggleStatus(1)"
       >
         ACCEPT <img src="assets/icons/arrow-right.svg" alt="Accept Button" />

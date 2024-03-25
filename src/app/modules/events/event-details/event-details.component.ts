@@ -28,7 +28,9 @@ export class EventDetailsComponent implements OnInit {
       this.submissionId = params.parentId;
     });
   }
+  userData: any;
   ngOnInit(): void {
+    this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
     this.getEventsDetails();
   }
 
