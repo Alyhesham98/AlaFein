@@ -169,6 +169,9 @@ export class EventFormComponent implements OnInit {
         );
       } else {
         this.onDateTimeCheck();
+        if(this.eventForm.get('repeat')?.value === null){
+          this.eventForm.get('repeat')?.setValue(0);
+        }
         this.eventService.createEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -208,10 +211,12 @@ export class EventFormComponent implements OnInit {
     ) {
       this.eventForm.get('paymentFee')?.setValidators(Validators.required);
       this.eventForm.get('url')?.setValidators(Validators.required);
+      this.eventForm.get('paymentFee')?.setValue(null);
       this.isPaymentAndURL = true;
     } else {
       this.eventForm.get('paymentFee')?.setValidators(null);
       this.eventForm.get('url')?.setValidators(null);
+      this.eventForm.get('paymentFee')?.setValue(0.0);
       this.isPaymentAndURL = false;
     }
     this.eventForm.get('paymentFee')?.updateValueAndValidity();
