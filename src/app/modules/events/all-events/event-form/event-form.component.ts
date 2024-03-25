@@ -74,7 +74,7 @@ export class EventFormComponent implements OnInit {
       repeat: new FormControl(null),
       kidsAvailability: new FormControl(false, Validators.required),
       url: new FormControl(null, Validators.required),
-      paymentFee: new FormControl(null, Validators.required),
+      paymentFee: new FormControl(0.0, Validators.required),
     });
   }
 
@@ -137,7 +137,9 @@ export class EventFormComponent implements OnInit {
   submitForm() {
     this.isSubmit = true;
     this.markFormGroupTouched(this.eventForm);
-
+    if (this.eventForm.get('repeat')?.value === null) {
+      this.eventForm.get('repeat')?.setValue(0);
+    }
     if (this.eventForm.valid) {
       this.eventForm.patchValue({
         venueId: this.eventForm.get('VenueId')?.value.Id,
@@ -169,9 +171,7 @@ export class EventFormComponent implements OnInit {
         );
       } else {
         this.onDateTimeCheck();
-        if(this.eventForm.get('repeat')?.value === null){
-          this.eventForm.get('repeat')?.setValue(0);
-        }
+
         this.eventService.createEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -216,7 +216,6 @@ export class EventFormComponent implements OnInit {
     } else {
       this.eventForm.get('paymentFee')?.setValidators(null);
       this.eventForm.get('url')?.setValidators(null);
-      this.eventForm.get('paymentFee')?.setValue(0.0);
       this.isPaymentAndURL = false;
     }
     this.eventForm.get('paymentFee')?.updateValueAndValidity();
