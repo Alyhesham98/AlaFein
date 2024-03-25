@@ -41,6 +41,10 @@ export class AllEventsComponent {
       field: 'Status.Name',
       text: 'Status',
     },
+    {
+      field: 'CreatedAt',
+      text: 'Created At',
+    },
   ];
   rowsData: any[] = [];
   pageNumber: number = 1;

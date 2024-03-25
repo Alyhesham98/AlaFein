@@ -33,6 +33,10 @@ export class OrganizersComponent implements OnInit {
       field: 'userStatus',
       text: 'User Status',
     },
+    {
+      field: 'CreatedAt',
+      text: 'Created At',
+    },
   ];
 
   actions: any[] = ['canView', 'canVerify'];
@@ -95,6 +99,7 @@ export class OrganizersComponent implements OnInit {
             Photo: element.Photo,
             EventCount: element.EventCount,
             userStatus: element.IsBlocked,
+            CreatedAt: element.CreatedAt,
             socialLinks: {
               facebook: element.Facebook,
               websiteURL: element.WebsiteURL,

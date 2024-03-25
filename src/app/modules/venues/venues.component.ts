@@ -33,6 +33,10 @@ export class VenuesComponent implements OnInit {
       field: 'userStatus',
       text: 'User Status',
     },
+    {
+      field: 'CreatedAt',
+      text: 'Created At',
+    },
   ];
 
   rowsData: any[] = [];
@@ -63,6 +67,7 @@ export class VenuesComponent implements OnInit {
             Facility: element.Facility,
             Email: element.Email,
             userStatus: element.IsBlocked,
+            CreatedAt: element.CreatedAt,
           });
         });
         this.totalRecords = data.PgTotal;

@@ -33,6 +33,10 @@ export class PendingEventsComponent {
       field: 'Date',
       text: 'Event Date',
     },
+    {
+      field: 'CreatedAt',
+      text: 'Created At',
+    },
   ];
   rowsData: any[] = [];
   pageNumber: number = 1;
