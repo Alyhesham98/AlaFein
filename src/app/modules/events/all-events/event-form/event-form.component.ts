@@ -71,7 +71,7 @@ export class EventFormComponent implements OnInit {
       poster: new FormControl(null),
       contactPerson: new FormControl(null),
       addtionalComment: new FormControl(null),
-      repeat: new FormControl(0),
+      repeat: new FormControl(null),
       kidsAvailability: new FormControl(false, Validators.required),
       url: new FormControl(null, Validators.required),
       paymentFee: new FormControl(null, Validators.required),
