@@ -106,6 +106,7 @@
                   [iconDisplay]="'input'"
                   [minDate]="minDate"
                   [showIcon]="true"
+                  (ngModelChange)="handleDateSelection($event)"
                   [readonlyInput]="true"
                   placeholder="Event Date 'From - To'"
                   (onSelect)="handleDateSelection($event)"
@@ -161,7 +162,7 @@
                       >
                     </div>
                   </div>
-                  <div class="col">
+                  <!-- <div class="col">
                     <p-calendar
                       formControlName="timeTo"
                       [timeOnly]="true"
@@ -177,7 +178,7 @@
                         >Field is required.</small
                       >
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>

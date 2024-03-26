@@ -31,7 +31,6 @@ export class EventFormComponent implements OnInit {
   isPaymentAndURL = false;
   dateFromTo: any;
   timeFrom: any;
-  timeTo: any;
   minDate = new Date();
   @ViewChild('fileInput') fileInput!: ElementRef;
   uploadedImage: any = null;
@@ -60,7 +59,6 @@ export class EventFormComponent implements OnInit {
       categoryId: new FormControl(null, Validators.required),
       dateFromTo: new FormControl(null, Validators.required),
       timeFrom: new FormControl(null, Validators.required),
-      timeTo: new FormControl(null, Validators.required),
       dates: new FormControl([]),
       VenueId: new FormControl(null, Validators.required),
       OrganizerId: new FormControl(null, Validators.required),
@@ -123,10 +121,28 @@ export class EventFormComponent implements OnInit {
       }
     });
   }
+  dateArray!: any[];
   handleDateSelection(selectedDates: any) {
     if (selectedDates && selectedDates.length === 1) {
-      selectedDates[1] = selectedDates[0];
       this.eventForm.get('dateFromTo')?.setValue(selectedDates);
+    } else {
+      var datesArray: any[] = [];
+      // Array to store the dates between start and end dates
+      var datesBetween = [];
+
+      // Function to iterate through the dates and add them to the array
+      var currentDate = new Date(selectedDates[0]);
+      var endDate = new Date(selectedDates[1]);
+      while (currentDate <= endDate) {
+        datesBetween.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      datesBetween.forEach(function (date) {
+        datesArray.push(date.toISOString());
+      });
+      if (datesArray.length >= 1) {
+        this.dateArray = datesArray;
+      }
     }
   }
 
@@ -223,39 +239,25 @@ export class EventFormComponent implements OnInit {
   }
 
   onDateTimeCheck() {
+    this.eventForm.get('dateFromTo')?.setValue(this.dateArray)
     const dateRange = this.eventForm.get('dateFromTo')?.value;
     const fromTime = this.datePipe.transform(
       this.eventForm.get('timeFrom')?.value,
       'HH:mm:ss',
       'en-US'
     );
-    const toTime = this.datePipe.transform(
-      this.eventForm.get('timeTo')?.value,
-      'HH:mm:ss',
-      'en-US'
-    );
+    var datesArray: any[] = [];
+    for (let i = 0; i < dateRange.length; i++) {
+      let date = new Date(this.eventForm.get('timeFrom')?.value);
+      date.setHours(date.getHours() + 2);
+      this.eventForm.get('timeFrom')?.setValue(date.toISOString());
+      const startDateTime =
+        formatDate(dateRange[i], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
 
-    let date = new Date(this.eventForm.get('timeFrom')?.value);
-    date.setHours(date.getHours() + 2);
-    let timeToDate = new Date(this.eventForm.get('timeTo')?.value);
-    timeToDate.setHours(timeToDate.getHours() + 2);
-    this.eventForm.get('timeFrom')?.setValue(date.toISOString());
-    this.eventForm.get('timeTo')?.setValue(timeToDate.toISOString());
-    const startDateTime =
-      formatDate(dateRange[0], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
-    const endDateTime =
-      formatDate(
-        dateRange[1] ? dateRange[1] : dateRange[0],
-        'yyyy-MM-dd',
-        'en-US'
-      ) +
-      ' ' +
-      toTime;
-    let startDate = new Date(startDateTime);
-    let endDate = new Date(endDateTime);
-    startDate.setHours(startDate.getHours() + 2);
-    endDate.setHours(endDate.getHours() + 2);
-    const datesArray = [startDate.toISOString(), endDate.toISOString()];
+      let startDate = new Date(startDateTime);
+      startDate.setHours(startDate.getHours() + 2);
+      datesArray.push(startDate.toISOString());
+    }
 
     this.eventForm.patchValue({
       dates: datesArray,
@@ -269,7 +271,6 @@ export class EventFormComponent implements OnInit {
     const dateFrom = new Date(this.config?.data?.data?.Date[0]);
     const dateTo = new Date(this.config?.data?.data?.Date[1]);
     const timeFrom = this.formatTime(dateFrom);
-    const timeTo = this.formatTime(dateTo);
 
     this.eventForm.setValue({
       eventNameEN: this.config.data.data.EventNameEN,
@@ -280,7 +281,6 @@ export class EventFormComponent implements OnInit {
       categoryId: this.config.data.data.Category.Id,
       dateFromTo: [dateFrom, dateTo],
       timeFrom: timeFrom,
-      timeTo: timeTo,
       dates: [dateFrom, dateTo],
       venueId: this.config.data.data.Venue.Id,
       VenueId: this.config.data.data.Venue.Id,
