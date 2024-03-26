@@ -123,9 +123,9 @@ export class EventFormComponent implements OnInit {
   }
   dateArray!: any[];
   handleDateSelection(selectedDates: any) {
-    if (selectedDates && selectedDates.length === 1) {
-      this.eventForm.get('dateFromTo')?.setValue(selectedDates);
-    } else {
+    if (selectedDates && selectedDates[1] === null) {
+      this.dateArray = selectedDates;
+    } else if (selectedDates && selectedDates.length > 1) {
       var datesArray: any[] = [];
       // Array to store the dates between start and end dates
       var datesBetween = [];
@@ -239,7 +239,7 @@ export class EventFormComponent implements OnInit {
   }
 
   onDateTimeCheck() {
-    this.eventForm.get('dateFromTo')?.setValue(this.dateArray)
+    this.eventForm.get('dateFromTo')?.setValue(this.dateArray);
     const dateRange = this.eventForm.get('dateFromTo')?.value;
     const fromTime = this.datePipe.transform(
       this.eventForm.get('timeFrom')?.value,
@@ -247,16 +247,39 @@ export class EventFormComponent implements OnInit {
       'en-US'
     );
     var datesArray: any[] = [];
-    for (let i = 0; i < dateRange.length; i++) {
+    if (dateRange?.length > 1 && dateRange) {
+      for (let i = 0; i < dateRange.length; i++) {
+        let date = new Date(this.eventForm.get('timeFrom')?.value);
+        date.setHours(date.getHours() + 2);
+        this.eventForm.get('timeFrom')?.setValue(date.toISOString());
+        const startDateTime =
+          formatDate(dateRange[i], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
+        if (i == dateRange.length - 1) {
+          let date = new Date(dateRange[i]);
+          date.setDate(date.getDate() + 1);
+          const startDateTime =
+            formatDate(date, 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
+          let startDate = new Date(startDateTime);
+          startDate.setHours(startDate.getHours() + 2);
+          datesArray.push(startDate.toISOString());
+        } else {
+          let startDate = new Date(startDateTime);
+          startDate.setHours(startDate.getHours() + 2);
+          datesArray.push(startDate.toISOString());
+        }
+      }
+    } else {
+      console.log(dateRange);
+
       let date = new Date(this.eventForm.get('timeFrom')?.value);
       date.setHours(date.getHours() + 2);
       this.eventForm.get('timeFrom')?.setValue(date.toISOString());
       const startDateTime =
-        formatDate(dateRange[i], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
+        formatDate(dateRange[0], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
 
       let startDate = new Date(startDateTime);
       startDate.setHours(startDate.getHours() + 2);
-      datesArray.push(startDate.toISOString());
+      datesArray = [startDate.toISOString()];
     }
 
     this.eventForm.patchValue({
