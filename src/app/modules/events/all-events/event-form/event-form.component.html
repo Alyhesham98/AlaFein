@@ -110,6 +110,7 @@
                   [readonlyInput]="true"
                   placeholder="Event Date 'From - To'"
                   (onSelect)="handleDateSelection($event)"
+                  [appendTo]="'body'"
                 ></p-calendar>
                 <div
                   *ngIf="f['dateFromTo'].errors && f['dateFromTo'].touched"
