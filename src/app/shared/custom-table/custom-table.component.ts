@@ -343,5 +343,16 @@ export class CustomTableComponent {
     this.selectedFilterByRole = null;
     this.spotlightDropdown = null;
     this.isApprovedDropdown = null;
+    this.body = {
+      search: null,
+      name: null,
+      email: null,
+      event: null,
+      venue: null,
+      roleFilter: null,
+      isSpotlight: null,
+      isApproved: null,
+    };
+    this.filterOutput.emit(this.body);
   }
 }
