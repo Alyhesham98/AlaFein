@@ -135,14 +135,7 @@
               formControlName="address"
               placeholder="Address"
             />
-            <div
-              *ngIf="g['address'].errors && g['address'].touched"
-              style="color: red"
-            >
-              <small *ngIf="g['address'].errors['required']"
-                >Field is required.</small
-              >
-            </div>
+
           </div>
           <div class="col-xl-4 mb-4">
             <input
