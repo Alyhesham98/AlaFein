@@ -187,16 +187,39 @@ export class VenueFormComponent implements OnInit {
     this.isSubmit = true;
     this.markFormGroupTouched(this.venueForm);
 
-    this.venuesService.createVenue(body).subscribe((res: any) => {
-      this.ref.close(true);
+    this.venuesService.createVenue(body).subscribe(
+      (res: any) => {
+        this.ref.close(true);
 
-      this.messageService.add({
-        key: 'toast1',
-        severity: 'success',
-        summary: 'Success',
-        detail: res.Message,
-      });
-    });
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: res.Message,
+        });
+      },
+      (err) => {
+        if (err.error?.Errors?.length >= 1) {
+          err.error.Errors.forEach((element: any) => {
+            this.messageService.add({
+              key: 'toast1',
+              severity: 'error',
+              summary: 'Error',
+              detail: element,
+            });
+          });
+        }
+
+        if (err.error?.Message) {
+          this.messageService.add({
+            key: 'toast1',
+            severity: 'error',
+            summary: 'Error',
+            detail: err.error.Message,
+          });
+        }
+      }
+    );
   }
 
   onResetForm() {
