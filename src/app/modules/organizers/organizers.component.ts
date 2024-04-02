@@ -131,7 +131,7 @@ export class OrganizersComponent implements OnInit {
             data: body,
           });
           this.ref.onClose.subscribe((res) =>
-            res
+            res === true
               ? this.getAllEventOrganizers({ pageNumber: 1, pageSize: 10 })
               : ''
           );

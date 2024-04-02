@@ -112,7 +112,7 @@ export class VenuesComponent implements OnInit {
     });
 
     this.ref.onClose.subscribe((res) =>
-      res ? this.getAllVenues({ pageNumber: 1, pageSize: 10 }) : ''
+      res === true ? this.getAllVenues({ pageNumber: 1, pageSize: 10 }) : ''
     );
   }
   filter: boolean = false;
