@@ -89,6 +89,8 @@
         <p-dropdown
           optionLabel="Name"
           optionValue="Name"
+          [filter]="true"
+          filterBy="Name"
           [options]="filterByRoleDropdownList"
           [placeholder]="placeholderFilterByRoleDropdown"
           [showClear]="true"
@@ -100,6 +102,8 @@
         <p-dropdown
           optionLabel="Name"
           optionValue="Value"
+          [filter]="true"
+          filterBy="Name"
           [options]="spotlightList"
           [placeholder]="placeholderSpotlightDropdown"
           [showClear]="true"

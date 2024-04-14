@@ -135,7 +135,6 @@
               formControlName="address"
               placeholder="Address"
             />
-
           </div>
           <div class="col-xl-4 mb-4">
             <input
@@ -229,6 +228,8 @@
               formControlName="categoryId"
               [options]="eventTypes"
               optionLabel="Name"
+              [filter]="true"
+              filterBy="Name"
               optionValue="Id"
               [showClear]="true"
               placeholder="Genre"

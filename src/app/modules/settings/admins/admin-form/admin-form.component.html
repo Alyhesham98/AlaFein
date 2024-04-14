@@ -41,6 +41,8 @@
             [options]="adminTypes"
             optionLabel="Name"
             optionValue="Id"
+            [filter]="true"
+            filterBy="Name"
             [showClear]="true"
             placeholder="Type"
             [disabled]="config.data"
@@ -75,10 +77,7 @@
   </div>
   <div class="footer">
     <a class="btn resetBtn" (click)="onResetForm()">RESET</a>
-    <button
-      class="btn createBtn"
-      (click)="onSubmitForm()"
-    >
+    <button class="btn createBtn" (click)="onSubmitForm()">
       <span>CREATE</span>
       <img
         src="assets/icons/arrow-right.svg"
