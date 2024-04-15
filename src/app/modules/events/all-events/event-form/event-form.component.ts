@@ -77,15 +77,16 @@ export class EventFormComponent implements OnInit {
   }
 
   getEventsDropdown() {
-    this.eventOrganizersService
-      .getAllEventOrganizers(1, 200)
-      .subscribe((res: any) => {
-        this.organizersOptions = res.Data;
-      });
+    // this.eventOrganizersService
+    //   .getAllEventOrganizers(1, 1000)
+    //   .subscribe((res: any) => {
+    //     this.organizersOptions = res.Data;
+    //   });
 
     this.eventService.getEventsDropdown().subscribe((res: any) => {
       this.eventTypes = res?.Data?.Category;
       this.repeatTypes = res?.Data?.Repeat;
+      this.organizersOptions = res?.Data.Organizer;
       this.attendanceOptions = res?.Data?.Attendance;
       this.repeatOptions = res?.Data?.Repeat;
       this.venuesOptions = res?.Data?.Venue;
