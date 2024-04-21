@@ -68,6 +68,7 @@ export class VenuesComponent implements OnInit {
             Email: element.Email,
             userStatus: element.IsBlocked,
             CreatedAt: element.CreatedAt,
+            Photo: element.Photo,
           });
         });
         this.totalRecords = data.PgTotal;
