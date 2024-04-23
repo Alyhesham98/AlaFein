@@ -227,7 +227,6 @@ export class EventOrganizersFormComponent implements OnInit {
   }
 
   changeValidation(formControl?: any) {
-    console.log('testsadf');
 
     if (
       this.eventSecondForm.get('facebook')?.value !== null ||

@@ -222,6 +222,13 @@ export class VenueFormComponent implements OnInit {
     );
   }
 
+  onErrorStep() {
+    this.changeValidation();
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.userForm);
+    this.markFormGroupTouched(this.venueForm);
+  }
+
   onResetForm() {
     this.userForm.reset();
     this.venueForm.reset();
@@ -299,8 +306,6 @@ export class VenueFormComponent implements OnInit {
   }
 
   changeValidation(formControl?: any) {
-    console.log('testsadf');
-
     if (
       this.venueForm.get('facebook')?.value !== null ||
       this.venueForm.get('instagram')?.value !== null ||

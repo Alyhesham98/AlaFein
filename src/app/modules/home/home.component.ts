@@ -99,7 +99,6 @@ export class HomeComponent implements OnInit {
         venue: this.dashboard.Venue,
       };
 
-      console.log(this.data);
       
 
       this.tablesData = [

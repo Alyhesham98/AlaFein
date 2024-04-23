@@ -365,7 +365,23 @@
     <button
       class="btn createBtn next"
       *ngIf="formPageNumber == 1"
-      (click)="onFormSubmit(1)"
+      (click)="
+        formPageNumber == 1 &&
+        userForm.valid &&
+        venueForm.get('instagram')?.valid &&
+        venueForm.get('facebook')?.valid &&
+        venueForm.get('websiteURL')?.valid &&
+        venueForm.get('other')?.valid &&
+        venueForm.get('phoneNumber')?.valid &&
+        venueForm.get('venueName')?.valid &&
+        venueForm.get('venueDescription')?.valid &&
+        venueForm.get('categoryId')?.valid &&
+        venueForm.get('photos')?.valid &&
+        venueForm.get('venueFacilities')?.valid &&
+        userForm.valid
+          ? onFormSubmit(1)
+          : onErrorStep()
+      "
     >
       <span>NEXT</span>
       <img

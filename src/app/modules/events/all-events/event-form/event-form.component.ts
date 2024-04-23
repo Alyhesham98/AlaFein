@@ -270,7 +270,6 @@ export class EventFormComponent implements OnInit {
         }
       }
     } else {
-      console.log(dateRange);
 
       let date = new Date(this.eventForm.get('timeFrom')?.value);
       date.setHours(date.getHours() + 2);
@@ -294,36 +293,62 @@ export class EventFormComponent implements OnInit {
 
     // Extracting date and time values
     this.dateFrom = new Date(this.config?.data?.data?.Date[0]);
+
     if (this.config?.data?.data?.Date[1].includes('-1970')) {
       this.dateTo = null;
-    } else if (this.config?.data?.data?.Date.length > 1) {
-      const firsDate =
-      this.config?.data?.data?.Date[0];
-    if (firsDate) {
-      // Check if the date string has the expected format (e.g., '13-04-2024, 06:43 PM')
-      const dateRegex = /^(\d{2})-(\d{2})-(\d{4}), (\d{2}):(\d{2}) (AM|PM)$/;
-      if (dateRegex.test(firsDate)) {
-        // Split the date string and create a Date object
-        const [_, day, month, year, hour, minute, period] =
-        firsDate.match(dateRegex);
-        let hours = parseInt(hour);
-        if (period === 'PM' && hours < 12) {
-          hours += 12;
+      const firsDate = this.config?.data?.data?.Date[0];
+      if (firsDate) {
+        // Check if the date string has the expected format (e.g., '13-04-2024, 06:43 PM')
+        const dateRegex = /^(\d{2})-(\d{2})-(\d{4}), (\d{2}):(\d{2}) (AM|PM)$/;
+        if (dateRegex.test(firsDate)) {
+          // Split the date string and create a Date object
+          const [_, day, month, year, hour, minute, period] =
+            firsDate.match(dateRegex);
+          let hours = parseInt(hour);
+          if (period === 'PM' && hours < 12) {
+            hours += 12;
+          }
+
+          this.dateFrom = new Date(
+            parseInt(year),
+            parseInt(month) - 1,
+            parseInt(day),
+            hours,
+            parseInt(minute)
+          );
+        } else {
+          console.error('Invalid date format:', firsDate);
         }
-        this.dateFrom = new Date(
-          parseInt(year),
-          parseInt(month) - 1,
-          parseInt(day),
-          hours,
-          parseInt(minute)
-        );
-        console.log(this.dateFrom);
       } else {
-        console.error('Invalid date format:', firsDate);
+        console.error('Date string is empty or undefined.');
       }
-    } else {
-      console.error('Date string is empty or undefined.');
-    }
+    } else if (this.config?.data?.data?.Date.length > 1) {
+      const firsDate = this.config?.data?.data?.Date[0];
+      if (firsDate) {
+        // Check if the date string has the expected format (e.g., '13-04-2024, 06:43 PM')
+        const dateRegex = /^(\d{2})-(\d{2})-(\d{4}), (\d{2}):(\d{2}) (AM|PM)$/;
+        if (dateRegex.test(firsDate)) {
+          // Split the date string and create a Date object
+          const [_, day, month, year, hour, minute, period] =
+            firsDate.match(dateRegex);
+          let hours = parseInt(hour);
+          if (period === 'PM' && hours < 12) {
+            hours += 12;
+          }
+
+          this.dateFrom = new Date(
+            parseInt(year),
+            parseInt(month) - 1,
+            parseInt(day),
+            hours,
+            parseInt(minute)
+          );
+        } else {
+          console.error('Invalid date format:', firsDate);
+        }
+      } else {
+        console.error('Date string is empty or undefined.');
+      }
       const dateString =
         this.config?.data?.data?.Date[this.config.data.data.Date.length - 1];
       if (dateString) {
@@ -344,7 +369,6 @@ export class EventFormComponent implements OnInit {
             hours,
             parseInt(minute)
           );
-          console.log(this.dateTo);
         } else {
           console.error('Invalid date format:', dateString);
         }
@@ -352,10 +376,16 @@ export class EventFormComponent implements OnInit {
         console.error('Date string is empty or undefined.');
       }
     }
+
     const timeFrom = this.formatTime(this.dateFrom);
-    console.log(
-      this.config?.data?.data?.Date[this.config.data.data.Date.length - 1]
-    );
+
+
+
+    if (this.dateFrom && this.dateTo) {
+      this.dateArray = [this.dateFrom, this.dateTo];
+    } else if (this.dateFrom && !this.dateTo) {
+      this.dateArray = [this.dateFrom];
+    }
 
     this.eventForm.setValue({
       eventNameEN: this.config.data.data.EventNameEN,
@@ -364,9 +394,9 @@ export class EventFormComponent implements OnInit {
       mainArtestNameEN: this.config.data.data.MainArtestNameEN,
       mainArtestNameAR: this.config.data.data.MainArtestNameAR,
       categoryId: this.config.data.data.Category.Id,
-      dateFromTo: [this.dateFrom, this.dateTo],
+      dateFromTo: this.dateArray,
       timeFrom: timeFrom,
-      dates: [this.dateFrom, this.dateTo],
+      dates: this.dateArray,
       venueId: this.config.data.data.Venue.Id,
       VenueId: this.config.data.data.Venue.Id,
       organizerId: this.config.data.data.Organizer.Id,

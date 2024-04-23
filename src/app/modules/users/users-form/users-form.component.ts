@@ -36,7 +36,6 @@ export class UsersFormComponent implements OnInit {
     }
   }
   setFormData(): void {
-    console.log(this.usersDetails);
 
     this.uploadedImage = this.usersDetails.Photo
       ? this.usersDetails.Photo

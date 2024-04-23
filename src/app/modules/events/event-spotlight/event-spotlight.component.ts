@@ -98,7 +98,6 @@ export class EventSpotlightComponent {
   }
 
   reOrderDetails(event: any) {
-    console.log(event);
     let body = {
       id: event.id,
       spotlightOrder: event.index,

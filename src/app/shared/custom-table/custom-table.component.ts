@@ -176,14 +176,11 @@ export class CustomTableComponent {
         // Access the nested property using the split parts
         var valueA = a[parts[0]][parts[1]];
         var valueB = b[parts[0]][parts[1]];
-        console.log(valueA);
-        console.log(valueB);
+
       } else {
         // Otherwise, proceed with regular property access
         var valueA = a[this.sortField];
         var valueB = b[this.sortField];
-        console.log(valueA);
-        console.log(valueB);
       }
 
       if (valueA < valueB) {
