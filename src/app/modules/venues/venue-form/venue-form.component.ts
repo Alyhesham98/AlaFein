@@ -225,6 +225,7 @@ export class VenueFormComponent implements OnInit {
   onErrorStep() {
     this.changeValidation();
     this.isSubmit = true;
+
     this.markFormGroupTouched(this.userForm);
     this.markFormGroupTouched(this.venueForm);
   }
