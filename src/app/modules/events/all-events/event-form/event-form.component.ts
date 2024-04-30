@@ -270,7 +270,6 @@ export class EventFormComponent implements OnInit {
         }
       }
     } else {
-
       let date = new Date(this.eventForm.get('timeFrom')?.value);
       date.setHours(date.getHours() + 2);
       this.eventForm.get('timeFrom')?.setValue(date.toISOString());
@@ -379,8 +378,6 @@ export class EventFormComponent implements OnInit {
 
     const timeFrom = this.formatTime(this.dateFrom);
 
-
-
     if (this.dateFrom && this.dateTo) {
       this.dateArray = [this.dateFrom, this.dateTo];
     } else if (this.dateFrom && !this.dateTo) {
@@ -399,8 +396,12 @@ export class EventFormComponent implements OnInit {
       dates: this.dateArray,
       venueId: this.config.data.data.Venue.Id,
       VenueId: this.config.data.data.Venue.Id,
-      organizerId: this.config.data.data.Organizer.Id,
-      OrganizerId: this.config.data.data.Organizer.Id,
+      organizerId: this.config.data.data?.Organizer
+        ? this.config.data.data.Organizer.Id
+        : this.config.data.data.Venue.Id,
+      OrganizerId: this.config.data.data?.Organizer
+        ? this.config.data.data.Organizer.Id
+        : this.config.data.data.Venue.Id,
       branchId: this.config.data.data.Branch.Id,
       attendanceOption: this.config.data.data.AttendanceOption.Id,
       poster: this.config.data.data.Poster,
@@ -416,7 +417,11 @@ export class EventFormComponent implements OnInit {
     this.eventForm.get('poster')?.setValue(this.config?.data?.data?.Poster);
     this.eventForm
       .get('organizerId')
-      ?.setValue(this.config?.data?.data?.Organizer.Id);
+      ?.setValue(
+        this.config?.data?.data?.Organizer
+          ? this.config?.data?.data?.Organizer.Id
+          : this.config?.data?.data?.Venue.Id
+      );
     this.eventForm.get('venueId')?.setValue(this.config?.data?.data?.Venue.Id);
 
     this.venuesOptions?.filter((x: any) => {
