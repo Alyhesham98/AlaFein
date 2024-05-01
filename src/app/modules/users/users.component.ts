@@ -21,10 +21,6 @@ export class UsersComponent implements OnInit {
       text: 'User name',
     },
     {
-      field: 'Status',
-      text: 'Status',
-    },
-    {
       field: 'Email',
       text: 'Email',
     },
@@ -37,7 +33,7 @@ export class UsersComponent implements OnInit {
   pageNumber: number = 1;
   pageSize: number = 10;
   totalRecords!: number;
-  actions: any[] = ['canEdit', 'canStatus', 'canBlock', 'canUnblock'];
+  actions: any[] = ['canEdit', 'canBlock', 'canUnblock'];
   ref: DynamicDialogRef | undefined;
 
   types: any[] = [];
@@ -63,10 +59,9 @@ export class UsersComponent implements OnInit {
           this.rowsData.push({
             Id: element.Id,
             FirstName: element.FirstName,
-            Status: element.Status.Name,
             Email: element.Email,
+            Photo: element.ProfilePicture,
             IsBlocked: element.IsBlocked,
-            Photo: element.Photo,
           });
         });
         this.totalRecords = data.PgTotal;
