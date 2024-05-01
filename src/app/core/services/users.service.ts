@@ -16,7 +16,7 @@ export class UsersService {
   constructor(private http: HttpClient, private router: Router) {}
   getAllUsers(pageNumber: number, pageSize: number) {
     return this.http.get(
-      `${this.url}AdminUser/GetPagination?pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `${this.url}Admin/GetAudiencePaginations?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
 
