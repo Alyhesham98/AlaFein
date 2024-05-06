@@ -259,12 +259,26 @@
             </p-selectButton>
             <div
               *ngIf="
-                g['venueFacilities'].errors && g['venueFacilities'].touched
+                g['venueFacilities'].errors &&
+                g['venueFacilities'].touched &&
+                venueFacilties.length >= 1
               "
               style="color: red"
             >
               <small *ngIf="g['venueFacilities'].errors['required']"
                 >Field is required.</small
+              >
+            </div>
+            <div
+              *ngIf="
+                g['venueFacilities'].errors &&
+                g['venueFacilities'].touched &&
+                venueFacilties.length === 0
+              "
+              style="color: red"
+            >
+              <small *ngIf="venueFacilties.length === 0"
+                >Please Add Facilities First</small
               >
             </div>
           </div>
