@@ -157,12 +157,14 @@ export class EventFormComponent implements OnInit {
     if (this.eventForm.get('repeat')?.value === null) {
       this.eventForm.get('repeat')?.setValue(0);
     }
+
     if (this.eventForm.valid) {
       this.eventForm.patchValue({
         venueId: this.eventForm.get('VenueId')?.value.Id,
-        attendanceOption: this.eventForm.get('attendanceOption')?.value.Id,
+        attendanceOption: this.eventForm.get('attendanceOption')?.value,
         organizerId: this.eventForm.get('OrganizerId')?.value,
       });
+      
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
@@ -412,7 +414,7 @@ export class EventFormComponent implements OnInit {
       poster: this.config.data.data.Poster,
       contactPerson: this.config.data.data.ContactPerson,
       addtionalComment: this.config.data.data.AddtionalComment,
-      repeat: 1,
+      repeat: this.config.data.data.Repeat ? this.config.data.data.Repeat : 0,
       kidsAvailability: this.config.data.data.KidsAvailability,
       url: this.config.data.data.URL ? this.config.data.data.URL : '  ',
       paymentFee: this.config.data.data.PaymentFee,
