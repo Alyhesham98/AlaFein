@@ -38,7 +38,6 @@
                     {{ rowData.FirstName ? rowData.FirstName : rowData.Name }}
                   </div>
                 </ng-template>
-                {{col.key}}
                 <ng-template [ngSwitchCase]="'Name'">
                   <div
                     style="
@@ -49,7 +48,7 @@
                   >
                     <img
                       [src]="
-                        'https://alafein.azurewebsites.net/' + rowData.VenueImage
+                        'https://alafein.azurewebsites.net/' + rowData.Photo
                       "
                       width="50"
                       height="50"
