@@ -168,7 +168,6 @@ export class EventFormComponent implements OnInit {
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
-        this.onDateTimeCheck();
 
         this.eventService.updateParentEvent(this.eventForm.value).subscribe(
           (res: any) => {
