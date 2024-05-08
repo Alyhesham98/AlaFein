@@ -6,7 +6,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { log } from 'console';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { EventOrganizersService } from 'src/app/core/services/event-organizers.service';
 
@@ -14,7 +14,7 @@ import { EventOrganizersService } from 'src/app/core/services/event-organizers.s
   selector: 'app-event-organizers-form',
   templateUrl: './event-organizers-form.component.html',
   styleUrls: ['./event-organizers-form.component.scss'],
-  providers: [MessageService],
+  providers: [ConfirmationService, MessageService],
 })
 export class EventOrganizersFormComponent implements OnInit {
   eventForm!: FormGroup;
@@ -27,7 +27,8 @@ export class EventOrganizersFormComponent implements OnInit {
     private eventOrganizersService: EventOrganizersService,
     private messageService: MessageService,
     public ref: DynamicDialogRef,
-    public config: DynamicDialogConfig
+    public config: DynamicDialogConfig,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -108,6 +109,40 @@ export class EventOrganizersFormComponent implements OnInit {
         this.markFormGroupTouched(control);
       }
     });
+  }
+
+  confirm1(event: Event) {
+    this.isSubmit = true;
+    this.markFormGroupTouched(this.eventForm);
+    this.markFormGroupTouched(this.eventSecondForm);
+
+    if (this.eventForm.valid && this.eventSecondForm.valid) {
+      this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Are you sure that you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: 'none',
+        rejectIcon: 'none',
+        rejectButtonStyleClass: 'p-button-text',
+        accept: () => {
+          this.onSubmitForm();
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Confirmed',
+            detail: 'You have accepted',
+          });
+        },
+        reject: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Rejected',
+            detail: 'You have rejected',
+            life: 3000,
+          });
+        },
+      });
+    }
   }
   onSubmitForm() {
     this.isSubmit = true;
@@ -227,7 +262,6 @@ export class EventOrganizersFormComponent implements OnInit {
   }
 
   changeValidation(formControl?: any) {
-
     if (
       this.eventSecondForm.get('facebook')?.value !== null ||
       this.eventSecondForm.get('instagram')?.value !== null ||
@@ -252,7 +286,9 @@ export class EventOrganizersFormComponent implements OnInit {
     ) {
       this.eventSecondForm.get('facebook')?.setValidators(Validators.required);
       this.eventSecondForm.get('instagram')?.setValidators(Validators.required);
-      this.eventSecondForm.get('websiteURL')?.setValidators(Validators.required);
+      this.eventSecondForm
+        .get('websiteURL')
+        ?.setValidators(Validators.required);
       this.eventSecondForm.get('other')?.setValidators(Validators.required);
       this.eventSecondForm.get('facebook')?.updateValueAndValidity();
       this.eventSecondForm.get('instagram')?.updateValueAndValidity();

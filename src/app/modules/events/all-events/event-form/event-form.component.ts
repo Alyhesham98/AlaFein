@@ -166,6 +166,8 @@ export class EventFormComponent implements OnInit {
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
+        this.onDateTimeCheck();
+
         this.eventService.updateParentEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -251,7 +253,7 @@ export class EventFormComponent implements OnInit {
     if (dateRange?.length > 1 && dateRange) {
       for (let i = 0; i < dateRange.length; i++) {
         let date = new Date(this.eventForm.get('timeFrom')?.value);
-        date.setHours(date.getHours() + 2);
+        date.setHours(date.getHours() + 3);
         this.eventForm.get('timeFrom')?.setValue(date.toISOString());
         const startDateTime =
           formatDate(dateRange[i], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
@@ -261,23 +263,23 @@ export class EventFormComponent implements OnInit {
           const startDateTime =
             formatDate(date, 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
           let startDate = new Date(startDateTime);
-          startDate.setHours(startDate.getHours() + 2);
+          startDate.setHours(startDate.getHours() + 3);
           datesArray.push(startDate.toISOString());
         } else {
           let startDate = new Date(startDateTime);
-          startDate.setHours(startDate.getHours() + 2);
+          startDate.setHours(startDate.getHours() + 3);
           datesArray.push(startDate.toISOString());
         }
       }
     } else {
       let date = new Date(this.eventForm.get('timeFrom')?.value);
-      date.setHours(date.getHours() + 2);
+      date.setHours(date.getHours() + 3);
       this.eventForm.get('timeFrom')?.setValue(date.toISOString());
       const startDateTime =
         formatDate(dateRange[0], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
 
       let startDate = new Date(startDateTime);
-      startDate.setHours(startDate.getHours() + 2);
+      startDate.setHours(startDate.getHours() + 3);
       datesArray = [startDate.toISOString()];
     }
 
@@ -379,8 +381,11 @@ export class EventFormComponent implements OnInit {
     const timeFrom = this.formatTime(this.dateFrom);
 
     if (this.dateFrom && this.dateTo) {
+      this.dateFrom.setHours(this.dateFrom.getHours() + 3);
+      this.dateTo.setHours(this.dateTo.getHours() + 3);
       this.dateArray = [this.dateFrom, this.dateTo];
     } else if (this.dateFrom && !this.dateTo) {
+      this.dateFrom.setHours(this.dateFrom.getHours() + 3);
       this.dateArray = [this.dateFrom];
     }
 

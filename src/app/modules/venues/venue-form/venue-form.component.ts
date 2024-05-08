@@ -7,7 +7,7 @@ import {
   FormArray,
   AbstractControl,
 } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { VenuesService } from 'src/app/core/services/venues.service';
 import { TimePickerComponent } from './time-picker/time-picker.component';
@@ -17,7 +17,7 @@ import { EgyptianPhoneNumberValidator } from 'src/app/core/validators/egyptian-p
   selector: 'app-venue-form',
   templateUrl: './venue-form.component.html',
   styleUrls: ['./venue-form.component.scss'],
-  providers: [MessageService, DialogService],
+  providers: [MessageService, DialogService, ConfirmationService],
 })
 export class VenueFormComponent implements OnInit {
   formPageNumber = 1;
@@ -37,7 +37,8 @@ export class VenueFormComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder,
     private dialogService: DialogService,
-    private ref: DynamicDialogRef
+    private ref: DynamicDialogRef,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -340,5 +341,33 @@ export class VenueFormComponent implements OnInit {
       this.markFormGroupTouched(this.venueForm);
       this.venueForm.updateValueAndValidity();
     }
+  }
+
+  confirm1(event: Event) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.onFormSubmit();
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'You have accepted',
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rejected',
+          detail: 'You have rejected',
+          life: 3000,
+        });
+      },
+    });
   }
 }

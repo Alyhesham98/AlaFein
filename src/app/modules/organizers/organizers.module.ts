@@ -11,7 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [OrganizersComponent, EventOrganizersFormComponent],
   imports: [
@@ -23,7 +23,8 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule,
   ],
 })
 export class OrganizersModule {}

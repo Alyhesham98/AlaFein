@@ -249,7 +249,7 @@
   </div>
   <div class="footer">
     <a class="btn resetBtn" (click)="resetForm()">RESET</a>
-    <button class="btn createBtn" (click)="onSubmitForm()">
+    <button class="btn createBtn" (click)="confirm1($event)">
       <span>{{ editMode ? "EDIT" : "CREATE" }}</span>
       <img
         src="assets/icons/arrow-right.svg"
@@ -262,3 +262,5 @@
 </div>
 
 <p-toast key="toast1"></p-toast>
+<p-toast key="toast2" />
+<p-confirmDialog />

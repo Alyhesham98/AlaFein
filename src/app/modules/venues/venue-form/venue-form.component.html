@@ -421,7 +421,7 @@
 
     <button
       class="btn createBtn complete"
-      (click)="onFormSubmit()"
+      (click)="confirm1($event)"
       *ngIf="formPageNumber == 2"
     >
       <span>COMPLETE</span>
@@ -434,3 +434,5 @@
     </button>
   </div>
 </div>
+<p-toast key="toast2" />
+<p-confirmDialog />

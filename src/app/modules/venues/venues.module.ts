@@ -15,6 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TimePickerComponent } from './venue-form/time-picker/time-picker.component';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [VenuesComponent, VenueFormComponent, TimePickerComponent],
@@ -31,7 +32,8 @@ import { ToastModule } from 'primeng/toast';
     SelectButtonModule,
     DialogModule,
     CalendarModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule,
   ],
 })
 export class VenuesModule {}
