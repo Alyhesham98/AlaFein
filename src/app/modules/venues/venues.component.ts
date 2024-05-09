@@ -57,6 +57,7 @@ export class VenuesComponent implements OnInit {
   }
 
   getAllVenues(e: any) {
+    this.rowsData = [];
     this.venuesService
       .getAllVenues(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {

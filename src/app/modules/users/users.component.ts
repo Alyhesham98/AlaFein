@@ -52,6 +52,7 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(e: any) {
+    this.rowsData = [];
     this.userService
       .getAllUsers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {

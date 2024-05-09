@@ -47,6 +47,7 @@ export class NotificationsComponent {
   }
 
   getAllNotifcations(e: any) {
+    this.rowsData = [];
     this.notifcationService
       .getAllNotifications(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
