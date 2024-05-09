@@ -346,7 +346,7 @@ export class VenueFormComponent implements OnInit {
   confirm1(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Are you sure that you want to proceed?',
+      message: 'Once you have created an venue, you cannot create it again as a event organizer to prevent duplication. However, a event organizer is by default considered an venue.',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',

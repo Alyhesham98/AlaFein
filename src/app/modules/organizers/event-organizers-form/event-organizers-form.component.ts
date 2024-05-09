@@ -119,7 +119,8 @@ export class EventOrganizersFormComponent implements OnInit {
     if (this.eventForm.valid && this.eventSecondForm.valid) {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
-        message: 'Are you sure that you want to proceed?',
+        message:
+          'Once you have created an event organizer, you cannot create it again as a venue to prevent duplication. However, a venue is by default considered an event organizer.',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
