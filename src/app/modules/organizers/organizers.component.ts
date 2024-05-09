@@ -86,6 +86,7 @@ export class OrganizersComponent implements OnInit {
   }
 
   getAllEventOrganizers(e: any) {
+    this.rowsData = [];
     this.eventOrganizersService
       .getAllEventOrganizers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
