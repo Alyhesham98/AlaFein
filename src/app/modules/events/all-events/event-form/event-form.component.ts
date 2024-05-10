@@ -164,11 +164,10 @@ export class EventFormComponent implements OnInit {
         attendanceOption: this.eventForm.get('attendanceOption')?.value,
         organizerId: this.eventForm.get('OrganizerId')?.value,
       });
-      
+
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
-
         this.eventService.updateParentEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -275,6 +274,7 @@ export class EventFormComponent implements OnInit {
     } else {
       let date = new Date(this.eventForm.get('timeFrom')?.value);
       date.setHours(date.getHours() + 3);
+      date.setDate(date.getDate() + 1);
       this.eventForm.get('timeFrom')?.setValue(date.toISOString());
       const startDateTime =
         formatDate(dateRange[0], 'yyyy-MM-dd', 'en-US') + ' ' + fromTime;
