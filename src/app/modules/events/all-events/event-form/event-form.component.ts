@@ -124,8 +124,6 @@ export class EventFormComponent implements OnInit {
   }
   dateArray!: any[];
   handleDateSelection(selectedDates: any) {
-    console.log(selectedDates);
-
     if (selectedDates && selectedDates[1] === null) {
       this.dateArray = selectedDates;
     } else if (selectedDates && selectedDates.length > 1) {
@@ -269,14 +267,27 @@ export class EventFormComponent implements OnInit {
       }
 
       // Handle last date range
-      let lastDateTime = new Date(dateRange[dateRange.length - 1]);
-      lastDateTime.setDate(lastDateTime.getDate() + 1);
-      lastDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
-      lastDateTime.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
-      lastDateTime.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
-      lastDateTime.setHours(lastDateTime.getHours() + 3);
 
-      datesArray.push(lastDateTime.toISOString());
+      let day = this.datePipe.transform(new Date(), 'yyyy-MM-dd') || '';
+      let lastDateTime = new Date(dateRange[dateRange.length - 1]);
+      let firstDate = this.datePipe.transform(dateRange[0], 'yyyy-MM-dd') || '';
+      if (day === firstDate) {
+        lastDateTime.setDate(lastDateTime.getDate() + 1);
+        lastDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
+        lastDateTime.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
+        lastDateTime.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
+        lastDateTime.setHours(lastDateTime.getHours() + 3);
+
+        datesArray.push(lastDateTime.toISOString());
+      } else {
+        lastDateTime.setDate(lastDateTime.getDate());
+        lastDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
+        lastDateTime.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
+        lastDateTime.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
+        lastDateTime.setHours(lastDateTime.getHours() + 3);
+
+        datesArray.push(lastDateTime.toISOString());
+      }
     } else {
       let date = new Date(this.eventForm.get('timeFrom')?.value);
       date.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
@@ -286,6 +297,11 @@ export class EventFormComponent implements OnInit {
       date.setDate(date.getDate() + 1);
 
       datesArray = [date.toISOString()];
+    }
+    if (
+      datesArray[datesArray.length - 1] === datesArray[datesArray.length - 2]
+    ) {
+      datesArray.pop();
     }
 
     this.eventForm.patchValue({
