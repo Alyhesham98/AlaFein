@@ -168,6 +168,7 @@ export class EventFormComponent implements OnInit {
       this.eventForm.removeControl('VenueId');
       this.eventForm.removeControl('OrganizerId');
       if (this.config.data) {
+        this.onDateTimeCheck();
         this.eventService.updateParentEvent(this.eventForm.value).subscribe(
           (res: any) => {
             this.ref.close(true);
@@ -240,26 +241,43 @@ export class EventFormComponent implements OnInit {
     this.eventForm.get('paymentFee')?.updateValueAndValidity();
     this.eventForm.get('url')?.updateValueAndValidity();
   }
-
+  fromTimeFormat: any;
   onDateTimeCheck() {
     this.eventForm.get('dateFromTo')?.setValue(this.dateArray);
     const dateRange = this.eventForm.get('dateFromTo')?.value;
-    const fromTime = this.datePipe.transform(
-      this.eventForm.get('timeFrom')?.value,
-      'HH:mm:ss',
-      'en-US'
-    );
+    console.log(this.eventForm.get('timeFrom')?.value);
+    const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$/i;
+    const isValid = timePattern.test(this.eventForm.get('timeFrom')?.value);
+    console.log(isValid);
+
+    if (isValid) {
+      let from = new Date();
+      from.setHours(
+        parseInt(this.eventForm.get('timeFrom')?.value.split(':')[0], 10)
+      );
+
+      this.fromTimeFormat = this.datePipe.transform(from, 'HH:mm:ss', 'en-US');
+    } else {
+      this.fromTimeFormat = this.datePipe.transform(
+        this.eventForm.get('timeFrom')?.value,
+        'HH:mm:ss',
+        'en-US'
+      );
+    }
+
     var datesArray: any[] = [];
 
     if (dateRange?.length > 1 && dateRange) {
       for (let i = 0; i < dateRange.length; i++) {
         let currentDateTime = new Date(dateRange[i]);
-        currentDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
+        currentDateTime.setHours(
+          parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10)
+        );
         currentDateTime.setMinutes(
-          parseInt(fromTime?.split(':')[1] || '0', 10)
+          parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10)
         );
         currentDateTime.setSeconds(
-          parseInt(fromTime?.split(':')[2] || '0', 10)
+          parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
         );
         currentDateTime.setHours(currentDateTime.getHours() + 3);
 
@@ -273,26 +291,41 @@ export class EventFormComponent implements OnInit {
       let firstDate = this.datePipe.transform(dateRange[0], 'yyyy-MM-dd') || '';
       if (day === firstDate) {
         lastDateTime.setDate(lastDateTime.getDate() + 1);
-        lastDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
-        lastDateTime.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
-        lastDateTime.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
+        lastDateTime.setHours(
+          parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10)
+        );
+        lastDateTime.setMinutes(
+          parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10)
+        );
+        lastDateTime.setSeconds(
+          parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
+        );
         lastDateTime.setHours(lastDateTime.getHours() + 3);
 
         datesArray.push(lastDateTime.toISOString());
+        console.log(datesArray+ ' stesaf');
       } else {
         lastDateTime.setDate(lastDateTime.getDate());
-        lastDateTime.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
-        lastDateTime.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
-        lastDateTime.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
+        lastDateTime.setHours(
+          parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10)
+        );
+        lastDateTime.setMinutes(
+          parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10)
+        );
+        lastDateTime.setSeconds(
+          parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
+        );
         lastDateTime.setHours(lastDateTime.getHours() + 3);
 
         datesArray.push(lastDateTime.toISOString());
+        console.log(datesArray);
+        
       }
     } else {
       let date = new Date(this.eventForm.get('timeFrom')?.value);
-      date.setHours(parseInt(fromTime?.split(':')[0] || '0', 10));
-      date.setMinutes(parseInt(fromTime?.split(':')[1] || '0', 10));
-      date.setSeconds(parseInt(fromTime?.split(':')[2] || '0', 10));
+      date.setHours(parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10));
+      date.setMinutes(parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10));
+      date.setSeconds(parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10));
       date.setHours(date.getHours() + 3);
       date.setDate(date.getDate() + 1);
 
