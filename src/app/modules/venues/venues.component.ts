@@ -70,6 +70,8 @@ export class VenuesComponent implements OnInit {
             userStatus: element.IsBlocked,
             CreatedAt: element.CreatedAt,
             Photo: element.Photo,
+            UserId: element.UserId,
+            IsBlocked: element.IsBlocked,
           });
         });
         this.totalRecords = data.PgTotal;

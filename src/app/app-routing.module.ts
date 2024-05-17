@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,11 +13,13 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'users',
     loadChildren: () =>
       import('./modules/users/users.module').then((m) => m.UsersModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'event-organizers',
@@ -24,6 +27,7 @@ const routes: Routes = [
       import('./modules/organizers/organizers.module').then(
         (m) => m.OrganizersModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'notifications',
@@ -31,16 +35,19 @@ const routes: Routes = [
       import('./modules/notifications/notifications.module').then(
         (m) => m.NotificationsModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'venues',
     loadChildren: () =>
       import('./modules/venues/venues.module').then((m) => m.VenuesModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'events',
     loadChildren: () =>
       import('./modules/events/events.module').then((m) => m.EventsModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'pending-comments',
@@ -48,6 +55,7 @@ const routes: Routes = [
       import('./modules/comments/comments.module').then(
         (m) => m.CommentsModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'settings',
@@ -55,6 +63,7 @@ const routes: Routes = [
       import('./modules/settings/settings.module').then(
         (m) => m.SettingsModule
       ),
+    canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: 'login' },
 ];

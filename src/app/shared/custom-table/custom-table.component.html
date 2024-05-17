@@ -189,7 +189,7 @@
                 style="border-radius: 50%"
                 alt="test"
               />
-              {{ rows.FirstName }}
+              {{ rows.FirstName + ' ' + rows.LastName }}
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'Facility'">
@@ -471,8 +471,8 @@
                             height="15"
                           />
                           <span style="margin-left: 10px">{{
-                            !rows.IsBlocked
-                              ? "unverified " + pageType
+                            !rows.IsBlocked && !rows.userStatus
+                              ? "unverify " + pageType
                               : "Verify " + pageType
                           }}</span>
                         </div>
@@ -704,7 +704,7 @@
                 style="border-radius: 50%"
                 alt="category"
               />
-              {{ rows.FirstName }}
+              {{ rows.FirstName + "" + rows.LastName }}
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'Facility'">
