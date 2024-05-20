@@ -245,10 +245,8 @@ export class EventFormComponent implements OnInit {
   onDateTimeCheck() {
     this.eventForm.get('dateFromTo')?.setValue(this.dateArray);
     const dateRange = this.eventForm.get('dateFromTo')?.value;
-    console.log(this.eventForm.get('timeFrom')?.value);
     const timePattern = /^(1[0-2]|0?[1-9]):[0-5][0-9] (AM|PM)$/i;
     const isValid = timePattern.test(this.eventForm.get('timeFrom')?.value);
-    console.log(isValid);
 
     if (isValid) {
       let from = new Date();
@@ -303,7 +301,7 @@ export class EventFormComponent implements OnInit {
         lastDateTime.setHours(lastDateTime.getHours() + 3);
 
         datesArray.push(lastDateTime.toISOString());
-        console.log(datesArray+ ' stesaf');
+        console.log(datesArray + ' stesaf');
       } else {
         lastDateTime.setDate(lastDateTime.getDate());
         lastDateTime.setHours(
@@ -319,17 +317,40 @@ export class EventFormComponent implements OnInit {
 
         datesArray.push(lastDateTime.toISOString());
         console.log(datesArray);
-        
       }
     } else {
-      let date = new Date(this.eventForm.get('timeFrom')?.value);
-      date.setHours(parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10));
-      date.setMinutes(parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10));
-      date.setSeconds(parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10));
-      date.setHours(date.getHours() + 3);
-      date.setDate(date.getDate() + 1);
+      const timeFromValue = this.eventForm.get('timeFrom')?.value;
 
-      datesArray = [date.toISOString()];
+      if (timePattern.test(timeFromValue)) {
+        let date = new Date(); // Use the current date
+
+        // Extract hours and minutes from the time string
+        const [time, period] = timeFromValue.split(' ');
+        const [hours, minutes] = time.split(':').map(Number);
+        let parsedHours = period === 'PM' ? (hours % 12) + 12 : hours % 12;
+
+        date.setHours(parsedHours, minutes, 0, 0); // Set time
+
+        // Add the additional time
+        date.setHours(date.getHours() + 3);
+        date.setDate(date.getDate() + 1);
+
+        console.log(timeFromValue);
+        datesArray = [date.toISOString()];
+      } else {
+        let date = new Date(this.eventForm.get('timeFrom')?.value);
+        date.setHours(parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10));
+        date.setMinutes(
+          parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10)
+        );
+        date.setSeconds(
+          parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
+        );
+        date.setHours(date.getHours() + 3);
+        date.setDate(date.getDate() + 1);
+        console.log(this.eventForm.get('timeFrom')?.value);
+        datesArray = [date.toISOString()];
+      }
     }
     if (
       datesArray[datesArray.length - 1] === datesArray[datesArray.length - 2]
@@ -371,6 +392,7 @@ export class EventFormComponent implements OnInit {
             hours,
             parseInt(minute)
           );
+          
         } else {
           console.error('Invalid date format:', firsDate);
         }
@@ -378,6 +400,7 @@ export class EventFormComponent implements OnInit {
         console.error('Date string is empty or undefined.');
       }
     } else if (this.config?.data?.data?.Date.length > 1) {
+      
       const firsDate = this.config?.data?.data?.Date[0];
       if (firsDate) {
         // Check if the date string has the expected format (e.g., '13-04-2024, 06:43 PM')
@@ -442,7 +465,8 @@ export class EventFormComponent implements OnInit {
       this.dateFrom.setHours(this.dateFrom.getHours() + 3);
       this.dateArray = [this.dateFrom];
     }
-
+    console.log(this.dateFrom.getTime());
+    
     this.eventForm.setValue({
       eventNameEN: this.config.data.data.EventNameEN,
       eventNameAR: this.config.data.data.EventNameAR,
