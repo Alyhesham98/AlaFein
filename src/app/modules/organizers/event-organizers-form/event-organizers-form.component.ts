@@ -251,8 +251,8 @@ export class EventOrganizersFormComponent implements OnInit {
     this.uploadedImage = this.config.data.organizer.User.ProfilePicture;
     this.eventSecondForm.patchValue({
       id: this.config.data.id,
-      mapLink: this.config.data.organizer.MapLink,
-      address: this.config.data.organizer.Address,
+      mapLink: this.config.data.organizer.MapLink?this.config.data.organizer.MapLink:' ',
+      address: this.config.data.organizer.Address?this.config.data.organizer.Address:' ',
       instagram: this.config.data.organizer.Instagram,
       facebook: this.config.data.organizer.Facebook,
       websiteURL: this.config.data.organizer.WebsiteURL,
@@ -260,6 +260,7 @@ export class EventOrganizersFormComponent implements OnInit {
       description: this.config.data.organizer.Description,
       categoryId: this.config.data.organizer.Category.Id,
     });
+    this.changeValidation()
   }
 
   changeValidation(formControl?: any) {
