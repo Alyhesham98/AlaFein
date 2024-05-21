@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -65,6 +66,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: '**', redirectTo: 'login' },
 ];
 

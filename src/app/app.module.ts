@@ -10,9 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { SharedModule } from './shared/shared.module';
+import { PrivacyPolicyComponent } from './modules/privacy-policy/privacy-policy.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PrivacyPolicyComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
