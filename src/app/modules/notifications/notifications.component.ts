@@ -37,7 +37,7 @@ export class NotificationsComponent {
     public dialogService: DialogService,
     private notifcationService: NotificationsService,
     public messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllNotifcations({
@@ -60,13 +60,12 @@ export class NotificationsComponent {
           const minutes = schedule.getMinutes();
           const seconds = schedule.getSeconds();
           const am_pm = hours >= 12 ? 'PM' : 'AM';
-          const formattedSchedule = `${day < 10 ? '0' : ''}${day}/${
-            month < 10 ? '0' : ''
-          }${month}/${year < 10 ? '0' : ''}${year} ${hours % 12 || 12}:${
-            minutes < 10 ? '0' : ''
-          }${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${am_pm}`;
+          const formattedSchedule = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''
+            }${month}/${year < 10 ? '0' : ''}${year} ${hours % 12 || 12}:${minutes < 10 ? '0' : ''
+            }${minutes}:${seconds < 10 ? '0' : ''}${seconds} ${am_pm}`;
 
           this.rowsData.push({
+            Id: element.Id,
             Title: element.Title,
             Body: element.Body,
             Schedule: element.Schedule ? formattedSchedule : '-',

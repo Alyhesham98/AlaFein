@@ -182,14 +182,15 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
-                *ngIf="pageType !== 'Admin'"
+                *ngIf="pageType !== 'Admin' && rows.Photo"
                 [src]="'https://alafein.azurewebsites.net/' + rows.Photo"
                 width="50"
                 height="50"
                 style="border-radius: 50%"
                 alt="test"
               />
-              {{ rows.FirstName + ' ' + rows.LastName }}
+              {{ rows.FirstName + " "
+              }}{{ +rows.LastName ? rows.LastName : "" }}
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'Facility'">
@@ -198,6 +199,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="facility.ImagePath"
                 [src]="
                   'https://alafein.azurewebsites.net/' + facility.ImagePath
                 "
@@ -315,6 +317,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="rows.Image"
                 [src]="'https://alafein.azurewebsites.net/' + rows.Image"
                 width="70"
                 height="70"
@@ -328,6 +331,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="rows.ImagePath"
                 [src]="'https://alafein.azurewebsites.net/' + rows.ImagePath"
                 width="70"
                 height="70"
@@ -697,14 +701,14 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
-                *ngIf="pageType !== 'Admin'"
+                *ngIf="pageType !== 'Admin' && rows.Photo"
                 [src]="'https://alafein.azurewebsites.net/' + rows.Photo"
                 width="50"
                 height="50"
                 style="border-radius: 50%"
                 alt="category"
               />
-              {{ rows.FirstName + "" + rows.LastName }}
+              {{ rows.FirstName + "" }}{{ +rows.LastName ? rows.LastName : "" }}
             </div>
           </ng-template>
           <ng-template [ngSwitchCase]="'Facility'">
@@ -798,6 +802,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="rows.Image"
                 [src]="'https://alafein.azurewebsites.net/' + rows.Image"
                 width="70"
                 height="70"
@@ -811,6 +816,7 @@
               style="min-width: 35px; border-radius: 50%; display: inline-block"
             >
               <img
+                *ngIf="rows.ImagePath"
                 [src]="'https://alafein.azurewebsites.net/' + rows.ImagePath"
                 width="70"
                 height="70"

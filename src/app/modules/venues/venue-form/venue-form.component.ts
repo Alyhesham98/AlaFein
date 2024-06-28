@@ -39,7 +39,7 @@ export class VenueFormComponent implements OnInit {
     private dialogService: DialogService,
     private ref: DynamicDialogRef,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getDropdown();
@@ -187,7 +187,9 @@ export class VenueFormComponent implements OnInit {
     };
     this.isSubmit = true;
     this.markFormGroupTouched(this.venueForm);
-
+    if (this.selectedWeekDays.length === 0) {
+      return;
+    }
     this.venuesService.createVenue(body).subscribe(
       (res: any) => {
         this.ref.close(true);

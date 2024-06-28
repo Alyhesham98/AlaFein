@@ -349,6 +349,14 @@
                   optionLabel="Name"
                   (onChange)="openDay(branchIndex, $event.value)"
                 ></p-selectButton>
+                <div
+                  *ngIf="selectedWeekDays.length === 0 && isSubmit"
+                  style="color: red"
+                >
+                  <small *ngIf="selectedWeekDays.length === 0 && isSubmit"
+                    >Field is required.</small
+                  >
+                </div>
               </div>
               <div class="col-xl-2 mt-4">
                 <a class="rejectBtn" (click)="removeControl(branchIndex)"

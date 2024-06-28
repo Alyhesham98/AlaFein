@@ -335,7 +335,6 @@ export class EventFormComponent implements OnInit {
         date.setHours(date.getHours() + 3);
         date.setDate(date.getDate() + 1);
 
-        console.log(timeFromValue);
         datesArray = [date.toISOString()];
       } else {
         let date = new Date(this.eventForm.get('timeFrom')?.value);

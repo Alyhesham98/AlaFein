@@ -51,7 +51,7 @@ export class OrganizersComponent implements OnInit {
     private eventOrganizersService: EventOrganizersService,
     private userService: UsersService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllEventOrganizers({
@@ -90,24 +90,28 @@ export class OrganizersComponent implements OnInit {
     this.eventOrganizersService
       .getAllEventOrganizers(e.page ? e.page + 1 : 1, e.rows ? e.rows : 10)
       .subscribe((data: any) => {
-        data.Data.forEach((element: any) => {
-          this.rowsData.push({
-            UserId: element.UserId,
-            Id: element.Id,
-            FirstName: element.FirstName,
-            LastName: element.LastName,
-            Email: element.Email,
-            Photo: element.Photo,
-            EventCount: element.EventCount,
-            userStatus: element.IsBlocked,
-            CreatedAt: element.CreatedAt,
-            socialLinks: {
-              facebook: element.Facebook,
-              websiteURL: element.WebsiteURL,
-              instagram: element.Instagram,
-            },
+        if (data.Data) {
+
+
+          data.Data.forEach((element: any) => {
+            this.rowsData.push({
+              UserId: element.UserId,
+              Id: element.Id,
+              FirstName: element.FirstName,
+              LastName: element.LastName,
+              Email: element.Email,
+              Photo: element.Photo,
+              EventCount: element.EventCount,
+              userStatus: element.IsBlocked,
+              CreatedAt: element.CreatedAt,
+              socialLinks: {
+                facebook: element.Facebook,
+                websiteURL: element.WebsiteURL,
+                instagram: element.Instagram,
+              },
+            });
           });
-        });
+        }
         this.totalRecords = data.PgTotal;
         this.pageNumber = data.PageNumber;
         this.pageSize = data.PageSize;

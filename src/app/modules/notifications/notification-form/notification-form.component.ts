@@ -25,7 +25,7 @@ export class NotificationFormComponent {
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private messageService: MessageService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.notificationForm = new FormGroup({
       id: new FormControl(null),
@@ -41,14 +41,35 @@ export class NotificationFormComponent {
     }
   }
   setFormData(): void {
-    let schedule = new Date(this.notificationDetails?.Schedule);
+    const dateParts = this.notificationDetails?.Schedule.split(' ');
+    const timeParts = dateParts[1].split(':');
+    const datePart = dateParts[0].split('/');
+
+    let hours = parseInt(timeParts[0], 10);
+    const minutes = parseInt(timeParts[1], 10);
+    const seconds = parseInt(timeParts[2], 10);
+    const isPM = dateParts[2] === 'PM';
+
+    if (isPM && hours !== 12) {
+      hours += 12;
+    } else if (!isPM && hours === 12) {
+      hours = 0;
+    }
+
+    const day = parseInt(datePart[0], 10);
+    const month = parseInt(datePart[1], 10) - 1; // months are 0-based in JavaScript Date
+    const year = 2000 + parseInt(datePart[2], 10); // assuming year 20xx
+
+    const date = new Date(year, month, day, hours, minutes, seconds);
+
+
     this.notificationForm.patchValue({
       id: this.notificationDetails?.Id,
       title: this.notificationDetails?.Title,
       titleAr: this.notificationDetails?.TitleAr,
       body: this.notificationDetails?.Body,
       bodyAr: this.notificationDetails?.BodyAr,
-      schedule: schedule,
+      schedule: date,
     });
   }
   isSubmit: boolean = false;
