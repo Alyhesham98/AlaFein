@@ -29,7 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     public authenticationService: AuthService,
     private loaderService: LoaderService
-  ) {}
+  ) { }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -51,12 +51,16 @@ export class TokenInterceptor implements HttpInterceptor {
           ) {
             this.authenticationService.logout();
           }
+          console.log(error.status);
+
           if (
             error instanceof HttpErrorResponse &&
             !newRequest.url.includes('login') &&
             error.status === 0
+            || error.status === 401
           ) {
             this.authenticationService.logout();
+            window.location.reload();
           }
 
           return throwError(error);
