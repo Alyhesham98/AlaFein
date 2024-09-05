@@ -6,6 +6,7 @@ import { Observable, tap } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +14,7 @@ export class AuthService {
   private url = 'https://alafein.azurewebsites.net/api/v1/';
   private userData!: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(data: any): Observable<any> {
     return this.http
@@ -26,14 +27,16 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-
   public isLoggedIn(): boolean {
     let token = localStorage.getItem('userData');
     return token != null && token.length > 0;
   }
 
   public save_token(data: any) {
-    this.userData = JSON.stringify(data.Data);    
+    this.userData = JSON.stringify({
+      JWTToken: data.Data.JWTToken,
+      refreshToken: data.Data.RefreshToken
+    });
     if (data.Succeeded) {
       window.localStorage.setItem('userData', this.userData);
     }
@@ -42,5 +45,18 @@ export class AuthService {
   public getToken(): string | null {
     let token = JSON.parse(localStorage.getItem('userData') ?? '{}');
     return this.isLoggedIn() ? token.JWTToken : null;
+  }
+
+  public refreshToken(): Observable<any> {
+    const tokenData = JSON.parse(localStorage.getItem('userData') ?? '{}');
+    return this.http.post<any>(`${this.url}AdminAccount/RefreshToken`, {
+      refreshToken: tokenData.refreshToken
+    }, httpOptions).pipe(tap(response => {
+      if (response && response.Data && response.Data.JWTToken) {
+        tokenData.JWTToken = response.Data.JWTToken;
+        tokenData.refreshToken = response.Data.RefreshToken; // Update refresh token if returned
+        localStorage.setItem('userData', JSON.stringify(tokenData));
+      }
+    }));
   }
 }

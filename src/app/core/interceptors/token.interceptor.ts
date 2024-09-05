@@ -51,8 +51,6 @@ export class TokenInterceptor implements HttpInterceptor {
           ) {
             this.authenticationService.logout();
           }
-          console.log(error.status);
-
           if (
             error instanceof HttpErrorResponse &&
             !newRequest.url.includes('login') &&
