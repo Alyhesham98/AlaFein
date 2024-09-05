@@ -66,7 +66,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
   { path: '**', redirectTo: 'login' },
 ];
 
@@ -74,4 +74,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
