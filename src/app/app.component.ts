@@ -18,6 +18,7 @@ export class AppComponent {
           event['url'] == '/login' ||
           event['url'] == '/' ||
           event['url'] == '/forget-password'
+          || event['url'] == '/privacy'
         ) {
           this.isLoggedIn = false;
         } else {
