@@ -51,16 +51,16 @@ export class AllEventsComponent {
   pageSize: number = 10;
   totalRecords!: number;
   ref: DynamicDialogRef | undefined;
-  actions: any[] = ['canView', 'canSpotlight'];
+  actions: any[] = ['canApprove', 'canView', 'canSpotlight'];
   constructor(
     private evetnsService: EventsService,
     public dialogService: DialogService,
     public messageService: MessageService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-       this.getAllEvents({
+    this.getAllEvents({
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     });
@@ -120,11 +120,11 @@ export class AllEventsComponent {
   getEventDetails(data: any) {
     this.router.navigate([
       'events/event-details/' +
-        data.Id +
-        '/' +
-        data?.Status?.Name +
-        '/' +
-        data?.SubmissionId,
+      data.Id +
+      '/' +
+      data?.Status?.Name +
+      '/' +
+      data?.SubmissionId,
     ]);
   }
 
