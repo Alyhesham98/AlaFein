@@ -25,6 +25,7 @@
         (pageNumber)="filter ? onSearch($event) : getAllEvents($event)"
         (spotlightDetails)="changeSpotlightStatus($event)"
         (dataDetails)="getEventDetails($event)"
+        (approveDetails)="toggleStatus($event)"
         [showFilter]="true"
         [showSearch]="false"
         [showSearchByName]="true"
@@ -37,7 +38,6 @@
         [placeholderIsApprovedDropdown]="'Search By Status'"
         (filterOutput)="onSearch($event)"
       ></app-custom-table>
-
     </div>
   </div>
 </div>

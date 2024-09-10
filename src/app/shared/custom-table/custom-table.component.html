@@ -562,7 +562,7 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="action === 'canApprove'">
-                  <div class="mb-2" *ngIf="!rows.IsPublished">
+                  <div class="mb-2" *ngIf="rows.Status.Id === 0">
                     <a
                       class="paraContent"
                       style="cursor: pointer"
@@ -583,7 +583,7 @@
                       </div>
                     </a>
                   </div>
-                  <div class="mb-2" *ngIf="rows.IsPublished">
+                  <div class="mb-2" *ngIf="rows.Status.Id === 1">
                     <a
                       class="paraContent"
                       style="cursor: pointer"

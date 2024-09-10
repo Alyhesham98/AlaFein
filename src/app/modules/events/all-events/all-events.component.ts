@@ -101,6 +101,19 @@ export class AllEventsComponent {
         }
       });
   }
+  toggleStatus(details: any) {
+    this.evetnsService
+      .toggleStatus({ id: details?.Id, status: details.Status.Id === 0 ? 1 : 0 })
+      .subscribe((res: any) => {
+        this.messageService.add({
+          key: 'toast1',
+          severity: 'success',
+          summary: 'Success',
+          detail: details.Status.Id === 0 ? 'Event Published' : 'Event Archived',
+        });
+        this.getAllEvents({ pageNumber: 1, pageSize: 10 });
+      });
+  }
 
   show(data?: any) {
     this.ref = this.dialogService.open(EventFormComponent, {

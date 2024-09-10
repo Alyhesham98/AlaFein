@@ -20,8 +20,10 @@
         [actions]="actions"
         (pageNumber)="getPendingEvents($event)"
         (dataDetails)="getEventDetails($event)"
+        (approveDetails)="toggleStatus($event)"
         [pageType]="'Events'"
       ></app-custom-table>
     </div>
   </div>
 </div>
+<p-toast key="toast1"></p-toast>
