@@ -30,7 +30,7 @@ export class CommentsComponent implements OnInit {
   constructor(
     private commentService: CommentsService,
     public messageService: MessageService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.getList({
       pageNumber: this.pageNumber,
@@ -72,7 +72,7 @@ export class CommentsComponent implements OnInit {
         }
       });
   }
-  
+
   filter: boolean = false;
 
   onSearch(event: any) {
