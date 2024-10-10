@@ -365,18 +365,24 @@ export class EventFormComponent implements OnInit {
 
   dateFrom: any;
   dateTo: any;
+  firstDateString: any;
   setFormData() {
     this.onAttendanceSelected(this.config.data.data.AttendanceOption.Id);
 
     // Extracting date and time values
-    const firstDateString = this.config?.data?.data?.Date[0];
+    if (this.config?.data?.data?.Date.length > 1) {
+
+      this.firstDateString = this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
+    } else {
+      this.firstDateString = this.config?.data?.data?.Date[0];
+    }
     let secondDateString = this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
 
     const dateRegex = /^(\d{2})-(\d{2})-(\d{4}), (\d{2}):(\d{2}) (AM|PM)$/;
 
     // Parse the first date
-    if (firstDateString && dateRegex.test(firstDateString)) {
-      const [_, day, month, year, hour, minute, period] = firstDateString.match(dateRegex);
+    if (this.firstDateString && dateRegex.test(this.firstDateString)) {
+      const [_, day, month, year, hour, minute, period] = this.firstDateString.match(dateRegex);
       let hours = parseInt(hour);
       if (period === 'PM' && hours < 12) {
         hours += 12;
@@ -386,7 +392,7 @@ export class EventFormComponent implements OnInit {
 
       this.dateFrom = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hours, parseInt(minute));
     } else {
-      console.error('Invalid date format:', firstDateString);
+      console.error('Invalid date format:', this.firstDateString);
       return; // Exit the function if the first date is invalid
     }
 
