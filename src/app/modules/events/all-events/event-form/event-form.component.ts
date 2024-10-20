@@ -91,7 +91,9 @@ export class EventFormComponent implements OnInit {
       this.attendanceOptions = res?.Data?.Attendance;
       this.repeatOptions = res?.Data?.Repeat;
       this.venuesOptions = res?.Data?.Venue;
-      if (this.config.data) {
+      if (this.config?.data) {
+        console.log(this.config.data);
+
         this.setFormData();
       }
     });
@@ -433,7 +435,7 @@ export class EventFormComponent implements OnInit {
       eventNameEN: this.config.data.data.EventNameEN,
       eventNameAR: this.config.data.data.EventNameAR,
       eventDescriptionEN: this.config.data.data.EventDescriptionEN,
-      EventDescriptionAR: this.config.data.data.EventDescriptionAR,
+      eventDescriptionAR: this.config?.data?.data?.EventDescriptionAR,
       mainArtestNameEN: this.config.data.data.MainArtestNameEN,
       mainArtestNameAR: this.config.data.data.MainArtestNameAR,
       categoryId: this.config.data.data.Category.Id,
