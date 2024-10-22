@@ -62,6 +62,7 @@ export class CommentsComponent implements OnInit {
             detail: 'Comment Published Successfully',
           });
           this.getList({ pageNumber: 1, pageSize: 10 });
+          window.location.reload();
         } else {
           this.messageService.add({
             key: 'toast1',
