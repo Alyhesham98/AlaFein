@@ -35,32 +35,37 @@ export class NotificationFormComponent {
       bodyAr: new FormControl(null, Validators.required),
       schedule: new FormControl(null),
     });
+
     if (this.config?.data) {
       this.notificationDetails = this.config?.data;
       this.setFormData();
     }
   }
+  scheduleDate!: Date;
   setFormData(): void {
-    const dateParts = this.notificationDetails?.Schedule.split(' ');
-    const timeParts = dateParts[1].split(':');
-    const datePart = dateParts[0].split('/');
+    if (this.notificationDetails?.Schedule !== '-') {
 
-    let hours = parseInt(timeParts[0], 10);
-    const minutes = parseInt(timeParts[1], 10);
-    const seconds = parseInt(timeParts[2], 10);
-    const isPM = dateParts[2] === 'PM';
+      const dateParts = this.notificationDetails?.Schedule.split(' ');
+      const timeParts = dateParts[1].split(':');
+      const datePart = dateParts[0].split('/');
 
-    if (isPM && hours !== 12) {
-      hours += 12;
-    } else if (!isPM && hours === 12) {
-      hours = 0;
+      let hours = parseInt(timeParts[0], 10);
+      const minutes = parseInt(timeParts[1], 10);
+      const seconds = parseInt(timeParts[2], 10);
+      const isPM = dateParts[2] === 'PM';
+
+      if (isPM && hours !== 12) {
+        hours += 12;
+      } else if (!isPM && hours === 12) {
+        hours = 0;
+      }
+
+      const day = parseInt(datePart[0], 10);
+      const month = parseInt(datePart[1], 10) - 1; // months are 0-based in JavaScript Date
+      const year = 2000 + parseInt(datePart[2], 10); // assuming year 20xx
+
+      this.scheduleDate = new Date(year, month, day, hours, minutes, seconds);
     }
-
-    const day = parseInt(datePart[0], 10);
-    const month = parseInt(datePart[1], 10) - 1; // months are 0-based in JavaScript Date
-    const year = 2000 + parseInt(datePart[2], 10); // assuming year 20xx
-
-    const date = new Date(year, month, day, hours, minutes, seconds);
 
 
     this.notificationForm.patchValue({
@@ -69,7 +74,7 @@ export class NotificationFormComponent {
       titleAr: this.notificationDetails?.TitleAr,
       body: this.notificationDetails?.Body,
       bodyAr: this.notificationDetails?.BodyAr,
-      schedule: date,
+      schedule: this.scheduleDate ? this.scheduleDate : null,
     });
   }
   isSubmit: boolean = false;
