@@ -282,7 +282,7 @@ export class EventFormComponent implements OnInit {
         currentDateTime.setSeconds(
           parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
         );
-        currentDateTime.setHours(currentDateTime.getHours() + 3);
+        currentDateTime.setHours(currentDateTime.getHours() + 2);
 
         datesArray.push(currentDateTime.toISOString());
       }
@@ -293,7 +293,7 @@ export class EventFormComponent implements OnInit {
       const lastDate = new Date(dateRange[dateRange.length - 1]);
 
       if (today.toDateString() === firstDate.toDateString()) {
-        lastDate.setDate(lastDate.getDate() + 1);
+        lastDate.setDate(lastDate.getDate());
         lastDate.setHours(
           parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10)
         );
@@ -303,7 +303,7 @@ export class EventFormComponent implements OnInit {
         lastDate.setSeconds(
           parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
         );
-        lastDate.setHours(lastDate.getHours() + 3);
+        lastDate.setHours(lastDate.getHours() + 2);
 
         datesArray.push(lastDate.toISOString());
       } else {
@@ -316,7 +316,7 @@ export class EventFormComponent implements OnInit {
         lastDate.setSeconds(
           parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
         );
-        lastDate.setHours(lastDate.getHours() + 3);
+        lastDate.setHours(lastDate.getHours() + 2);
 
         datesArray.push(lastDate.toISOString());
       }
@@ -331,7 +331,7 @@ export class EventFormComponent implements OnInit {
       currentDateTime.setSeconds(
         parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
       );
-      currentDateTime.setHours(currentDateTime.getHours() + 3);
+      currentDateTime.setHours(currentDateTime.getHours() + 2);
 
       datesArray.push(currentDateTime.toISOString());
     } else {
@@ -349,7 +349,7 @@ export class EventFormComponent implements OnInit {
       date.setHours(parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10));
       date.setMinutes(parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10));
       date.setSeconds(parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10));
-      date.setHours(date.getHours() + 3);
+      date.setHours(date.getHours() + 2);
 
       datesArray = [date.toISOString()];
     }
