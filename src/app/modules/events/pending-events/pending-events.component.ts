@@ -16,7 +16,7 @@ export class PendingEventsComponent {
       text: 'ID',
     },
     {
-      field: 'Name',
+      field: 'NameEn',
       text: 'Event name',
     },
     {

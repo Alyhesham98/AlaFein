@@ -18,7 +18,7 @@ export class AllEventsComponent {
       text: 'ID',
     },
     {
-      field: 'Name',
+      field: 'NameEn',
       text: 'Event name',
     },
     {

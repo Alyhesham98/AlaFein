@@ -18,7 +18,7 @@ export class EventSpotlightComponent {
       text: 'ID',
     },
     {
-      field: 'Name',
+      field: 'NameEn',
       text: 'Event name',
     },
     {
@@ -52,7 +52,7 @@ export class EventSpotlightComponent {
     private router: Router,
     public dialogService: DialogService,
     public messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getSpotlightEvents({
