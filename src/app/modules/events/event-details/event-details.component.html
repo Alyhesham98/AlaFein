@@ -47,7 +47,13 @@
               height="28"
               alt="Price Image"
             />
-            <p>{{ eventDetails?.PaymentFee }} EGP</p>
+            <p>
+              {{
+                eventDetails?.AttendanceOption.Id === 2
+                  ? "Free"
+                  : eventDetails.PaymentFee + " EGP"
+              }}
+            </p>
           </div>
           <div class="location">
             <img
@@ -126,15 +132,21 @@
         class="rejectBtn"
         *ngIf="
           (eventStatus === 'ACCEPT' || eventStatus === 'PENDING') &&
-          userData.Role === 'Super Admin'
+          userData.user.Role === 'Super Admin'
         "
         (click)="toggleStatus(2)"
         >REJECT</a
       >
-      <button class="customBtn" (click)="show(eventDetails)">MODIFY</button>
+      <button
+        class="customBtn"
+        (click)="show(eventDetails)"
+        *ngIf="userData.user.Role === 'Super Admin'"
+      >
+        MODIFY
+      </button>
       <button
         class="btn actionsBtn acceptBtn"
-        *ngIf="eventStatus !== 'ACCEPT' && userData.Role === 'Super Admin'"
+        *ngIf="eventStatus !== 'ACCEPT' && userData.user.Role === 'Super Admin'"
         (click)="toggleStatus(1)"
       >
         ACCEPT <img src="assets/icons/arrow-right.svg" alt="Accept Button" />

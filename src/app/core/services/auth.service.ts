@@ -35,7 +35,8 @@ export class AuthService {
   public save_token(data: any) {
     this.userData = JSON.stringify({
       JWTToken: data.Data.JWTToken,
-      refreshToken: data.Data.RefreshToken
+      refreshToken: data.Data.RefreshToken,
+      user: data.Data
     });
     if (data.Succeeded) {
       window.localStorage.setItem('userData', this.userData);

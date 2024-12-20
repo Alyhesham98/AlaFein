@@ -20,7 +20,7 @@
         </a>
       </li>
       <li
-        *ngIf="userData?.Role !== 'Admin'"
+        *ngIf="userData?.user.Role !== 'Admin'"
         class="nav-item text-center d-flex justify-content-center w-100"
       >
         <a
@@ -130,7 +130,7 @@
               >CATEGORIES</a
             >
           </li>
-          <li *ngIf="userData?.Role !== 'Admin'">
+          <li *ngIf="userData?.user.Role !== 'Admin'">
             <a
               [routerLink]="'/settings/admins'"
               routerLinkActive="active"

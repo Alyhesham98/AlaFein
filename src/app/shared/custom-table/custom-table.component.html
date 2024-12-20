@@ -384,7 +384,9 @@
                   </a>
                 </div>
               </ng-container>
-              <ng-container *ngIf="action === 'canEdit'">
+              <ng-container
+                *ngIf="action === 'canEdit' && userData?.user.Role !== 'Admin'"
+              >
                 <div class="ms-3">
                   <a
                     class="paraContent d-flex align-items-end"
@@ -492,7 +494,9 @@
                     </a>
                   </div>
                 </ng-container>
-                <ng-container *ngIf="action === 'canEdit'">
+                <ng-container
+                  *ngIf="action === 'canEdit' && userData?.user.Role !== 'Admin'"
+                >
                   <div class="mb-2">
                     <a
                       class="paraContent d-flex align-items-end"
@@ -875,7 +879,9 @@
                   </a>
                 </div>
               </ng-container>
-              <ng-container *ngIf="action === 'canEdit'">
+              <ng-container
+                *ngIf="action === 'canEdit' && userData?.user.Role !== 'Admin'"
+              >
                 <div class="ms-3">
                   <a
                     class="paraContent d-flex align-items-end"
@@ -958,7 +964,9 @@
                     </a>
                   </div>
                 </ng-container>
-                <ng-container *ngIf="action === 'canEdit'">
+                <ng-container
+                  *ngIf="action === 'canEdit' && userData?.user.Role !== 'Admin'"
+                >
                   <div class="mb-2">
                     <a
                       class="paraContent d-flex align-items-end"

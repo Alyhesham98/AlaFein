@@ -100,7 +100,10 @@ export class CustomTableComponent {
   sortOrder!: number; // 1 for ascending, -1 for descending
   type: any;
   @Input() pageType: any;
-  constructor(private router: Router) {}
+  userData: any;
+  constructor(private router: Router) {
+    this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
+  }
   page = 0;
   size = 10;
   onPageChange(event: any) {
@@ -176,7 +179,6 @@ export class CustomTableComponent {
         // Access the nested property using the split parts
         var valueA = a[parts[0]][parts[1]];
         var valueB = b[parts[0]][parts[1]];
-
       } else {
         // Otherwise, proceed with regular property access
         var valueA = a[this.sortField];
