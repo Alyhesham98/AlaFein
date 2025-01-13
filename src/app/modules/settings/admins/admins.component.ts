@@ -24,7 +24,7 @@ export class AdminsComponent implements OnInit {
       text: 'Email',
     },
   ];
-  actions: any[] = ['canView'];
+  actions: any[] = [];
   rowsData: any[] = [];
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -32,10 +32,18 @@ export class AdminsComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   adminRoles = [];
   filter: boolean = false;
+  userData: any;
   constructor(
     public dialogService: DialogService,
     private adminsService: AdminsService
-  ) {}
+  ) {
+    this.userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
+    if (this.userData?.user.Role !== 'Admin') {
+      this.actions = ['canView'];
+    } else {
+      this.actions = [];
+    }
+  }
 
   ngOnInit(): void {
     this.getAllAdmins({
