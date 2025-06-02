@@ -41,7 +41,7 @@ export class EventFormComponent implements OnInit {
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -226,7 +226,9 @@ export class EventFormComponent implements OnInit {
   }
 
   onAttendanceSelected(attendanceOption: any) {
-    this.eventForm.get('paymentFee')?.setValue(attendanceOption.Id ? attendanceOption.Id : attendanceOption);
+    this.eventForm
+      .get('paymentFee')
+      ?.setValue(attendanceOption.Id ? attendanceOption.Id : attendanceOption);
     if (
       attendanceOption.Id === 0 ||
       attendanceOption.Id === 1 ||
@@ -266,7 +268,11 @@ export class EventFormComponent implements OnInit {
       fromTime = new Date(timeFromValue); // Parse date if not in the expected format
     }
 
-    this.fromTimeFormat = this.datePipe.transform(fromTime, 'HH:mm:ss', 'en-US');
+    this.fromTimeFormat = this.datePipe.transform(
+      fromTime,
+      'HH:mm:ss',
+      'en-US'
+    );
 
     let datesArray: string[] = [];
 
@@ -282,7 +288,7 @@ export class EventFormComponent implements OnInit {
         currentDateTime.setSeconds(
           parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
         );
-        currentDateTime.setHours(currentDateTime.getHours() + 2);
+        currentDateTime.setHours(currentDateTime.getHours() + 3);
 
         datesArray.push(currentDateTime.toISOString());
       }
@@ -331,7 +337,7 @@ export class EventFormComponent implements OnInit {
       currentDateTime.setSeconds(
         parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10)
       );
-      currentDateTime.setHours(currentDateTime.getHours() + 2);
+      currentDateTime.setHours(currentDateTime.getHours() + 3);
 
       datesArray.push(currentDateTime.toISOString());
     } else {
@@ -349,13 +355,13 @@ export class EventFormComponent implements OnInit {
       date.setHours(parseInt(this.fromTimeFormat?.split(':')[0] || '0', 10));
       date.setMinutes(parseInt(this.fromTimeFormat?.split(':')[1] || '0', 10));
       date.setSeconds(parseInt(this.fromTimeFormat?.split(':')[2] || '0', 10));
-      date.setHours(date.getHours() + 2);
+      date.setHours(date.getHours() + 3);
 
       datesArray = [date.toISOString()];
     }
 
     // Remove any invalid entries like "1970-01-01T00:00:00.000Z"
-    datesArray = datesArray.filter(date => !date.includes("1970"));
+    datesArray = datesArray.filter((date) => !date.includes('1970'));
 
     // Remove duplicate entries
     datesArray = Array.from(new Set(datesArray));
@@ -365,7 +371,6 @@ export class EventFormComponent implements OnInit {
     });
   }
 
-
   dateFrom: any;
   dateTo: any;
   firstDateString: any;
@@ -374,18 +379,20 @@ export class EventFormComponent implements OnInit {
 
     // Extracting date and time values
     if (this.config?.data?.data?.Date.length > 1) {
-
-      this.firstDateString = this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
+      this.firstDateString =
+        this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
     } else {
       this.firstDateString = this.config?.data?.data?.Date[0];
     }
-    let secondDateString = this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
+    let secondDateString =
+      this.config?.data?.data?.Date[this.config?.data?.data?.Date.length - 1];
 
     const dateRegex = /^(\d{2})-(\d{2})-(\d{4}), (\d{2}):(\d{2}) (AM|PM)$/;
 
     // Parse the first date
     if (this.firstDateString && dateRegex.test(this.firstDateString)) {
-      const [_, day, month, year, hour, minute, period] = this.firstDateString.match(dateRegex);
+      const [_, day, month, year, hour, minute, period] =
+        this.firstDateString.match(dateRegex);
       let hours = parseInt(hour);
       if (period === 'PM' && hours < 12) {
         hours += 12;
@@ -393,7 +400,13 @@ export class EventFormComponent implements OnInit {
         hours = 0; // Handle midnight
       }
 
-      this.dateFrom = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hours, parseInt(minute));
+      this.dateFrom = new Date(
+        parseInt(year),
+        parseInt(month) - 1,
+        parseInt(day),
+        hours,
+        parseInt(minute)
+      );
     } else {
       console.error('Invalid date format:', this.firstDateString);
       return; // Exit the function if the first date is invalid
@@ -401,7 +414,8 @@ export class EventFormComponent implements OnInit {
 
     // Parse the second date if it exists and is valid
     if (secondDateString && dateRegex.test(secondDateString)) {
-      const [_, day, month, year, hour, minute, period] = secondDateString.match(dateRegex);
+      const [_, day, month, year, hour, minute, period] =
+        secondDateString.match(dateRegex);
       let hours = parseInt(hour);
       if (period === 'PM' && hours < 12) {
         hours += 12;
@@ -409,7 +423,13 @@ export class EventFormComponent implements OnInit {
         hours = 0; // Handle midnight
       }
 
-      this.dateTo = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), hours, parseInt(minute));
+      this.dateTo = new Date(
+        parseInt(year),
+        parseInt(month) - 1,
+        parseInt(day),
+        hours,
+        parseInt(minute)
+      );
     } else {
       this.dateTo = null; // Handle case where the second date is invalid or not provided
     }
@@ -479,7 +499,6 @@ export class EventFormComponent implements OnInit {
       }
     });
   }
-
 
   formatTime(date: Date): string {
     let hours = date.getHours();
